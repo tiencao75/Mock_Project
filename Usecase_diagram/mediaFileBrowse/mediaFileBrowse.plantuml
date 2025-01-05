@@ -1,0 +1,13 @@
+@startuml
+actor User
+participant "CLI" as CLI
+participant "MediaController" as MediaCtrl
+participant "MediaScanner" as Scanner
+
+User -> CLI : scanDirectory(path)
+CLI -> MediaCtrl : scanDirectory(path)
+MediaCtrl -> Scanner : scanDirectory(path)
+Scanner -> Scanner : scan for media files
+Scanner --> MediaCtrl : return list of MediaFiles
+MediaCtrl --> CLI : display MediaFiles
+@enduml

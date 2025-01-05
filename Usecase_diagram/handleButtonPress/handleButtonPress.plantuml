@@ -1,0 +1,13 @@
+@startuml
+participant "S32K144Interface" as S32K144
+participant "DeviceManager" as DeviceMgr
+participant "MediaController" as MediaCtrl
+participant "MediaPlayer" as Player
+
+S32K144 -> DeviceMgr : handleButtonPress(button)
+DeviceMgr -> MediaCtrl : button pressed (e.g., PLAY_PAUSE)
+MediaCtrl -> Player : execute action (play/pause)
+Player -> Player : toggle playback state
+Player --> MediaCtrl : playback toggled
+MediaCtrl --> DeviceMgr : update hardware state
+@enduml

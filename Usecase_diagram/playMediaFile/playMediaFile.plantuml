@@ -1,0 +1,13 @@
+@startuml
+actor User
+participant "CLI" as CLI
+participant "MediaController" as MediaCtrl
+participant "MediaPlayer" as Player
+
+User -> CLI : selectMedia(file)
+CLI -> MediaCtrl : playMedia(file)
+MediaCtrl -> Player : play(file)
+Player -> Player : initialize playback
+Player --> MediaCtrl : playback started
+MediaCtrl --> CLI : update UI (playing)
+@enduml

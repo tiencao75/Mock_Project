@@ -1,0 +1,13 @@
+@startuml
+actor User
+participant "CLI" as CLI
+participant "MediaController" as MediaCtrl
+participant "PlaylistManager" as PlaylistMgr
+
+User -> CLI : createPlaylist(name)
+CLI -> MediaCtrl : createPlaylist(name)
+MediaCtrl -> PlaylistMgr : createPlaylist(name)
+PlaylistMgr -> PlaylistMgr : create new playlist object
+PlaylistMgr --> MediaCtrl : return playlist ID
+MediaCtrl --> CLI : display success message
+@enduml

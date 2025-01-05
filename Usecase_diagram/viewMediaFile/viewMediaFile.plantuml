@@ -1,0 +1,13 @@
+@startuml
+actor User
+participant "CLI" as CLI
+participant "MediaController" as MediaCtrl
+participant "PlaylistManager" as PlaylistMgr
+
+User -> CLI : viewMediaFiles()
+CLI -> MediaCtrl : getMediaFiles()
+MediaCtrl -> PlaylistMgr : getAllPlaylists()
+PlaylistMgr --> MediaCtrl : return playlists and media files
+MediaCtrl --> CLI : send list of MediaFiles
+CLI --> User : display MediaFiles
+@enduml

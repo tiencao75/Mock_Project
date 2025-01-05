@@ -1,0 +1,15 @@
+@startuml
+actor User
+participant "CLI" as CLI
+participant "MediaController" as MediaCtrl
+participant "DeviceManager" as DeviceMgr
+participant "S32K144Interface" as S32K144
+
+User -> CLI : adjustVolume(level)
+CLI -> MediaCtrl : setVolume(level)
+MediaCtrl -> DeviceMgr : setVolume(level)
+DeviceMgr -> S32K144 : update volume display
+S32K144 --> DeviceMgr : acknowledge update
+DeviceMgr --> MediaCtrl : volume updated
+MediaCtrl --> CLI : confirm volume change
+@enduml

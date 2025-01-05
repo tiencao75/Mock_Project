@@ -1,0 +1,177 @@
+@startuml Media Player Class Diagram
+
+' Style configurations
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor white
+    ArrowColor black
+    BorderColor black
+}
+
+package Model {
+    abstract class MediaFile {
+        - path: string
+        - name: string
+        - type: MediaType
+        - metadata: map<string, string>
+        + getMetadata(): map<string, string>
+        + setMetadata(key: string, value: string)
+        + getDuration(): int
+        + getPath(): string
+        + getName(): string
+    }
+    
+    class AudioFile {
+        - artist: string
+        - album: string
+        - genre: string
+        - year: int
+        - trackNumber: int
+        + getArtist(): string
+        + getAlbum(): string
+        + setArtist(artist: string)
+        + setAlbum(album: string)
+    }
+    
+    class VideoFile {
+        - codec: string
+        - bitrate: int
+        - resolution: string
+        + getCodec(): string
+        + getBitrate(): int
+        + getResolution(): string
+    }
+    
+    class Playlist {
+        - id: int
+        - name: string
+        - mediaFiles: vector<MediaFile*>
+        + addFile(file: MediaFile*)
+        + removeFile(index: int)
+        + getFiles(): vector<MediaFile*>
+        + getName(): string
+        + setName(name: string)
+    }
+    
+    class PlaylistManager {
+        - playlists: vector<Playlist*>
+        + createPlaylist(name: string): Playlist*
+        + deletePlaylist(id: int)
+        + getPlaylist(id: int): Playlist*
+        + getAllPlaylists(): vector<Playlist*>
+    }
+    
+    class DeviceManager {
+        - volume: int
+        - s32k144Connection: S32K144Interface*
+        + setVolume(level: int)
+        + getVolume(): int
+        + updateDisplay(info: string)
+        + handleButtonPress(button: ButtonType)
+    }
+}
+
+package View {
+    class CLI {
+        - currentPage: int
+        - itemsPerPage: int
+        + showMainMenu()
+        + showMediaList(files: vector<MediaFile*>)
+        + showPlaylistMenu()
+        + showMetadataMenu(file: MediaFile*)
+        + showPlayerControls()
+        + showVolume(level: int)
+    }
+}
+
+package Controller {
+    class MediaController {
+        - mediaScanner: MediaScanner*
+        - player: MediaPlayer*
+        - playlistManager: PlaylistManager*
+        - deviceManager: DeviceManager*
+        + scanDirectory(path: string)
+        + playMedia(file: MediaFile*)
+        + pauseMedia()
+        + stopMedia()
+        + nextTrack()
+        + previousTrack()
+        + setVolume(level: int)
+    }
+    
+    class MediaScanner {
+        - supportedFormats: vector<string>
+        + scanDirectory(path: string): vector<MediaFile*>
+        + scanUSB(): vector<MediaFile*>
+        - mountUSB()
+        - unmountUSB()
+    }
+    
+    class MediaPlayer {
+        - currentFile: MediaFile*
+        - isPlaying: bool
+        - currentPosition: int
+        + play(file: MediaFile*)
+        + pause()
+        + stop()
+        + seek(position: int)
+        + getCurrentPosition(): int
+        - initSDL()
+        - cleanupSDL()
+    }
+}
+
+package Hardware {
+    class S32K144Interface {
+        - serialConnection: SerialPort*
+        + connect()
+        + disconnect()
+        + readADC(): int
+        + readButtons(): ButtonState
+        + updateDisplay(text: string)
+    }
+}
+
+enum MediaType {
+    AUDIO
+    VIDEO
+}
+
+enum ButtonType {
+    PLAY_PAUSE
+    NEXT
+    PREVIOUS
+    STOP
+}
+
+' Inheritance relationships
+MediaFile <|-- AudioFile : extends
+MediaFile <|-- VideoFile : extends
+
+' Composition relationships (strong ownership)
+PlaylistManager "1" *-- "0..*" Playlist : manages >
+Playlist "1" *-- "0..*" MediaFile : contains >
+
+' Aggregation relationships (weak ownership)
+MediaController o-- MediaScanner : uses >
+MediaController o-- MediaPlayer : uses >
+MediaController o-- PlaylistManager : uses >
+MediaController o-- DeviceManager : uses >
+
+' Association relationships
+CLI "1" --> "1" MediaController : controls >
+DeviceManager "1" --> "1" S32K144Interface : interfaces with >
+MediaFile --> "1" MediaType : has type >
+DeviceManager --> ButtonType : handles >
+
+note "CLI depends on MediaController\nfor all operations" as N1
+CLI .. N1
+N1 .. MediaController
+
+note "MediaController is the central\ncoordinator between all components" as N2
+MediaController .. N2
+
+note "DeviceManager handles all\nhardware interactions" as N3
+DeviceManager .. N3
+
+@enduml
