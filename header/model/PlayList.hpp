@@ -17,6 +17,7 @@ public:
     std::string getName() const;
     std::vector<MediaFile> getSongs() const;
 
+    bool operator==(const Playlist& other) const;
     // Methods
     void addSong(const MediaFile& song);
     void removeSong(const MediaFile& song);

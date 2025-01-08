@@ -10,6 +10,7 @@ private:
     bool isPlaying;
 
 public:
+    PlayingMedia();
     MediaFile* getCurrentMediaFile() const;
     int getCurrentTime() const;
     bool getIsPlaying() const;

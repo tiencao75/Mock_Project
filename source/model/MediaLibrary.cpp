@@ -1,5 +1,6 @@
 #include "MediaLibrary.hpp"
 #include <algorithm>
+#include <stdexcept>
 
 std::vector<MediaFile> MediaLibrary::getAllMediaFiles() const {
     return mediaFiles;
@@ -19,7 +20,7 @@ MediaFile MediaLibrary::getMediaFileByName(const std::string& name) const {
             return file;
         }
     }
-    //throw std::runtime_error("File not found");
+    throw std::runtime_error("File not found");
 }
 
 void MediaLibrary::scanDirectory(const std::string& path) {

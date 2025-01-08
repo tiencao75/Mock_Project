@@ -1,6 +1,7 @@
 #include "PlayingMedia.hpp"
 #include <stdexcept>
 
+
 PlayingMedia::PlayingMedia() : currentMediaFile(nullptr), currentTime(0), isPlaying(false) {}
 
 MediaFile* PlayingMedia::getCurrentMediaFile() const {

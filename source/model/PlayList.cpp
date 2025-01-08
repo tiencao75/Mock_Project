@@ -1,4 +1,4 @@
-#include "Playlist.hpp"
+#include "PlayList.hpp"
 #include <algorithm> // For std::find
 #include <stdexcept> // For exceptions
 
@@ -14,7 +14,10 @@ std::string Playlist::getName() const {
 std::vector<MediaFile> Playlist::getSongs() const {
     return songs;
 }
-
+// Toán tử so sánh ==
+bool Playlist::operator==(const Playlist& other) const {
+    return name == other.name && songs == other.songs;
+}
 // Add a song to the playlist
 void Playlist::addSong(const MediaFile& song) {
     // Check if the song is already in the playlist

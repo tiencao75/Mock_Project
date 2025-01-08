@@ -23,6 +23,11 @@ public:
     // Setters
     void setMetadata(const Metadata& metadata);
     void setType(const std::string& type);
+        // Toán tử so sánh ==
+    bool operator==(const MediaFile& other) const;
+
+    // Toán tử so sánh != nếu cần
+    bool operator!=(const MediaFile& other) const;
 };
 
 #endif // MEDIA_FILE_HPP

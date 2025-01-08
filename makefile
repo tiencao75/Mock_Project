@@ -1,6 +1,6 @@
 # Compiler và cờ biên dịch
 CC = g++
-CFLAGS = -Wall -g -I./header
+CFLAGS = -Wall -g -I./header -I./header/model -I./header/controller -I./header/view
 
 # Thư mục chứa tệp nguồn, tệp đối tượng và tệp thực thi
 SRC_DIR = ./source
@@ -12,6 +12,7 @@ BIN_DIR = $(OUT_DIR)/bin
 MODEL_DIR = $(SRC_DIR)/model
 CONTROLLER_DIR = $(SRC_DIR)/controller
 VIEW_DIR = $(SRC_DIR)/view
+MAIN_SOURCE = $(SRC_DIR)/main.cpp
 
 # Tìm tất cả các tệp nguồn .cpp trong các thư mục con
 MODEL_SOURCES = $(wildcard $(MODEL_DIR)/*.cpp)
@@ -19,28 +20,20 @@ CONTROLLER_SOURCES = $(wildcard $(CONTROLLER_DIR)/*.cpp)
 VIEW_SOURCES = $(wildcard $(VIEW_DIR)/*.cpp)
 
 # Tổng hợp các nguồn
-SOURCES = $(MODEL_SOURCES) $(CONTROLLER_SOURCES) $(VIEW_SOURCES)
+SOURCES = $(MODEL_SOURCES) $(CONTROLLER_SOURCES) $(VIEW_SOURCES) $(MAIN_SOURCE)
 
 # Tạo danh sách tệp đối tượng từ danh sách tệp nguồn
 OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
 
 # Tên tệp thực thi
-TARGET = $(BIN_DIR)/main
+TARGET = $(BIN_DIR)/main.exe
 
 # Quy tắc mặc định
-all: $(BIN_DIR) $(OBJ_DIR) $(TARGET)
+all: dirs $(TARGET)
 
-# Tạo thư mục out/ nếu chưa tồn tại
-$(OUT_DIR):
-	mkdir -p $(OUT_DIR)
-
-# Tạo thư mục obj/ nếu chưa tồn tại
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-
-# Tạo thư mục bin/ nếu chưa tồn tại
-$(BIN_DIR):
-	mkdir -p $(BIN_DIR)
+# Quy tắc tạo thư mục nếu chưa tồn tại
+dirs:
+	mkdir -p $(OBJ_DIR) $(BIN_DIR)
 
 # Quy tắc tạo tệp thực thi
 $(TARGET): $(OBJECTS)
@@ -48,6 +41,7 @@ $(TARGET): $(OBJECTS)
 
 # Quy tắc tạo tệp đối tượng từ tệp nguồn .cpp
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 # Quy tắc dọn dẹp

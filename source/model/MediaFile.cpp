@@ -19,6 +19,16 @@ Metadata MediaFile::getMetadata() const {
     return metadata;
 }
 
+// Toán tử so sánh ==
+bool MediaFile:: operator==(const MediaFile& other) const {
+    return this->name == other.name;
+}
+
+// Toán tử so sánh != nếu cần
+bool MediaFile:: operator!=(const MediaFile& other) const {
+    return !(*this == other);
+}
+
 void MediaFile::setMetadata(const Metadata& metadata) {
     this->metadata = metadata;
 }
