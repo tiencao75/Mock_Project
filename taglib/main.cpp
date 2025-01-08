@@ -25,8 +25,8 @@ void printMetadata(TagLib::Tag *tag, TagLib::AudioProperties *audioProperties)
     std::cout << "Artist      : " << tag->artist().toCString() << std::endl;
     std::cout << "Album       : " << tag->album().toCString() << std::endl;
     std::cout << "Year        : " << tag->year() << std::endl;
-    std::cout << "Track       : " << tag->track() << std::endl;             // Hiển thị Track
-    std::cout << "Genre       : " << tag->genre().toCString() << std::endl; // Hiển thị Genre
+    std::cout << "Track       : " << tag->track() << std::endl;
+    std::cout << "Genre       : " << tag->genre().toCString() << std::endl;
     std::cout << "Duration    : " << audioProperties->length() << " seconds" << std::endl;
 
     std::cout << "\n=== Audio Properties ===" << std::endl;
@@ -52,7 +52,7 @@ void showAllFiles(const std::string &directory)
     int index = 1;
     for (const auto &entry : fs::directory_iterator(directory))
     {
-        if (fs::is_regular_file(entry))
+        if (fs::is_regular_file(entry)) // kiem tra file thong thuong
         {
             std::cout << index++ << ". " << entry.path().filename().string() << std::endl;
         }
@@ -79,7 +79,7 @@ int main()
             std::cout << "\nEnter the number of the file you want to edit: ";
             int fileChoice;
             std::cin >> fileChoice;
-            std::cin.ignore(); // Đọc bỏ newline
+            std::cin.ignore();
 
             int currentIndex = 1;
             std::string filepath;
@@ -129,7 +129,7 @@ int main()
                         std::cout << "0. Exit Editing" << std::endl;
                         std::cout << "Enter your choice: ";
                         std::cin >> subChoice;
-                        std::cin.ignore(); // Đọc bỏ newline
+                        std::cin.ignore();
 
                         std::string newValue;
                         unsigned int newYear;
