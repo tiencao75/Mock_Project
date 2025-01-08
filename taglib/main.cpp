@@ -20,31 +20,19 @@ struct OriginalMetadata
 
 void printMetadata(TagLib::Tag *tag, TagLib::AudioProperties *audioProperties)
 {
-    std::cout << "+---------------------+---------------------------+" << std::endl;
-    std::cout << "|       Field         |          Value           |" << std::endl;
-    std::cout << "+---------------------+---------------------------+" << std::endl;
+    std::cout << "\n=== Metadata Information ===" << std::endl;
+    std::cout << "Title       : " << tag->title().toCString() << std::endl;
+    std::cout << "Artist      : " << tag->artist().toCString() << std::endl;
+    std::cout << "Album       : " << tag->album().toCString() << std::endl;
+    std::cout << "Year        : " << tag->year() << std::endl;
+    std::cout << "Track       : " << tag->track() << std::endl;             // Hiển thị Track
+    std::cout << "Genre       : " << tag->genre().toCString() << std::endl; // Hiển thị Genre
+    std::cout << "Duration    : " << audioProperties->length() << " seconds" << std::endl;
 
-    std::cout << "| " << std::setw(20) << std::left << "Title"
-              << "| " << std::setw(25) << tag->title().toCString() << " |" << std::endl;
-    std::cout << "| " << std::setw(20) << std::left << "Artist"
-              << "| " << std::setw(25) << tag->artist().toCString() << " |" << std::endl;
-    std::cout << "| " << std::setw(20) << std::left << "Album"
-              << "| " << std::setw(25) << tag->album().toCString() << " |" << std::endl;
-    std::cout << "| " << std::setw(20) << std::left << "Year"
-              << "| " << std::setw(25) << tag->year() << " |" << std::endl;
-    std::cout << "| " << std::setw(20) << std::left << "Duration (seconds)"
-              << "| " << std::setw(25) << audioProperties->length() << " |" << std::endl;
-    std::cout << "+---------------------+---------------------------+" << std::endl;
-
-    std::cout << "\nAudio Information:" << std::endl;
-    std::cout << "+---------------------+---------------------------+" << std::endl;
-    std::cout << "| " << std::setw(20) << std::left << "Channels"
-              << "| " << std::setw(25) << audioProperties->channels() << " |" << std::endl;
-    std::cout << "| " << std::setw(20) << std::left << "Sample Rate (Hz)"
-              << "| " << std::setw(25) << audioProperties->sampleRate() << " |" << std::endl;
-    std::cout << "| " << std::setw(20) << std::left << "Bitrate (kbps)"
-              << "| " << std::setw(25) << audioProperties->bitrate() << " |" << std::endl;
-    std::cout << "+---------------------+---------------------------+" << std::endl;
+    std::cout << "\n=== Audio Properties ===" << std::endl;
+    std::cout << "Bitrate     : " << audioProperties->bitrate() << " kbps" << std::endl;
+    std::cout << "Sample Rate : " << audioProperties->sampleRate() << " Hz" << std::endl;
+    std::cout << "Channels    : " << audioProperties->channels() << std::endl;
 }
 
 void restoreMetadata(TagLib::Tag *tag, const OriginalMetadata &originalMetadata)
