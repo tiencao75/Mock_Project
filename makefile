@@ -62,17 +62,17 @@ BIN_DIR = $(OUT_DIR)/bin
 MODEL_DIR = $(SRC_DIR)/model
 CONTROLLER_DIR = $(SRC_DIR)/controller
 VIEW_DIR = $(SRC_DIR)/view
-INCLUDE_DIR = $(SRC_DIR)/include
+#INCLUDE_DIR = $(SRC_DIR)/include
 MAIN_SOURCE = $(SRC_DIR)/main.cpp
 
 # Tìm tất cả các tệp nguồn .cpp trong các thư mục con
 MODEL_SOURCES = $(wildcard $(MODEL_DIR)/*.cpp)
 CONTROLLER_SOURCES = $(wildcard $(CONTROLLER_DIR)/*.cpp)
 VIEW_SOURCES = $(wildcard $(VIEW_DIR)/*.cpp)
-INCLUDE_SOURCES = $(wildcard $(INCLUDE_DIR)/*.cpp)
+#INCLUDE_SOURCES = $(wildcard $(INCLUDE_DIR)/*.cpp)
 
 # Tổng hợp các nguồn
-SOURCES = $(MODEL_SOURCES) $(CONTROLLER_SOURCES) $(VIEW_SOURCES) $(INCLUDE_SOURCES) $(MAIN_SOURCE)
+SOURCES = $(MODEL_SOURCES) $(CONTROLLER_SOURCES) $(VIEW_SOURCES) $(MAIN_SOURCE) #$(INCLUDE_SOURCES)
 
 # Tạo danh sách tệp đối tượng từ danh sách tệp nguồn
 OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
