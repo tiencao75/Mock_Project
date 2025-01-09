@@ -16,7 +16,8 @@ public:
     void addMediaFile(const std::shared_ptr<MediaFile> &file);
     void removeMediaFile(const std::shared_ptr<MediaFile> &file);
     std::shared_ptr<MediaFile> getMediaFileByName(const std::string &name) const;
-    void scanDirectory(const std::string &directory, std::vector<MediaFile> &mediaFiles);
+    void scanDirectory(const std::string &directory, std::vector<std::shared_ptr<MediaFile>> &mediaFiles);
+
     void scanUSBDevice();
 };
 
