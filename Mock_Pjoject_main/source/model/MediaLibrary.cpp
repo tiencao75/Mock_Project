@@ -33,27 +33,32 @@ std::shared_ptr<MediaFile> MediaLibrary::getMediaFileByName(const std::string &n
     throw std::runtime_error("File not found");
 }
 
-void MediaLibrary::scanDirectory(const std::string &directory, std::vector<MediaFile> &mediaFiles)
+void MediaLibrary::scanDirectory(const std::string &directory, std::vector<std::shared_ptr<MediaFile>> &mediaFiles)
 {
-
-   try {
+    try
+    {
         // Kiểm tra nếu thư mục tồn tại
-        if (!fs::exists(directory) || !fs::is_directory(directory)) {
+        if (!fs::exists(directory) || !fs::is_directory(directory))
+        {
             throw std::runtime_error("Error: Path does not exist or is not a directory.");
         }
 
         // Duyệt qua các file trong thư mục
-        for (const auto &entry : fs::directory_iterator(directory)) {
-            if (fs::is_regular_file(entry)) {
+        for (const auto &entry : fs::directory_iterator(directory))
+        {
+            if (fs::is_regular_file(entry))
+            {
                 std::string filePath = entry.path().string();
                 std::string fileName = entry.path().filename().string();
                 std::string extension = entry.path().extension().string();
 
                 // Chỉ xử lý các file .mp3 hoặc .mp4
-                if (extension == ".mp3" || extension == ".mp4") {
+                if (extension == ".mp3" || extension == ".mp4")
+                {
                     std::string fileType = (extension == ".mp3") ? "audio" : "video";
 
-                    try {
+                    try
+                    {
                         // Tạo đối tượng MediaFile
                         auto mediaFile = std::make_shared<MediaFile>(fileName, filePath, fileType);
 
@@ -70,13 +75,18 @@ void MediaLibrary::scanDirectory(const std::string &directory, std::vector<Media
 
                         // Thêm MediaFile vào danh sách
                         mediaFiles.push_back(mediaFile);
-                    } catch (const std::exception &e) {
-                        std::cerr << "Error loading metadata for file: " << fileName << "\n" << e.what() << std::endl;
+                    }
+                    catch (const std::exception &e)
+                    {
+                        std::cerr << "Error loading metadata for file: " << fileName << "\n"
+                                  << e.what() << std::endl;
                     }
                 }
             }
         }
-    } catch (const std::exception &e) {
+    }
+    catch (const std::exception &e)
+    {
         std::cerr << "Error while scanning directory: " << e.what() << std::endl;
     }
 }
