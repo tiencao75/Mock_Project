@@ -1,0 +1,26 @@
+#include "MediaLibrary.hpp"
+#include <vector>
+
+int main() {
+    const std::string mediaDir = "/home/user/Music"; // Thư mục chứa file nhạc
+    std::vector<MediaFile> mediaFiles;
+
+    MediaLibrary library;
+    library.scanDirectory(mediaDir, mediaFiles); // Quét thư mục
+
+    // Hiển thị danh sách file
+    std::cout << "\nMedia files scanned:" << std::endl;
+    for (const auto& file : mediaFiles) {
+        std::cout << "File: " << file.getName()
+                  << ", Path: " << file.getPath()
+                  << ", Type: " << file.getType() << std::endl;
+
+        // In thông tin Metadata
+        Metadata metadata = file.getMetadata();
+        for (const auto& [key, value] : metadata.getData()) {
+            std::cout << "  " << key << ": " << value << std::endl;
+        }
+    }
+
+    return 0;
+}
