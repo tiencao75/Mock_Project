@@ -1,0 +1,106 @@
+@startuml
+package Model {
+    class MediaFile {
+        - name: string
+        - path: string
+        - type: string
+        - metadata: Metadata
+
+        + getName(): string
+        + getPath(): string
+        + getType(): string
+        + getMetadata(): Metadata
+        + setMetadata(metadata: Metadata): void
+        + setType(type: string): void
+    }
+
+    class Playlist {
+        - name: string
+        - songs: vector<MediaFile>
+
+        + getName(): string
+        + getSongs(): vector<MediaFile>
+        + addSong(song: MediaFile): void
+        + removeSong(song: MediaFile): void
+    }
+
+    class MediaLibrary {
+        - mediaFiles: vector<MediaFile>
+
+        + getAllMediaFiles(): vector<MediaFile>
+        + addMediaFile(file: MediaFile): void
+        + removeMediaFile(file: MediaFile): void
+        + getMediaFileByName(name: string): MediaFile
+        + scanDirectory(path: string): void
+        + scanUSBDevice(): void
+    }
+
+    class PlaylistLibrary {
+        - playlists: vector<Playlist>
+
+        + getAllPlaylists(): vector<Playlist>
+        + addPlaylist(playlist: Playlist): void
+        + removePlaylist(playlist: Playlist): void
+        + getPlaylistByName(name: string): Playlist
+    }
+
+    class ModelManager {
+        - mediaLibrary: MediaLibrary
+        - playlistLibrary: PlaylistLibrary
+        - playingMedia: PlayingMedia
+        - deviceManager:DeviceManager
+
+        + getMediaLibrary(): MediaLibrary
+        + getPlaylistLibrary(): PlaylistLibrary
+        + getPlayingMedia(): PlayingMedia
+        + getDeviceManager(): DeviceManager
+    }
+
+    class PlayingMedia {
+        - currentMediaFile: MediaFile*
+        - currentTime: int
+        - isPlaying: bool
+
+        + getCurrentMediaFile(): MediaFile*
+        + setCurrentMediaFile(mediaFile: MediaFile*): void
+        + getCurrentTime(): int
+        + setCurrentTime(time: int): void
+        + getIsPlaying(): bool
+        + setIsPlaying(playing: bool): void
+        + play(): void
+        + pause(): void
+        + stop(): void
+        + skiptoNext(): void
+        + skiptoPrevious(): void
+        + skipForward(seconds: int): void
+        + skipBackward(seconds: int): void
+    }
+
+    class Metadata {
+        - data: map<string, string>
+
+        + getData(): map<string, string>
+        + setData(data: map<string, string>): void
+        + getValue(key: string): string
+        + setValue(key: string, value: string): void
+    }
+
+    class DeviceManager {
+        - volume: int
+        - s32k144Connection: S32K144Interface*
+        + setVolume(level: int)
+        + getVolume(): int
+        + updateDisplay(info: string)
+    }
+
+    ' Liên kết giữa các lớp
+    ModelManager --> MediaLibrary
+    ModelManager --> PlaylistLibrary
+    ModelManager --> PlayingMedia
+    ModelManager --> DeviceManager
+    MediaLibrary o--> MediaFile
+    PlaylistLibrary o--> Playlist
+    Playlist o--> MediaFile
+    MediaFile o--> Metadata
+}
+@enduml

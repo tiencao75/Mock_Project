@@ -1,0 +1,83 @@
+@startuml
+package Controller {
+    class ScanfOptionController {
+    + showScanOptions(): void
+    + processDirectoryInput(path: string): void
+    + processUSBScan(): void
+    }
+
+    class MainMenuController {
+    + showMainMenu(): void
+    + handleMenuSelection(option: int): void
+    }
+
+    class FileController {
+        + scanDirectory(path: string): vector<MediaFile>
+        + scanUSBDevice(): vector<MediaFile>
+        
+    }
+
+    class PlaylistController {
+        + getAllPlaylists(): vector<Playlist>
+        + createPlaylist(name: string): void
+        + deletePlaylist(name: string): void
+    }
+
+    class MediaFileController {
+        + getAllMediaFiles(): vector<MediaFile>
+        + getMediaFileDetails(name: string): MediaFile
+    }
+
+    class PlayingMediaController {
+        + playMediaFile(file: MediaFile)
+        + play(): void
+        + pause(): void
+        + stop(): void
+        + skipToNext(): void
+        + skipToPrevious(): void
+        + adjustVolume(level: int): void
+    }
+
+    class DetailedPlaylistController {
+        + getPlaylistDetails(playlistName: string): Playlist
+        + addSongToPlaylist(playlistName: string, song: MediaFile): void
+        + removeSongFromPlaylist(playlistName: string, song: MediaFile): void
+    }
+
+    class MetadataController {
+        + getMediaFileMetadata(file: MediaFile): map<string, string>
+        + updateMediaFileMetadata(file: MediaFile, metadata: map<string, string>): void
+    }
+
+    class ControllerManager {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
+        - fileController: FileController
+        - playlistController: PlaylistController
+        - mediaFileController: MediaFileController
+        - playingMediaController: PlayingMediaController
+        - detailedPlaylistController: DetailedPlaylistController
+        - metadataController: MetadataController
+        --
+        + getModelManager(): ModelManager
+        + getViewManager(): ViewManager
+        + getFileController(): FileController
+        + getPlaylistController(): PlaylistController
+        + getMediaFileController(): MediaFileController
+        + getPlayingMediaController(): PlayingMediaController
+        + getDetailedPlaylistController(): DetailedPlaylistController
+        + getMetadataController(): MetadataController
+    }
+
+    ' Liên kết giữa các Controller
+    ControllerManager --> ScanfOptionController
+    ControllerManager --> MainMenuController
+    ControllerManager --> FileController
+    ControllerManager --> PlaylistController
+    ControllerManager --> MediaFileController
+    ControllerManager --> PlayingMediaController
+    ControllerManager --> DetailedPlaylistController
+    ControllerManager --> MetadataController
+
+}
+@enduml
