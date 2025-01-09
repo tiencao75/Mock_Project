@@ -146,19 +146,20 @@
 //     return 0;
 // }
 
-#include <iostream>
 #include "ControllerManager.hpp"
-#include "MainMenuController.hpp"
+#include "ViewScanfOption.hpp"
+#include "ViewMainMenu.hpp"
+#include <iostream>
 
 int main() {
     // Khởi tạo ControllerManager
     ControllerManager controllerManager;
 
-    // Lấy MainMenuController từ ControllerManager
-    MainMenuController& mainMenuController = controllerManager.getPlaylistController();
+    // Chạy chương trình
+    std::cout << "=== Starting Application ===" << std::endl;
+    controllerManager.handleInputData();
 
-    // Gọi hàm xử lý menu
-    mainMenuController.handleMenuSelection();
+    std::cout << "=== Application Ended ===" << std::endl;
 
     return 0;
 }

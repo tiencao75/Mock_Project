@@ -6,6 +6,8 @@ std::vector<Playlist> PlaylistLibrary::getAllPlaylists() const {
     return playlists;
 }
 
+PlaylistLibrary::PlaylistLibrary() {}
+
 void PlaylistLibrary::addPlaylist(const Playlist& playlist) {
     playlists.push_back(playlist);
 }

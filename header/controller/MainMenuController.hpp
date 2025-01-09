@@ -1,18 +1,19 @@
 #ifndef MAINMENUCONTROLLER_HPP
 #define MAINMENUCONTROLLER_HPP
 
-#include "ControllerManager.hpp"
+#include "ModelManager.hpp"
+#include "ViewManager.hpp"
 
 class MainMenuController {
 private:
-    ControllerManager* controllerManager;
+    ModelManager& modelManager;
+    ViewManager& viewManager;
 
 public:
-    MainMenuController(ControllerManager* manager);
+    MainMenuController(ModelManager& modelManager, ViewManager& viewManager);
     ~MainMenuController();
 
-    void handleMenuSelection(); // Tự động hiển thị và xử lý lựa chọn menu
+    void showMainMenu(); // Hiển thị menu chính và xử lý lựa chọn
 };
 
 #endif // MAINMENUCONTROLLER_HPP
-

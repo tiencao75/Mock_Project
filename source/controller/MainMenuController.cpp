@@ -1,47 +1,50 @@
 #include "MainMenuController.hpp"
+#include "ViewMainMenu.hpp"
 #include <iostream>
 
-MainMenuController::MainMenuController(ControllerManager* manager)
-    : controllerManager(manager) {}
+MainMenuController::MainMenuController(ModelManager& modelManager, ViewManager& viewManager)
+    : modelManager(modelManager), viewManager(viewManager) {}
 
 MainMenuController::~MainMenuController() {}
 
-void MainMenuController::handleMenuSelection() {
-    bool isRunning = true;
+void MainMenuController::showMainMenu() {
+    auto* mainMenuView = dynamic_cast<ViewMainMenu*>(viewManager.getView("ViewMainMenu"));
 
-    while (isRunning) {
-        // Hiển thị menu chính
-        controllerManager->getViewManager().getView("ViewMainMenu")->show();
+    if (mainMenuView) {
+        mainMenuView->showMainMenu();
+    }
 
-        // Nhận lựa chọn từ người dùng
-        std::cout << "Enter your choice: ";
-        int selection;
-        std::cin >> selection;
+    int selection;
+    std::cin >> selection;
 
-        // Xử lý lựa chọn
-        switch (selection) {
-        case 1:
-            std::cout << "Navigating to Scan Options..." << std::endl;
-            // Chuyển sang ViewScanfOption và gọi handleDirectoryScan
-            controllerManager->getViewManager().switchView(
-                controllerManager->getViewManager().getView("ViewScanfOption"));
-            controllerManager->getFileController().handleDirectoryScan();
-            break;
-        case 2:
-            std::cout << "Navigating to Play Media..." << std::endl;
-            // Logic xử lý chuyển sang Play Media
-            break;
-        case 3:
-            std::cout << "Navigating to Playlist Manager..." << std::endl;
-            // Logic xử lý chuyển sang Playlist Manager
-            break;
-        case 0:
-            std::cout << "Exiting application..." << std::endl;
-            isRunning = false;
-            break;
-        default:
-            std::cerr << "Invalid option. Please try again." << std::endl;
-            break;
+    switch (selection) {
+    case 1:
+        if (mainMenuView) {
+            mainMenuView->update("Navigating to File Controller...");
         }
+        // Logic xử lý cho File Controller
+        break;
+    case 2:
+        if (mainMenuView) {
+            mainMenuView->update("Navigating to Media File Controller...");
+        }
+        // Logic xử lý cho Media File Controller
+        break;
+    case 3:
+        if (mainMenuView) {
+            mainMenuView->update("Navigating to Metadata Controller...");
+        }
+        // Logic xử lý cho Metadata Controller
+        break;
+    case 0:
+        if (mainMenuView) {
+            mainMenuView->update("Exiting application...");
+        }
+        break;
+    default:
+        if (mainMenuView) {
+            mainMenuView->update("Invalid option. Please try again.");
+        }
+        break;
     }
 }

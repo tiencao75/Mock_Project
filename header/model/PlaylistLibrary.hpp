@@ -9,6 +9,7 @@ private:
     std::vector<Playlist> playlists;
 
 public:
+    PlaylistLibrary();
     std::vector<Playlist> getAllPlaylists() const;
     void addPlaylist(const Playlist& playlist);
     void removePlaylist(const Playlist& playlist);

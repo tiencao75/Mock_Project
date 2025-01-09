@@ -9,7 +9,8 @@ private:
     std::vector<MediaFile> mediaFiles;
 
 public:
-    std::vector<MediaFile> getAllMediaFiles() const;
+    MediaLibrary();
+    const std::vector<MediaFile>& getAllMediaFiles() const;
     void addMediaFile(const MediaFile& file);
     void removeMediaFile(const MediaFile& file);
     MediaFile getMediaFileByName(const std::string& name) const;

@@ -11,6 +11,7 @@ private:
 
 public:
     // Constructor
+    DeviceManager();
     DeviceManager(S32K144Interface* connection);
 
     // Destructor

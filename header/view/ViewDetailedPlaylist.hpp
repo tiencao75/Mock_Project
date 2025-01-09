@@ -3,7 +3,7 @@
 
 #include "ViewBase.hpp"
 #include <string>
-#include "Playlist.hpp"
+#include "PlayList.hpp"
 #include "MediaFile.hpp"
 
 class ViewDetailedPlaylist : public ViewBase {

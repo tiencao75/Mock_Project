@@ -2,7 +2,8 @@
 #include <algorithm>
 #include <stdexcept>
 
-std::vector<MediaFile> MediaLibrary::getAllMediaFiles() const {
+MediaLibrary::MediaLibrary() {}
+const std::vector<MediaFile> & MediaLibrary::getAllMediaFiles() const {
     return mediaFiles;
 }
 

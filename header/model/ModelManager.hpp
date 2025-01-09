@@ -15,6 +15,7 @@ private:
     
 
 public:
+    ModelManager() = default;
     MediaLibrary& getMediaLibrary();
     PlaylistLibrary& getPlaylistLibrary();
     PlayingMedia& getPlayingMedia();

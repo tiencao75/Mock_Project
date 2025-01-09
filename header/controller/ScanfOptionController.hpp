@@ -1,19 +1,21 @@
 #ifndef SCANFOPTIONCONTROLLER_HPP
 #define SCANFOPTIONCONTROLLER_HPP
 
-#include "ControllerManager.hpp"
-#include <string>
+#include "ModelManager.hpp"
+#include "ViewManager.hpp"
 
 class ScanfOptionController {
 private:
-    ControllerManager* controllerManager;
+    ModelManager& modelManager;
+    ViewManager& viewManager;
 
 public:
-    ScanfOptionController(ControllerManager* manager);
+    ScanfOptionController(ModelManager& modelManager, ViewManager& viewManager);
     ~ScanfOptionController();
 
     void handleDirectoryScan(); // Xử lý quét thư mục
     void handleUSBScan();       // Xử lý quét USB
+    bool checkMediaFiles(); // Kiểm tra file media
 };
 
 #endif // SCANFOPTIONCONTROLLER_HPP

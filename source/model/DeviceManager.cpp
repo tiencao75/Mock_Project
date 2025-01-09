@@ -2,6 +2,7 @@
 #include <iostream>
 
 // Constructor
+DeviceManager::DeviceManager(){}
 DeviceManager::DeviceManager(S32K144Interface* connection)
     : volume(0), s32k144Connection(connection) {}
 

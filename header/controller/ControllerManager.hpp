@@ -1,44 +1,57 @@
+// #ifndef CONTROLLERMANAGER_HPP
+// #define CONTROLLERMANAGER_HPP
+
+// #include "ModelManager.hpp"
+// #include "ViewManager.hpp"
+// #include "ScanfOptionController.hpp"
+// #include "MainMenuController.hpp"
+
+// class ControllerManager {
+// private:
+//     ModelManager modelManager;
+//     ViewManager viewManager;
+//     ScanfOptionController scanfOptionController;
+//     MainMenuController mainMenuController;
+
+// public:
+//     ControllerManager();
+//     ~ControllerManager();
+
+//     void handleInputData(); // Xử lý dữ liệu từ người dùng
+// };
+
+// #endif // CONTROLLERMANAGER_HPP
 #ifndef CONTROLLERMANAGER_HPP
 #define CONTROLLERMANAGER_HPP
 
 #include "ModelManager.hpp"
 #include "ViewManager.hpp"
-#include "FileController.hpp"
-#include "PlaylistController.hpp"
+#include "ViewScanfOption.hpp"
+#include "ViewMainMenu.hpp"
+#include "ScanfOptionController.hpp"
+#include "ModelManager.hpp"
+#include "ViewManager.hpp"
+#include "ScanfOptionController.hpp"
+#include "MainMenuController.hpp"
 #include "MediaFileController.hpp"
-#include "PlayingMediaController.hpp"
-#include "DetailedPlaylistController.hpp"
 #include "MetadataController.hpp"
 
 class ControllerManager {
-
-
-
 private:
-    ModelManager modelManager;
-    ViewManager viewManager;
-
-    // FileController fileController;
-    // PlaylistController playlistController;
-    // MediaFileController mediaFileController;
-    // PlayingMediaController playingMediaController;
-    // DetailedPlaylistController detailedPlaylistController;
-    // MetadataController metadataController;
+    ModelManager modelManager;                 // Quản lý block Model
+    ViewManager viewManager;                   // Quản lý block View
+    ScanfOptionController scanfOptionController; // Quản lý logic quét file
+    MainMenuController mainMenuController;     // Quản lý menu chính
+    MediaFileController mediaFileController;   // Quản lý logic media file
+    MetadataController metadataController;     // Quản lý logic metadata
 
 public:
     ControllerManager();
-    // Getters
-    ModelManager& getModelManager();
-    ViewManager& getViewManager();
-    // FileController& getFileController();
-    // PlaylistController& getPlaylistController();
-    // MediaFileController& getMediaFileController();
-    // PlayingMediaController& getPlayingMediaController();
-    // DetailedPlaylistController& getDetailedPlaylistController();
-    // MetadataController& getMetadataController();
+    ~ControllerManager();
 
-    // Additional methods if needed
-    void handleInput(const std::string& input); // Xử lý input từ người dùng
+    void handleInputData(); // Xử lý dữ liệu từ người dùng và điều hướng logic
+    ModelManager& getModelManager();               // Getter cho ModelManager
+    ViewManager& getViewManager();                 // Getter cho ViewManager
 };
 
 #endif // CONTROLLERMANAGER_HPP
