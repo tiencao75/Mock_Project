@@ -45,13 +45,13 @@ package Model {
     }
 
     class ModelManager {
-        - mediaLibrary: MediaLibrary
-        - playlistLibrary: PlaylistLibrary
-        - playingMedia: PlayingMedia
+        - mediaLibrary: MediaLibrary*
+        - playlistLibrary: PlaylistLibrary*
+        - playingMedia: PlayingMedia*
 
-        + getMediaLibrary(): MediaLibrary
-        + getPlaylistLibrary(): PlaylistLibrary
-        + getPlayingMedia(): PlayingMedia
+        + getMediaLibrary(): MediaLibrary*
+        + getPlaylistLibrary(): PlaylistLibrary*
+        + getPlayingMedia(): PlayingMedia*
     }
 
     class PlayingMedia {
