@@ -53,49 +53,76 @@ ViewManager& ControllerManager::getViewManager() {
 }
 // Hàm xử lý dữ liệu từ người dùng
 void ControllerManager::handleInputData() {
-    // Bước 1: Kiểm tra file media qua ScanfOptionController
-    auto* scanOptionView = dynamic_cast<ViewScanfOption*>(viewManager.getView("ViewScanOption"));
-    if (scanOptionView) {
-        scanOptionView->update("Checking for media files...");
-    }
-
+    // Bước 1: Kiểm tra file media
     scanfOptionController.handleDirectoryScan();
-    bool mediaFilesExist = scanfOptionController.checkMediaFiles();
-    if (!mediaFilesExist) {
+    if (!scanfOptionController.checkMediaFiles()) {
+        auto* scanOptionView = dynamic_cast<ViewScanfOption*>(viewManager.getView("ViewScanOption"));
         if (scanOptionView) {
             scanOptionView->update("No media files found. Please add files and try again.");
         }
-        return; // Dừng lại nếu không có file
+        return;
     }
 
-    // Bước 2: Hiển thị menu chính qua MainMenuController
+    // Bước 2: Hiển thị menu chính
     bool isRunning = true;
     while (isRunning) {
-        mainMenuController.showMainMenu(); // Hiển thị Main Menu qua View
+        mainMenuController.showMainMenu();
 
-        // Lựa chọn từ người dùng
         int selection;
         std::cin >> selection;
 
-        // Điều hướng logic dựa trên lựa chọn
         switch (selection) {
-        case 1:
-            mediaFileController.getAllMediaFiles();
+        case 1: { // Hiển thị tất cả file media
+            auto mediaFiles = mediaFileController.getAllMediaFiles();
+            auto* mediaFileView = dynamic_cast<ViewMediaFile*>(viewManager.getView("ViewMediaFile"));
+
+            if (mediaFileView) {
+                if (mediaFiles.empty()) {
+                    mediaFileView->update("No media files found.");
+                } else {
+                    mediaFileView->update("Displaying all media files:");
+                    for (const auto& file : mediaFiles) {
+                        mediaFileView->update(" - " + file.getName() + " (" + file.getType() + ")");
+                    }
+                }
+            }
             break;
-        case 2:
-            //metadataController.getMediaFileMetadata();
+        }
+        case 2: { // Hiển thị metadata
+            auto* metadataView = dynamic_cast<ViewMetadata*>(viewManager.getView("ViewMetadata"));
+            if (metadataView) {
+                std::string fileName;
+                metadataView->update("Enter the name of the file to view metadata: ");
+                std::cin >> fileName;
+
+                try {
+                    auto file = mediaFileController.getMediaFileDetails(fileName);
+                    auto metadata = metadataController.getMediaFileMetadata(file);
+
+                    for (const auto& [key, value] : metadata) {
+                        metadataView->update(key + ": " + value);
+                    }
+                } catch (const std::exception& e) {
+                    metadataView->update("Error: " + std::string(e.what()));
+                }
+            }
             break;
-        case 0:
-            if (auto* mainMenuView = dynamic_cast<ViewMainMenu*>(viewManager.getView("ViewMainMenu"))) {
+        }
+        case 0: { // Thoát chương trình
+            auto* mainMenuView = dynamic_cast<ViewMainMenu*>(viewManager.getView("ViewMainMenu"));
+            if (mainMenuView) {
                 mainMenuView->update("Exiting application...");
             }
             isRunning = false;
             break;
-        default:
-            if (auto* mainMenuView = dynamic_cast<ViewMainMenu*>(viewManager.getView("ViewMainMenu"))) {
+        }
+        default: {
+            auto* mainMenuView = dynamic_cast<ViewMainMenu*>(viewManager.getView("ViewMainMenu"));
+            if (mainMenuView) {
                 mainMenuView->update("Invalid option. Please try again.");
             }
             break;
+        }
         }
     }
 }

@@ -12,7 +12,7 @@ void ViewMediaFile::hide() {
 }
 
 void ViewMediaFile::update(const std::string& data) {
-    std::cout << "Updating Media File View with data: " << data << std::endl;
+    std::cout << data << std::endl;
 }
 
 std::string ViewMediaFile::getName() const {

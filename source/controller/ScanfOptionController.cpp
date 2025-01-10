@@ -39,7 +39,7 @@ void ScanfOptionController::handleUSBScan() {
 }
 
 bool ScanfOptionController::checkMediaFiles() {
-    auto& mediaFiles = modelManager.getMediaLibrary().getAllMediaFiles();
+    //auto& mediaFiles = modelManager.getMediaLibrary().getAllMediaFiles();
     //return !mediaFiles.empty();
     return 1;
 }
