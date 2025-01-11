@@ -31,6 +31,7 @@
 #include "ModelManager.hpp"
 #include "ViewManager.hpp"
 #include "MediaFile.hpp"
+#include "ViewMetadata.hpp"
 #include <map>
 #include <string>
 
@@ -44,7 +45,8 @@ public:
     ~MetadataController();
 
     std::map<std::string, std::string> getMediaFileMetadata(MediaFile& file); // Lấy metadata của file
-    void updateMediaFileMetadata(MediaFile& file, const std::map<std::string, std::string>& metadata); // Cập nhật metadata
+    void updateMediaFileMetadata(MediaFile& file, const std::string& key, const std::string& value); // Cập nhật metadata
+    void handleInput();
 };
 
 #endif // METADATACONTROLLER_HPP

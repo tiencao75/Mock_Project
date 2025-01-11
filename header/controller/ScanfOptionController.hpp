@@ -3,6 +3,14 @@
 
 #include "ModelManager.hpp"
 #include "ViewManager.hpp"
+#include <filesystem>
+
+enum class ScanOption {
+    AddOrUpdateDefaultDir = 1,
+    UseDefaultDir,
+    EnterCustomDir,
+    ScanUSB
+};
 
 class ScanfOptionController {
 private:
@@ -15,7 +23,7 @@ public:
 
     void handleDirectoryScan(); // Xử lý quét thư mục
     void handleUSBScan();       // Xử lý quét USB
-    bool checkMediaFiles(); // Kiểm tra file media
+    void handleInput(); // Kiểm tra file media
 };
 
 #endif // SCANFOPTIONCONTROLLER_HPP

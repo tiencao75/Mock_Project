@@ -36,6 +36,13 @@
 #include "MediaFileController.hpp"
 #include "MetadataController.hpp"
 
+enum class MainMenuOption {
+    ShowAllMediaFiles = 1,
+    ShowMetadata,
+    EditMetadata,
+    Exit
+};
+
 class ControllerManager {
 private:
     ModelManager modelManager;                 // Quản lý block Model
@@ -52,6 +59,10 @@ public:
     void handleInputData(); // Xử lý dữ liệu từ người dùng và điều hướng logic
     ModelManager& getModelManager();               // Getter cho ModelManager
     ViewManager& getViewManager();                 // Getter cho ViewManager
+    // Hàm đọc và ghi dữ liệu
+    static std::map<std::string, std::string> readDataFromFile(const std::string& filename);
+    static void writeDataToFile(const std::string& filename, const std::map<std::string, std::string>& data);
+
 };
 
 #endif // CONTROLLERMANAGER_HPP

@@ -1,4 +1,5 @@
 #include "ScanfOptionController.hpp"
+#include "ControllerManager.hpp"
 #include "ViewScanfOption.hpp"
 #include <iostream>
 
@@ -38,29 +39,177 @@ void ScanfOptionController::handleUSBScan() {
     }
 }
 
-bool ScanfOptionController::checkMediaFiles() {
-    //auto& mediaFiles = modelManager.getMediaLibrary().getAllMediaFiles();
-    //return !mediaFiles.empty();
-    return 1;
-}
-// bool ScanfOptionController::checkMediaFiles() {
-//     // Hiển thị thông báo yêu cầu nhập đường dẫn
-//     std::cout << "Enter the path to scan for media files: ";
-//     std::string path;
-//     std::cin >> path;
+// void ScanfOptionController::handleInput() {
+//     auto* scanOptionView = dynamic_cast<ViewScanfOption*>(viewManager.getView("ViewScanfOption"));
 
-//     // Quét thư mục tại đường dẫn được nhập
-//     modelManager.getMediaLibrary().scanDirectory(path);
-
-//     // Lấy danh sách file media sau khi quét
-//     auto& mediaFiles = modelManager.getMediaLibrary().getAllMediaFiles();
-
-//     // Kiểm tra danh sách file có trống hay không
-//     if (mediaFiles.empty()) {
-//         std::cout << "No media files found in the specified directory." << std::endl;
-//         return false;
+//     if (!scanOptionView) {
+//         std::cerr << "ViewScanfOption not found." << std::endl;
+//         return;
 //     }
 
-//     std::cout << "Media files found in the specified directory." << std::endl;
-//     return true;
+//     // Đường dẫn thư mục mặc định (nếu có)
+//     static std::string defaultDirectory = "";
+
+//     // Hiển thị thư mục mặc định hiện tại
+//     if (defaultDirectory.empty()) {
+//         scanOptionView->update("Default directory is empty.");
+//     } else {
+//         scanOptionView->update("Default directory: " + defaultDirectory);
+//     }
+
+//     while (true) {
+//         // Hiển thị menu tùy chọn
+//         std::cout << "1. Add or update default directory\n";
+//         std::cout << "2. Use default directory\n";
+//         std::cout << "3. Enter custom directory path\n";
+//         std::cout << "4. Scan USB devices\n";
+//         std::cout << "Enter your choice (1-4): ";
+
+//         int choiceInput;
+//         std::cin >> choiceInput;
+
+//         auto choice = static_cast<MenuOption>(choiceInput);
+
+//         switch (choice) {
+//             case MenuOption::AddOrUpdateDefaultDir: { // Thêm hoặc sửa thư mục mặc định
+//                 std::cout << "Enter the new default directory path: ";
+//                 std::string newPath;
+//                 std::cin >> newPath;
+
+//                 if (std::filesystem::exists(newPath) && std::filesystem::is_directory(newPath)) {
+//                     defaultDirectory = newPath;
+//                     modelManager.getMediaLibrary().scanDirectory(defaultDirectory);
+//                     scanOptionView->update("Default directory updated: " + defaultDirectory);
+//                 } else {
+//                     scanOptionView->update("Error: Invalid directory path.");
+//                 }
+//                 break;
+//             }
+//             case MenuOption::UseDefaultDir: { // Sử dụng thư mục mặc định
+//                 if (defaultDirectory.empty()) {
+//                     scanOptionView->update("No default directory set. Returning to menu.");
+//                 } else {
+//                     scanOptionView->update("Using default directory: " + defaultDirectory);
+//                     modelManager.getMediaLibrary().scanDirectory(defaultDirectory);
+//                 }
+//                 break;
+//             }
+//             case MenuOption::EnterCustomDir: { // Nhập đường dẫn tùy chỉnh
+//                 std::cout << "Enter the directory path to scan: ";
+//                 std::string customPath;
+//                 std::cin >> customPath;
+
+//                 if (std::filesystem::exists(customPath) && std::filesystem::is_directory(customPath)) {
+//                     modelManager.getMediaLibrary().scanDirectory(customPath);
+//                     scanOptionView->update("Scanned custom directory: " + customPath);
+//                 } else {
+//                     scanOptionView->update("Error: Invalid directory path.");
+//                 }
+//                 break;
+//             }
+//             case MenuOption::ScanUSB: { // Quét USB
+//                 scanOptionView->update("Scanning USB devices...");
+//                 modelManager.getMediaLibrary().scanUSBDevice();
+//                 scanOptionView->update("USB scanning completed.");
+//                 break;
+//             }
+//             default:
+//                 scanOptionView->update("Invalid choice. Please select again.");
+//                 break;
+//         }
+
+//         // Thoát vòng lặp sau khi thực hiện lệnh
+//         if (choice >= MenuOption::AddOrUpdateDefaultDir && choice <= MenuOption::ScanUSB) {
+//             break;
+//         }
+//     }
 // }
+
+void ScanfOptionController::handleInput() {
+    const std::string filename = "dataUser.txt";
+
+    // Sử dụng hàm từ ControllerManager
+    auto data = ControllerManager::readDataFromFile(filename);
+    std::string defaultDirectory = data["defaultDirectory"];
+
+    auto* scanOptionView = dynamic_cast<ViewScanfOption*>(viewManager.getView("ViewScanfOption"));
+    if (!scanOptionView) {
+        std::cerr << "ViewScanfOption not found." << std::endl;
+        return;
+    }
+
+    // Hiển thị thư mục mặc định hiện tại
+    if (defaultDirectory.empty()) {
+        scanOptionView->update("Default directory is empty.");
+    } else {
+        scanOptionView->update("Default directory: " + defaultDirectory);
+    }
+
+    while (true) {
+        // Hiển thị menu tùy chọn
+        std::cout << "1. Add or update default directory\n";
+        std::cout << "2. Use default directory\n";
+        std::cout << "3. Enter custom directory path\n";
+        std::cout << "4. Scan USB devices\n";
+        std::cout << "Enter your choice (1-4): ";
+
+        int choiceInput;
+        std::cin >> choiceInput;
+
+        auto choice = static_cast<ScanOption>(choiceInput);
+
+        switch (choice) {
+            case ScanOption::AddOrUpdateDefaultDir: {
+                std::cout << "Enter the new default directory path: ";
+                std::string newPath;
+                std::cin >> newPath;
+
+                if (std::filesystem::exists(newPath) && std::filesystem::is_directory(newPath)) {
+                    defaultDirectory = newPath;
+                    data["defaultDirectory"] = defaultDirectory;
+                    ControllerManager::writeDataToFile(filename, data);
+                    modelManager.getMediaLibrary().scanDirectory(defaultDirectory);
+                    scanOptionView->update("Default directory updated: " + defaultDirectory);
+                } else {
+                    scanOptionView->update("Error: Invalid directory path.");
+                }
+                break;
+            }
+            case ScanOption::UseDefaultDir: {
+                if (defaultDirectory.empty()) {
+                    scanOptionView->update("No default directory set. Returning to menu.");
+                } else {
+                    scanOptionView->update("Using default directory: " + defaultDirectory);
+                    modelManager.getMediaLibrary().scanDirectory(defaultDirectory);
+                }
+                break;
+            }
+            case ScanOption::EnterCustomDir: {
+                std::cout << "Enter the directory path to scan: ";
+                std::string customPath;
+                std::cin >> customPath;
+
+                if (std::filesystem::exists(customPath) && std::filesystem::is_directory(customPath)) {
+                    modelManager.getMediaLibrary().scanDirectory(customPath);
+                    scanOptionView->update("Scanned custom directory: " + customPath);
+                } else {
+                    scanOptionView->update("Error: Invalid directory path.");
+                }
+                break;
+            }
+            case ScanOption::ScanUSB: {
+                scanOptionView->update("Scanning USB devices...");
+                modelManager.getMediaLibrary().scanUSBDevice();
+                scanOptionView->update("USB scanning completed.");
+                break;
+            }
+            default:
+                scanOptionView->update("Invalid choice. Please select again.");
+                break;
+        }
+
+        if (choice >= ScanOption::AddOrUpdateDefaultDir && choice <= ScanOption::ScanUSB) {
+            break;
+        }
+    }
+}
