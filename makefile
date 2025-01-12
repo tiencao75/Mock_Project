@@ -1,7 +1,7 @@
 # Compiler và cờ biên dịch
 CC = g++
 CFLAGS = -Wall -g -I/usr/local/include/taglib -I./header -I./header/include -I./header/model -I./header/controller -I./header/view
-
+LDFLAGS = -lSDL2 -lSDL2_mixer -ltag -ltag_c -lz
 # Thư mục chứa tệp nguồn, tệp đối tượng và tệp thực thi
 SRC_DIR = ./source
 OUT_DIR = ./out
@@ -48,7 +48,7 @@ dirs:
 
 # Quy tắc tạo tệp thực thi
 $(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LIB_DIRS) $(LIBS)
+	$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LIB_DIRS) $(LIBS) $(LDFLAGS)
 
 # Quy tắc tạo tệp đối tượng từ tệp nguồn .cpp
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp

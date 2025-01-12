@@ -11,6 +11,7 @@ private:
 
 public:
     PlayingMedia();
+    ~PlayingMedia();
     MediaFile* getCurrentMediaFile() const;
     int getCurrentTime() const;
     bool getIsPlaying() const;

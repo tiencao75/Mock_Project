@@ -20,7 +20,6 @@ bool Playlist::operator==(const Playlist& other) const {
 }
 // Add a song to the playlist
 void Playlist::addSong(const MediaFile& song) {
-    // Check if the song is already in the playlist
     if (std::find(songs.begin(), songs.end(), song) != songs.end()) {
         throw std::runtime_error("Song already exists in the playlist");
     }

@@ -37,10 +37,12 @@
 #include "MetadataController.hpp"
 
 enum class MainMenuOption {
-    ShowAllMediaFiles = 1,
+    Exit,
+    ShowAllMediaFiles,
     ShowMetadata,
     EditMetadata,
-    Exit
+    ManagerPlayList
+    
 };
 
 class ControllerManager {
