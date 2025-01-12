@@ -1,18 +1,22 @@
 #ifndef PLAYINGMEDIACONTROLLER_HPP
 #define PLAYINGMEDIACONTROLLER_HPP
 
-#include "ControllerManager.hpp"
+#include "ModelManager.hpp"
+#include "ViewManager.hpp"
 #include "MediaFile.hpp"
 #include "PlayingMedia.hpp"
 #include <vector>
 
 class PlayingMediaController {
 private:
-    ControllerManager* controllerManager;
+    //ControllerManager* controllerManager;
+    ModelManager& modelManager;
+    ViewManager& viewManager;
 
 public:
     // Constructor
-    PlayingMediaController(ControllerManager* manager);
+    //PlayingMediaController(ControllerManager* manager);
+    PlayingMediaController(ModelManager&,ViewManager&);
 
     // Destructor
     ~PlayingMediaController();
@@ -37,6 +41,9 @@ public:
 
     // Method to adjust the volume level
     void adjustVolume(int level);
+
+    //function to handle input
+    void handleInput();
 };
 
 #endif // PLAYINGMEDIACONTROLLER_HPP

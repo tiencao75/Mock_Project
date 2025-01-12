@@ -1,4 +1,5 @@
 #include "ControllerManager.hpp"
+#include "PlayingMediaController.hpp"
 #include "ViewScanfOption.hpp"
 #include "ViewMainMenu.hpp"
 #include "ViewMediaFile.hpp"
@@ -13,7 +14,8 @@ ControllerManager::ControllerManager()
     : scanfOptionController(modelManager, viewManager),
       mainMenuController(modelManager, viewManager),
       mediaFileController(modelManager, viewManager),
-      metadataController(modelManager, viewManager) {
+      metadataController(modelManager, viewManager), 
+      playingMediaController(modelManager, viewManager){
     viewManager.addView(std::make_unique<ViewScanfOption>());
     viewManager.addView(std::make_unique<ViewMainMenu>());
     viewManager.addView(std::make_unique<ViewMediaFile>());
@@ -276,6 +278,10 @@ void ControllerManager::handleInputData() {
             }
             break;
             }
+            case MainMenuOption::PlayingMedia:{
+                playingMediaController.handleInput();
+            }
+
             case MainMenuOption::Exit: { // Thoát chương trình
                 auto* mainMenuView = dynamic_cast<ViewMainMenu*>(viewManager.getView("ViewMainMenu"));
                 if (mainMenuView) {

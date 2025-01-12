@@ -35,13 +35,15 @@
 #include "MainMenuController.hpp"
 #include "MediaFileController.hpp"
 #include "MetadataController.hpp"
+#include "PlayingMediaController.hpp"
 
 enum class MainMenuOption {
     Exit,
     ShowAllMediaFiles,
     ShowMetadata,
     EditMetadata,
-    ManagerPlayList
+    ManagerPlayList,
+    PlayingMedia
     
 };
 
@@ -53,6 +55,7 @@ private:
     MainMenuController mainMenuController;     // Quản lý menu chính
     MediaFileController mediaFileController;   // Quản lý logic media file
     MetadataController metadataController;     // Quản lý logic metadata
+    PlayingMediaController playingMediaController;
 
 public:
     ControllerManager();
