@@ -1,64 +1,106 @@
 #include "PlayingMedia.hpp"
+#include <iostream>
 #include <stdexcept>
 
+// Constructor
+PlayingMedia::PlayingMedia() : currentMediaFile(nullptr), music(nullptr), isPlaying(false)
+{
+    if (SDL_Init(SDL_INIT_AUDIO) < 0)
+    {
+        throw std::runtime_error("SDL could not initialize! SDL Error: " + std::string(SDL_GetError()));
+    }
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    {
+        throw std::runtime_error("SDL_mixer could not initialize! Mix Error: " + std::string(Mix_GetError()));
+    }
+}
 
-PlayingMedia::PlayingMedia() : currentMediaFile(nullptr), currentTime(0), isPlaying(false) {}
+// Destructor
+PlayingMedia::~PlayingMedia()
+{
+    if (music)
+    {
+        Mix_FreeMusic(music);
+    }
+    Mix_CloseAudio();
+    SDL_Quit();
+}
 
-MediaFile* PlayingMedia::getCurrentMediaFile() const {
+// Truy xuất media hiện tại
+std::shared_ptr<MediaFile> PlayingMedia::getCurrentMediaFile() const
+{
     return currentMediaFile;
 }
 
-int PlayingMedia::getCurrentTime() const {
-    return currentTime;
+// Đặt media hiện tại
+void PlayingMedia::setCurrentMediaFile(const std::shared_ptr<MediaFile> &mediaFile)
+{
+    if (music)
+    {
+        Mix_FreeMusic(music);
+        music = nullptr;
+    }
+
+    currentMediaFile = mediaFile;
+
+    // Load file âm nhạc
+    if (currentMediaFile)
+    {
+        music = Mix_LoadMUS(currentMediaFile->getPath().c_str());
+        if (!music)
+        {
+            throw std::runtime_error("Failed to load music: " + std::string(Mix_GetError()));
+        }
+    }
 }
 
-bool PlayingMedia::getIsPlaying() const {
+// Kiểm tra trạng thái phát
+bool PlayingMedia::getIsPlaying() const
+{
     return isPlaying;
 }
 
-void PlayingMedia::setCurrentMediaFile(MediaFile* mediaFile) {
-    currentMediaFile = mediaFile;
-}
-
-void PlayingMedia::setCurrentTime(int time) {
-    currentTime = time;
-}
-
-void PlayingMedia::setIsPlaying(bool playing) {
-    isPlaying = playing;
-}
-
-void PlayingMedia::play() {
-    if (!currentMediaFile) {
-        throw std::runtime_error("No media file set to play");
+// Phát media
+void PlayingMedia::play()
+{
+    if (!music)
+    {
+        throw std::runtime_error("No media file is loaded");
+    }
+    if (Mix_PlayMusic(music, -1) == -1)
+    {
+        throw std::runtime_error("Error playing music: " + std::string(Mix_GetError()));
     }
     isPlaying = true;
+    std::cout << "Playing: " << currentMediaFile->getName() << std::endl;
 }
 
-void PlayingMedia::pause() {
-    if (!isPlaying) {
-        throw std::runtime_error("Cannot pause. Media is not playing");
+// Tạm dừng media
+void PlayingMedia::pause()
+{
+    if (!isPlaying)
+    {
+        return;
+    }
+    Mix_PauseMusic();
+    isPlaying = false;
+    std::cout << "Paused: " << currentMediaFile->getName() << std::endl;
+}
+
+// Dừng phát
+void PlayingMedia::stop()
+{
+    if (Mix_PlayingMusic())
+    {
+        Mix_HaltMusic();
     }
     isPlaying = false;
+    std::cout << "Stopped: " << currentMediaFile->getName() << std::endl;
 }
 
-void PlayingMedia::stop() {
-    isPlaying = false;
-    currentTime = 0;
-}
-
-void PlayingMedia::skipToNext() {
-    // Placeholder for skipping to next track
-}
-
-void PlayingMedia::skipToPrevious() {
-    // Placeholder for skipping to previous track
-}
-
-void PlayingMedia::skipForward(int seconds) {
-    currentTime += seconds;
-}
-
-void PlayingMedia::skipBackward(int seconds) {
-    currentTime = (currentTime > seconds) ? currentTime - seconds : 0;
+// Điều chỉnh âm lượng
+void PlayingMedia::setVolume(int volume)
+{
+    Mix_VolumeMusic(volume);
+    std::cout << "Volume set to: " << volume << std::endl;
 }

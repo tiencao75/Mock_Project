@@ -1,31 +1,43 @@
-#ifndef PLAYING_MEDIA_HPP
-#define PLAYING_MEDIA_HPP
+#ifndef PLAYINGMEDIA_HPP
+#define PLAYINGMEDIA_HPP
 
+#include <memory>
+#include <string>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 #include "MediaFile.hpp"
 
 class PlayingMedia {
 private:
-    MediaFile* currentMediaFile;
-    int currentTime;
-    bool isPlaying;
+    std::shared_ptr<MediaFile> currentMediaFile;  // Media file hiện tại đang phát
+    Mix_Music* music;                            // Đối tượng SDL_mixer cho âm nhạc
+    bool isPlaying;                              // Trạng thái phát
 
 public:
+    // Constructor và Destructor
     PlayingMedia();
-    MediaFile* getCurrentMediaFile() const;
-    int getCurrentTime() const;
+    ~PlayingMedia();
+
+    // Truy xuất media hiện tại
+    std::shared_ptr<MediaFile> getCurrentMediaFile() const;
+
+    // Đặt media hiện tại
+    void setCurrentMediaFile(const std::shared_ptr<MediaFile>& mediaFile);
+
+    // Kiểm tra trạng thái phát
     bool getIsPlaying() const;
 
-    void setCurrentMediaFile(MediaFile* mediaFile);
-    void setCurrentTime(int time);
-    void setIsPlaying(bool playing);
-
+    // Phát media
     void play();
+
+    // Tạm dừng media
     void pause();
+
+    // Dừng phát
     void stop();
-    void skipToNext();
-    void skipToPrevious();
-    void skipForward(int seconds);
-    void skipBackward(int seconds);
+
+    // Điều chỉnh âm lượng
+    void setVolume(int volume);
 };
 
-#endif // PLAYING_MEDIA_HPP
+#endif

@@ -1,59 +1,50 @@
 #include "MediaLibrary.hpp"
-#include <algorithm>
-#include <stdexcept>
-#include <filesystem>
 #include <iostream>
+#include <filesystem>
 
 namespace fs = std::filesystem;
 
-std::vector<std::shared_ptr<MediaFile>> MediaLibrary::getAllMediaFiles() const
+std::vector<MediaFile> MediaLibrary::getAllMediaFiles()
 {
-    return MediaFiles;
+    return mediaFiles;
 }
 
-void MediaLibrary::addMediaFile(const std::shared_ptr<MediaFile> &file)
+void MediaLibrary::addMediaFile(const MediaFile &file)
 {
-    MediaFiles.push_back(file);
+    mediaFiles.push_back(file);
 }
 
-void MediaLibrary::removeMediaFile(const std::shared_ptr<MediaFile> &file)
+void MediaLibrary::removeMediaFile(const MediaFile &file)
 {
-    MediaFiles.erase(remove(MediaFiles.begin(), MediaFiles.end(), file), MediaFiles.end());
+    mediaFiles.erase(std::remove(mediaFiles.begin(), mediaFiles.end(), file), mediaFiles.end());
 }
 
-std::shared_ptr<MediaFile> MediaLibrary::getMediaFileByName(const std::string &name) const
+MediaFile MediaLibrary::getMediaFileByName(const std::string &name)
 {
-    for (const auto &file : MediaFiles)
+    for (const auto &file : mediaFiles)
     {
-        if (file->getName() == name)
+        if (file.getName() == name)
         {
             return file;
         }
     }
-    throw std::runtime_error("File not found");
+    throw std::runtime_error("Media file not found: " + name);
 }
 
 void MediaLibrary::scanDirectory(const std::string &directory, std::vector<std::shared_ptr<MediaFile>> &mediaFiles)
 {
     try
     {
-        // Kiểm tra nếu thư mục tồn tại
-        if (!fs::exists(directory) || !fs::is_directory(directory))
+        for (const auto &entry : fs::directory_iterator(path))
         {
-            throw std::runtime_error("Error: Path does not exist or is not a directory.");
-        }
-
-        // Duyệt qua các file trong thư mục
-        for (const auto &entry : fs::directory_iterator(directory))
-        {
-            if (fs::is_regular_file(entry))
+            if (entry.is_regular_file())
             {
                 std::string filePath = entry.path().string();
                 std::string fileName = entry.path().filename().string();
-                std::string extension = entry.path().extension().string();
+                std::string fileType;
 
-                // Chỉ xử lý các file .mp3 hoặc .mp4
-                if (extension == ".mp3" || extension == ".mp4")
+                // Đoán loại tệp dựa trên đuôi file
+                if (filePath.find(".mp3") != std::string::npos)
                 {
                     std::string fileType = (extension == ".mp3") ? "audio" : "video";
 
@@ -82,16 +73,24 @@ void MediaLibrary::scanDirectory(const std::string &directory, std::vector<std::
                                   << e.what() << std::endl;
                     }
                 }
+                else if (filePath.find(".mp4") != std::string::npos)
+                {
+                    fileType = "video";
+                }
+                else
+                {
+                    fileType = "unknown";
+                }
+
+                // Tạo đối tượng MediaFile với constructor có tham số
+                MediaFile mediaFile(fileName, filePath, fileType);
+                addMediaFile(mediaFile);
             }
         }
+        std::cout << "Scan completed for directory: " << path << std::endl;
     }
     catch (const std::exception &e)
     {
         std::cerr << "Error while scanning directory: " << e.what() << std::endl;
     }
-}
-
-void MediaLibrary::scanUSBDevice()
-{
-    // Implementation for scanning USB
 }

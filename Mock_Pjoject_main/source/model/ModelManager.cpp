@@ -1,13 +1,16 @@
 #include "ModelManager.hpp"
 
-MediaLibrary& ModelManager::getMediaLibrary() {
+MediaLibrary &ModelManager::getMediaLibrary()
+{
     return mediaLibrary;
 }
 
-PlaylistLibrary& ModelManager::getPlaylistLibrary() {
+PlaylistLibrary &ModelManager::getPlaylistLibrary()
+{
     return playlistLibrary;
 }
 
-PlayingMedia& ModelManager::getPlayingMedia() {
+PlayingMedia &ModelManager::getPlayingMedia()
+{
     return playingMedia;
 }

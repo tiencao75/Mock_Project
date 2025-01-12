@@ -1,15 +1,14 @@
-#ifndef MEDIA_LIBRARY_HPP
-#define MEDIA_LIBRARY_HPP
+#ifndef MEDIALIBRARY_HPP
+#define MEDIALIBRARY_HPP
 
-#include <vector>
-#include <memory>
-#include <string>
 #include "MediaFile.hpp"
+#include <vector>
+#include <string>
 
 class MediaLibrary
 {
 private:
-    std::vector<std::shared_ptr<MediaFile>> MediaFiles;
+    std::vector<MediaFile> mediaFiles;
 
 public:
     std::vector<std::shared_ptr<MediaFile>> getAllMediaFiles() const;
@@ -21,4 +20,4 @@ public:
     void scanUSBDevice();
 };
 
-#endif // MEDIA_LIBRARY_HPP
+#endif
