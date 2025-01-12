@@ -1,0 +1,2 @@
+update scanUSBdevice():  trong mediafilelibrary
+update các methods trong  class playingmetadata

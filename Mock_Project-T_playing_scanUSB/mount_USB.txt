@@ -1,0 +1,32 @@
+******1. settingUSB*********
+
+chọn 2.0 hoặc 3.0 tùy vào USB
+bấm + màu đỏ đểm thêm USB
+gõ lệnh lsusb để kiểm tra ket nói thành công chưa
+
+
+*****2. Gắn thiết bị USB vào hệ thống**********
+
+1. Tạo một thư mục để gắn thiết bị:
+sudo mkdir /media/usb
+
+2. Gắn phân vùng vào thư mục:
+sudo mount /dev/sdb1 /media/usb
+
+3.Truy cập vào USB:
+cd /media/usb
+ls
+
+********3.  Chuyển quyền sở hữu về người dùng *******
+sudo chown -R $USER:$USER /media/user./..
+sudo chown -R $USER:$USER /media/user./..
+
+
+
+***********4. Ngắt kết nối USB khi không dùng***********
+sudo umount /media/usb
+
+
+*********5. kiểm tra được gắn hoàn toàn chưa ********
+df -h
+
