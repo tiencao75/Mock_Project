@@ -9,7 +9,7 @@
 class ViewMediaFile : public ViewBase {
 private:
     int currentPage;
-
+    
 public:
     ViewMediaFile();
 

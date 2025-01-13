@@ -1,30 +1,3 @@
-// #include "MediaFileController.hpp"
-// #include "ModelManager.hpp"
-// #include "MediaLibrary.hpp"
-// #include <iostream>
-
-// // Constructor
-// MediaFileController::MediaFileController(ControllerManager* manager)
-//     : controllerManager(manager) {
-//     // No initialization needed for now
-// }
-
-// // Destructor
-// MediaFileController::~MediaFileController() {
-//     // Cleanup if necessary
-// }
-
-// // Method to get all media files
-// std::vector<MediaFile> MediaFileController::getAllMediaFiles() {
-//     // Access the ModelManager to get all media files from MediaLibrary
-//     return controllerManager->getModelManager().getMediaLibrary().getAllMediaFiles();
-// }
-
-// // Method to get details of a specific media file by name
-// MediaFile MediaFileController::getMediaFileDetails(const std::string& name) {
-//     // Access the ModelManager to get the media file by name
-//     return controllerManager->getModelManager().getMediaLibrary().getMediaFileByName(name);
-// }
 #include "MediaFileController.hpp"
 
 // Constructor
@@ -59,5 +32,71 @@ MediaFile MediaFileController::getMediaFileDetails(const std::string& name) {
         return *sharedMediaFile;
     } else {
         //throw std::runtime_error("Media file not found: " + name);
+    }
+}
+
+void MediaFileController::handleInput() {
+    bool isRunning = true;
+    while (isRunning) {
+        std::cout << "\nMedia Options Menu:\n";
+        std::cout << static_cast<int>(MediaMenuOption::ShowAllMediaFiles) << ". Show All Media Files\n";
+        std::cout << static_cast<int>(MediaMenuOption::ShowMetadata) << ". Show Metadata\n";
+        std::cout << static_cast<int>(MediaMenuOption::BackToMainMenu) << ". Back to Main Menu\n";
+        std::cout << "Enter your choice: ";
+
+        int choiceInput;
+        std::cin >> choiceInput;
+        auto choice = static_cast<MediaMenuOption>(choiceInput);
+
+        switch (choice) {
+            case MediaMenuOption::ShowAllMediaFiles: { // Show All Media Files
+                auto mediaFiles = getAllMediaFiles();
+                auto* mediaFileView = dynamic_cast<ViewMediaFile*>(viewManager.getView("ViewMediaFile"));
+
+                if (mediaFileView) {
+                    if (mediaFiles.empty()) {
+                        mediaFileView->update("No media files found.");
+                    } else {
+                        mediaFileView->update("Displaying all media files:");
+                        modelManager.getMediaLibrary().getAllMediaFiles();
+                        for (const auto& file : mediaFiles) {
+                            mediaFileView->update(" - " + file.getName() + " (" + file.getType() + ")");
+                        }
+                    }
+                }
+                break;
+            }
+            case MediaMenuOption::ShowMetadata: { // Show Metadata
+                auto* metadataView = dynamic_cast<ViewMetadata*>(viewManager.getView("ViewMetadata"));
+                if (metadataView) {
+                    std::cout << "Enter the name of the file to view metadata: ";
+                    std::string fileName;
+                    std::cin >> fileName;
+
+                    try {
+                        auto file = getMediaFileDetails(fileName);
+                        const auto& metadata = file.getMetadata().getData();
+                        if (metadata.empty()) {
+                            metadataView->update("No metadata available for this file.");
+                        } else {
+                            for (const auto& [key, value] : metadata) {
+                                metadataView->update(key + ": " + value);
+                            }
+                        }
+                    } catch (const std::exception& e) {
+                        metadataView->update("Error: " + std::string(e.what()));
+                    }
+                }
+                break;
+            }
+            case MediaMenuOption::BackToMainMenu: { // Back to Main Menu
+                isRunning = false;
+                break;
+            }
+            default: {
+                std::cout << "Invalid option. Please try again.\n";
+                break;
+            }
+        }
     }
 }

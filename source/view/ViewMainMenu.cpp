@@ -18,7 +18,7 @@ std::string ViewMainMenu::getName() const {
 }
 
 void ViewMainMenu::showMainMenu() {
-    std::cout << "=== Main Menu ===\n1. Scan Options\n2. Show metadata file\n3. Edit metadata file\n0. Exit\n";
+    std::cout << "=== Main Menu ===\n1. Scan Options\n2. MediaFiledData\n3. Edit metadata\n4. ManagerPlayList\n5. Play mediafile\n0. Exit\n";
     std::cout << "Enter your choice: ";
 }
 

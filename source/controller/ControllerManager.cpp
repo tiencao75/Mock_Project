@@ -87,56 +87,15 @@ void ControllerManager::handleInputData() {
         auto selection = static_cast<MainMenuOption>(selectionInput);
 
         switch (selection) {
-            case MainMenuOption::ShowAllMediaFiles: { // Hiển thị tất cả file media
-            // Lấy danh sách file từ MediaLibrary thông qua ModelManager
-            const auto& mediaFiles = modelManager.getMediaLibrary().getAllMediaFiles();
-            auto* mediaFileView = dynamic_cast<ViewMediaFile*>(viewManager.getView("ViewMediaFile"));
-
-            if (mediaFileView) {
-                if (mediaFiles.empty()) {
-                    mediaFileView->update("No media files found.");
-                } else {
-                    mediaFileView->update("Displaying all media files:");
-                    for (const auto& file : mediaFiles) {
-                        if (file) { // Kiểm tra null pointer
-                            mediaFileView->update(" - " + file->getName() + " (" + file->getType() + ")");
-                        }
-                    }
-                }
-            }
-            break;
-            }
-
-            case MainMenuOption::ShowMetadata: { // Hiển thị metadata của một file
-                auto* metadataView = dynamic_cast<ViewMetadata*>(viewManager.getView("ViewMetadata"));
-
-                if (metadataView) {
-                    std::string fileName;
-                    metadataView->update("Enter the name of the file to view metadata: ");
-                    std::cin >> fileName;
-
-                    try {
-                        auto file = modelManager.getMediaLibrary().getMediaFileByName(fileName);
-                        if (!file) {
-                            throw std::runtime_error("File not found: " + fileName);
-                        }
-
-                        const auto& metadata = file->getMetadata().getData();
-                        if (metadata.empty()) {
-                            metadataView->update("No metadata available for this file.");
-                        } else {
-                            for (const auto& [key, value] : metadata) {
-                                metadataView->update(key + ": " + value);
-                            }
-                        }
-                    } catch (const std::exception& e) {
-                        metadataView->update("Error: " + std::string(e.what()));
-                    }
-                }
+            case MainMenuOption::SacanfOption:{
+                scanfOptionController.handleInput();
                 break;
             }
-
-            case MainMenuOption::EditMetadata: { // Sửa metadata
+            case MainMenuOption::MediaFiledData: {
+                mediaFileController.handleInput();
+                break;
+            }
+            case MainMenuOption::EditMetadata: {
                 metadataController.handleInput();
                 break;
             }

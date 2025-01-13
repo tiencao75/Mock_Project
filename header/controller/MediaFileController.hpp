@@ -30,10 +30,18 @@
 
 #include "ModelManager.hpp"
 #include "ViewManager.hpp"
+#include "ViewMediaFile.hpp"
+#include "ViewMetadata.hpp"
 #include "MediaFile.hpp"
 #include <vector>
 #include <string>
+#include <iostream>
 
+enum class MediaMenuOption {
+    BackToMainMenu = 0,
+    ShowAllMediaFiles = 1,
+    ShowMetadata = 2
+};
 class MediaFileController {
 private:
     ModelManager& modelManager;
@@ -45,6 +53,7 @@ public:
 
     std::vector<MediaFile> getAllMediaFiles();           // Lấy danh sách tất cả các file media
     MediaFile getMediaFileDetails(const std::string& name); // Lấy chi tiết file media theo tên
+    void handleInput();
 };
 
 #endif // MEDIAFILECONTROLLER_HPP

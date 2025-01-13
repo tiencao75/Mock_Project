@@ -39,8 +39,8 @@
 
 enum class MainMenuOption {
     Exit,
-    ShowAllMediaFiles,
-    ShowMetadata,
+    SacanfOption,
+    MediaFiledData,
     EditMetadata,
     ManagerPlayList,
     PlayingMedia

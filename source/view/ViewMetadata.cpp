@@ -10,7 +10,7 @@ void ViewMetadata::hide() {
 }
 
 void ViewMetadata::update(const std::string& data) {
-    std::cout << "Updating Metadata View with data: " << data << std::endl;
+    std::cout << data << std::endl;
 }
 
 std::string ViewMetadata::getName() const {
