@@ -1,6 +1,12 @@
 #include "PlaylistController.hpp"
+#include "ControllerManager.hpp"
 #include <iostream>
 #include <limits>
+#include <fstream>
+#include <sstream>
+#include <map>
+#include <string>
+
 
 // Constructor
 PlaylistController::PlaylistController(ModelManager& modelManager, ViewManager& viewManager)
@@ -35,8 +41,13 @@ void PlaylistController::deletePlaylist(const std::string& name) {
     }
 }
 
-// Method to handle user input for managing playlists
+
 void PlaylistController::handleInput() {
+    const std::string filename = "playlistsData.txt";
+
+    // Read existing playlist data from file
+    auto data = ControllerManager::readDataFromFile(filename);
+
     bool isManagingPlaylist = true;
 
     while (isManagingPlaylist) {
@@ -68,6 +79,12 @@ void PlaylistController::handleInput() {
                 std::string playlistName;
                 std::getline(std::cin, playlistName);
                 createPlaylist(playlistName);
+
+                // Update data and save to file
+                data[playlistName] = ""; // Empty string for no songs initially
+                std::cout << "Saving playlist data...\n";
+                writeDataToFileFormatted(filename, data);
+                std::cout << "Playlist data saved successfully.\n";
                 break;
             }
 
@@ -76,19 +93,28 @@ void PlaylistController::handleInput() {
                 std::string playlistName;
                 std::getline(std::cin, playlistName);
                 deletePlaylist(playlistName);
+
+                // Remove from data and save to file
+                data.erase(playlistName);
+                std::cout << "Saving playlist data...\n";
+                writeDataToFileFormatted(filename, data);
+                std::cout << "Playlist data saved successfully.\n";
                 break;
             }
 
             case 3: { // View All Playlists
-                auto playlists = getAllPlaylists();
-                if (playlists.empty()) {
-                    std::cout << "No playlists available.\n";
-                } else {
-                    std::cout << "Available Playlists:\n";
-                    for (const auto& playlist : playlists) {
-                        std::cout << " - " << playlist->getName() << "\n";
-                    }
+                std::ifstream inFile(filename);
+                if (!inFile) {
+                    std::cerr << "Error: Unable to open file " << filename << " for reading.\n";
+                    break;
                 }
+
+                std::cout << "\n=== Playlists in File ===\n";
+                std::string line;
+                while (std::getline(inFile, line)) {
+                    std::cout << line << "\n";
+                }
+                inFile.close();
                 break;
             }
 
@@ -108,6 +134,12 @@ void PlaylistController::handleInput() {
                     if (mediaFile) {
                         playlist->addSong(*mediaFile);
                         std::cout << "Song '" << songName << "' added to playlist '" << playlistName << "' successfully!\n";
+
+                        // Update data and save to file
+                        data[playlistName] += (data[playlistName].empty() ? "" : ",") + songName;
+                        std::cout << "Saving playlist data...\n";
+                        writeDataToFileFormatted(filename, data);
+                        std::cout << "Playlist data saved successfully.\n";
                     } else {
                         std::cerr << "Error: Song not found in media library.\n";
                     }
@@ -133,6 +165,19 @@ void PlaylistController::handleInput() {
                     if (mediaFile) {
                         playlist->removeSong(*mediaFile);
                         std::cout << "Song '" << songName << "' removed from playlist '" << playlistName << "' successfully!\n";
+
+                        // Update data and save to file
+                        auto& songList = data[playlistName];
+                        auto pos = songList.find(songName);
+                        if (pos != std::string::npos) {
+                            songList.erase(pos, songName.length());
+                            if (songList[pos] == ',') {
+                                songList.erase(pos, 1); // Remove trailing comma
+                            }
+                        }
+                        std::cout << "Saving playlist data...\n";
+                        writeDataToFileFormatted(filename, data);
+                        std::cout << "Playlist data saved successfully.\n";
                     } else {
                         std::cerr << "Error: Song not found in media library.\n";
                     }
@@ -174,3 +219,28 @@ void PlaylistController::handleInput() {
         }
     }
 }
+
+void PlaylistController::writeDataToFileFormatted(const std::string& filename, const std::map<std::string, std::string>& data) {
+    std::ofstream outFile(filename);
+    if (!outFile) {
+        std::cerr << "Error: Unable to open file " << filename << " for writing.\n";
+        return;
+    }
+
+    for (const auto& [playlistName, songs] : data) {
+        outFile << "=== Playlist: " << playlistName << " ===\n";
+        if (songs.empty()) {
+            outFile << "(No songs in this playlist)\n\n";
+        } else {
+            size_t index = 1;
+            std::istringstream songStream(songs);
+            std::string song;
+            while (std::getline(songStream, song, ',')) {
+                outFile << index++ << ". " << song << "\n";
+            }
+            outFile << "\n";
+        }
+    }
+    outFile.close();
+}
+

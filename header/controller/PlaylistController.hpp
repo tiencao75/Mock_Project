@@ -61,6 +61,9 @@ public:
 
     // Method to handle user input for managing playlists
     void handleInput();
+
+    void writeDataToFileFormatted(const std::string& filename, const std::map<std::string, std::string>& data);
+
 };
 
 #endif // PLAYLISTCONTROLLER_HPP
