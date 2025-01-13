@@ -36,6 +36,7 @@
 #include "MediaFileController.hpp"
 #include "MetadataController.hpp"
 #include "PlayingMediaController.hpp"
+#include "PlaylistController.hpp"
 
 enum class MainMenuOption {
     Exit,
@@ -56,6 +57,7 @@ private:
     MediaFileController mediaFileController;   // Quản lý logic media file
     MetadataController metadataController;     // Quản lý logic metadata
     PlayingMediaController playingMediaController;
+    PlaylistController playlistController;
 
 public:
     ControllerManager();
