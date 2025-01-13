@@ -280,6 +280,7 @@ void ControllerManager::handleInputData() {
             }
             case MainMenuOption::PlayingMedia:{
                 playingMediaController.handleInput();
+                break;
             }
 
             case MainMenuOption::Exit: { // Thoát chương trình
