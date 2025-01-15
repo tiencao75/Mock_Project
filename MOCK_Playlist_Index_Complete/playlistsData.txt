@@ -1,0 +1,10 @@
+Playlist: Hieu
+1,/home/huyhoa308/mp3_mp4/MoLaPhaiMo-MiuLeYunoBigBoi-13593592.mp3,audio
+2,/home/huyhoa308/mp3_mp4/smrq3j1s3m.mp3,audio
+---
+Playlist: Hoa
+---
+Playlist: Tien
+1,/home/huyhoa308/mp3_mp4/SauChiaTayConLaiGi-YoupNevadios-16540051.mp4,video
+2,/home/huyhoa308/mp3_mp4/MoLaPhaiMo-MiuLeYunoBigBoi-13593592.mp3,audio
+---

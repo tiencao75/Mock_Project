@@ -1,0 +1,1 @@
+defaultDirectory=/home/huyhoa308/mp3_mp4
