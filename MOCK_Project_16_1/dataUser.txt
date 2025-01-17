@@ -1,1 +1,0 @@
-defaultDirectory=/home/hieuphan/HP/model/video/

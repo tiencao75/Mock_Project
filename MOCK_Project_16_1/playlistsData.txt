@@ -1,9 +1,0 @@
-Playlist: Hieu
-1,/home/hieuphan/HP/model/video/video4.mp4,video
----
-Playlist: Hoa
----
-Playlist: Tien
----
-Playlist: hieu
----
