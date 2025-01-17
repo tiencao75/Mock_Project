@@ -1,0 +1,9 @@
+Playlist: hieu1
+1,/home/hieuphan/HP/model/video/video4.mp4,video
+2,/home/hieuphan/HP/model/video/audio3.mp3,audio
+3,/home/hieuphan/HP/model/video/audio1.mp3,audio
+4,/home/hieuphan/HP/model/video/video2.mp4,video
+5,/home/hieuphan/HP/model/video/take.mp4,video
+---
+Playlist: hieu3
+---
