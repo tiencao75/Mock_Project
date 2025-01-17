@@ -1,57 +1,40 @@
-#ifndef PLAYINGMEDIA_HPP
-#define PLAYINGMEDIA_HPP
+#ifndef PLAYING_MEDIA_HPP
+#define PLAYING_MEDIA_HPP
 
-#include <string>
-#include <memory>
-#include <thread>
-#include <map>
-#include <SDL2/SDL_mixer.h>
 #include "MediaFile.hpp"
-#include "PlayList.hpp"
+#include <SDL2/SDL_mixer.h>
 
-class PlayingMedia
-{
+class PlayingMedia {
+private:
+    MediaFile* currentMediaFile;
+    int currentTime;
+    bool isPlaying;
+    bool isPaused = false;
+    int volume;
+    Mix_Music *music; // Con trỏ quản lý tài nguyên âm nhạc
+
 public:
-    static PlayingMedia &getInstance();
+    PlayingMedia();
+    ~PlayingMedia();
+    MediaFile* getCurrentMediaFile() const;
+    int getCurrentTime() const;
+    bool getIsPlaying() const;
 
-    const MediaFile *getCurrentMediaFile() const;
+    void setCurrentMediaFile(MediaFile* mediaFile);
+    void setCurrentTime(int time);
+    void setIsPlaying(bool playing);
+    bool getIsPaused()const;
+    static void onMusicFinished();
+    static PlayingMedia& getInstance();
 
-    void setCurrentMediaFile(const MediaFile *mediaFile);
-    void setPlaylist(std::shared_ptr<Playlist> playlist);
-    bool getIsPaused() const;
     void play();
     void pause();
-    void resume();
     void stop();
     void skipToNext();
     void skipToPrevious();
+    void skipForward(int seconds);
+    void skipBackward(int seconds);
     void adjustVolume(int newVolume);
-    void displayPlaybackProgress(int currentTime, int duration);
-    void showPlaybackMenu(int currentTime, int totalDuration);
-
-    ~PlayingMedia();
-
-private:
-    PlayingMedia();
-    PlayingMedia(const PlayingMedia &) = delete;
-    PlayingMedia &operator=(const PlayingMedia &) = delete;
-
-    void playbackLoop();
-
-    bool isPlaying;
-    bool stopPlayback;
-    bool isPaused;
-    int currentTime;
-    int volume;
-    Mix_Music *music;
-
-    std::shared_ptr<Playlist> currentPlaylist;
-    std::map<unsigned int, MediaFile>::const_iterator currentSong;
-    MediaFile *currentMediaFile;
-
-    std::thread playbackThread;
 };
 
-std::string convertToAudio(const std::string &filePath);
-
-#endif // PLAYINGMEDIA_HPP
+#endif // PLAYING_MEDIA_HPP

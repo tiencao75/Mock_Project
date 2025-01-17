@@ -15,6 +15,7 @@ PlaylistController::~PlaylistController() {}
 
 // Handle user input for playlist management
 void PlaylistController::handleInput() {
+    modelManager.getMediaLibrary().clearScreen();
     const std::string filename = "playlistsData.txt";
     try {
         readPlaylistsFromFile(filename);

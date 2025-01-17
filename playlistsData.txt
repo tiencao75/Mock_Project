@@ -1,9 +1,9 @@
-Playlist: hieu1
-1,/home/hieuphan/HP/model/video/video4.mp4,video
-2,/home/hieuphan/HP/model/video/audio3.mp3,audio
-3,/home/hieuphan/HP/model/video/audio1.mp3,audio
-4,/home/hieuphan/HP/model/video/video2.mp4,video
-5,/home/hieuphan/HP/model/video/take.mp4,video
+Playlist: Hoa
+1,/home/huyhoa308/mp3_mp4/NgayTetQueEm-DangKhoifeatFEEZY-14872672.mp3,audio
 ---
-Playlist: hieu3
+Playlist: Hieu
+1,/home/huyhoa308/mp3_mp4/NgayTetQueEm-DangKhoifeatFEEZY-14872672 (3rd copy).mp3,audio
+---
+Playlist: Tien
+1,/home/huyhoa308/mp3_mp4/GieoQueDancePerformance-HoangThuyLinh-11971854 (6th copy).mp3,audio
 ---

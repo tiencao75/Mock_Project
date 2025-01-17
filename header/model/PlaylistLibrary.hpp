@@ -74,7 +74,6 @@ public:
     std::shared_ptr<Playlist> getPlaylistByIndex(unsigned int index) const;
 
     void setPlaylists(const std::map<unsigned int, std::shared_ptr<Playlist>>& newPlaylists);
-    std::map<unsigned int, MediaFile>& getSongs();
 
 };
 

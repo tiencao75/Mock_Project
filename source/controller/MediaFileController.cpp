@@ -43,9 +43,11 @@ MediaFile MediaFileController::getMediaFileDetails(unsigned int index)
 
 void MediaFileController::handleInput()
 {
+    modelManager.getMediaLibrary().clearScreen();
     bool isRunning = true;
     while (isRunning)
     {
+        modelManager.getMediaLibrary().clearScreen();
         std::cout << "\nMedia Options Menu:\n";
         std::cout << static_cast<int>(MediaMenuOption::ShowAllMediaFiles) << ". Show All Media Files\n";
         std::cout << static_cast<int>(MediaMenuOption::ShowMetadata) << ". Show Metadata\n";
@@ -72,99 +74,99 @@ void MediaFileController::handleInput()
                 else
                 {
                     mediaFileView->update("Displaying all media files:");
-                    modelManager.getMediaLibrary().getAllMediaFiles();
-                    for (const auto &file : mediaFiles)
-                    {
-                        mediaFileView->update(" - " + file.getName() + " (" + file.getType() + ")");
-                    }
+                    modelManager.getMediaLibrary().displayPaginatedFiles(modelManager.getMediaLibrary().getAllMediaFiles());
                 }
             }
             break;
         }
         case MediaMenuOption::ShowMetadata:
-{
-    // Hiển thị metadata của một file
-    auto *metadataView = dynamic_cast<ViewMetadata *>(viewManager.getView("ViewMetadata"));
+        { // Hiển thị metadata của một file
+            auto *metadataView = dynamic_cast<ViewMetadata *>(viewManager.getView("ViewMetadata"));
 
-    if (metadataView)
-    {
-        try
-        {
-            // Hiển thị danh sách file với ID
-            const auto &mediaFiles = modelManager.getMediaLibrary().getAllMediaFiles();
-            if (mediaFiles.empty())
+            if (metadataView)
             {
-                metadataView->update("No media files available to show metadata.");
-            }
-            else
-            {
-                std::string fileList = "\n=== Available Media Files ===\n";
-                fileList += "| ID   | Name                  |\n";
-                fileList += "|------|-----------------------|\n";
-                for (const auto &[id, file] : mediaFiles)
+                try
                 {
-                    fileList += "| " + std::to_string(id) + "    | " + file->getName();
-                    fileList.append(23 - file->getName().size(), ' ');
-                    fileList += "|\n";
-                }
-                fileList += "===============================\n";
-                metadataView->update(fileList);
-
-                // Yêu cầu người dùng nhập ID để xem metadata
-                metadataView->update("Enter the ID of the file to view metadata: ");
-                unsigned int fileID;
-                std::cin >> fileID;
-
-                // Lấy file từ ID và hiển thị metadata
-                auto mediaFile = modelManager.getMediaLibrary().getMediaFileByIndex(fileID);
-                if (!mediaFile)
-                {
-                    metadataView->update("Error: File with the provided ID does not exist.");
-                }
-                else
-                {
-                    const auto &metadata = mediaFile->getMetadata().getData();
-                    if (metadata.empty())
+                    // Hiển thị danh sách file với ID
+                    const auto &mediaFiles = modelManager.getMediaLibrary().getAllMediaFiles();
+                    if (mediaFiles.empty())
                     {
-                        metadataView->update("No metadata available for the selected file.");
+                        metadataView->update("No media files available to show metadata.");
                     }
                     else
                     {
-                        std::string metadataOutput = "\n=== Metadata for File ===\n";
-                        metadataOutput += "| Field         | Value                |\n";
-                        metadataOutput += "|---------------|----------------------|\n";
-                        for (const auto &[key, value] : metadata)
+                        modelManager.getMediaLibrary().displayPaginatedFiles(modelManager.getMediaLibrary().getAllMediaFiles());
+
+                        // Yêu cầu người dùng nhập ID để xem metadata
+                        metadataView->update("Enter the ID of the file to view metadata: ");
+                        unsigned int fileID;
+                        std::cin >> fileID;
+
+                        // Lấy file từ ID và hiển thị metadata
+                        auto mediaFile = modelManager.getMediaLibrary().getMediaFileByIndex(fileID);
+                        if (!mediaFile)
                         {
-                            std::string formattedValue = value.empty() ? "Unknown" : value;
-                            std::string row = "| " + key;
-                            row.append(15 - key.size(), ' ');
-                            row += "| " + formattedValue;
-                            row.append(22 - formattedValue.size(), ' ');
-                            row += "|\n";
-                            metadataOutput += row;
+                            metadataView->update("Error: File with the provided ID does not exist.");
                         }
-                        metadataOutput += "===========================\n";
-                        metadataView->update(metadataOutput);
+                        else
+                        {
+                            const auto &metadata = mediaFile->getMetadata().getData();
+                            if (metadata.empty())
+                            {
+                                metadataView->update("No metadata available for the selected file.");
+                            }
+                            else
+                            {
+                                modelManager.getMediaLibrary().clearScreen();
+                                metadataView->update("--------------------------------------------------");
+                                metadataView->update("Metadata for file: '" + mediaFile->getName() + "'");
+                                metadataView->update("--------------------------------------------------");
+
+                                // Hiển thị metadata với định dạng bảng
+                                for (const auto &[key, value] : metadata) {
+                                    std::string formattedLine = key;
+                                    formattedLine.append(20 - key.size(), ' '); // Thêm khoảng trắng để căn chỉnh
+                                    formattedLine += ": " + (value.empty() ? "unknown" : value);
+                                    metadataView->update(formattedLine);
+                                }
+
+                                metadataView->update("--------------------------------------------------");
+                                while (true)
+                                {
+                                    metadataView->update("Enter 0 to exit: ");
+                                    unsigned int exitCode;
+                                    std::cin >> exitCode;
+
+                                    if (exitCode == 0)
+                                    {
+                                        metadataView->update("Exiting metadata view...");
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        metadataView->update("Invalid input. Please enter 0 to exit.");
+                                    }
+                                }
+
+                            }
+                        }
                     }
                 }
+                catch (const std::exception &e)
+                {
+                    metadataView->update("An error occurred while fetching metadata: " + std::string(e.what()));
+                }
+                catch (...)
+                {
+                    metadataView->update("An unknown error occurred while fetching metadata.");
+                }
             }
+            else
+            {
+                std::cerr << "Error: Metadata view not available.\n";
+            }
+            break;
         }
-        catch (const std::exception &e)
-        {
-            metadataView->update("An error occurred while fetching metadata: " + std::string(e.what()));
-        }
-        catch (...)
-        {
-            metadataView->update("An unknown error occurred while fetching metadata.");
-        }
-    }
-    else
-    {
-        std::cerr << "Error: Metadata view not available.\n";
-    }
-    break;
-}
-
 
         case MediaMenuOption::BackToMainMenu:
         { // Back to Main Menu

@@ -1,1 +1,1 @@
-defaultDirectory=/home/hieuphan/HP/model/video/
+defaultDirectory=/home/huyhoa308/mp3_mp4

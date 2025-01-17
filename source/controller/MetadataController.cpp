@@ -26,6 +26,7 @@ void MetadataController::updateMediaFileMetadata(MediaFile &file, const std::str
 }
 void MetadataController::handleInput()
 {
+    modelManager.getMediaLibrary().clearScreen();
     auto *metadataView = dynamic_cast<ViewMetadata *>(viewManager.getView("ViewMetadata"));
     if (!metadataView)
     {

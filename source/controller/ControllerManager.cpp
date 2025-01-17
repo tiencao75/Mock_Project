@@ -78,6 +78,7 @@ void ControllerManager::handleInputData() {
     // Bước 2: Hiển thị menu chính
     bool isRunning = true;
     while (isRunning) {
+        modelManager.getMediaLibrary().clearScreen();
         // Hiển thị Main Menu
         mainMenuController.showMainMenu();
 

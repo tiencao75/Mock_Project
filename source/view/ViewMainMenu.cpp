@@ -7,6 +7,7 @@ void ViewMainMenu::show() {
 
 void ViewMainMenu::hide() {
     std::cout << "Hiding Main Menu..." << std::endl;
+    
 }
 
 void ViewMainMenu::update(const std::string& data) {

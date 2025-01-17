@@ -1,180 +1,284 @@
 #include "PlayingMediaController.hpp"
 #include "ModelManager.hpp"
 #include "PlayingMedia.hpp"
-#include "PlaylistController.hpp"
-#include "PlaylistLibrary.hpp"
-#include "MediaFile.hpp"
-#include <iostream>
 #include <limits>
+#include <iostream>
 
-PlayingMediaController::PlayingMediaController(ModelManager &modelManager, ViewManager &viewManager)
-    : modelManager(modelManager), viewManager(viewManager) {}
+// Constructor
+// PlayingMediaController::PlayingMediaController(ControllerManager* manager)
+//     : controllerManager(manager) {
+//     // No initialization needed for now
+// }
 
-PlayingMediaController::~PlayingMediaController() {}
+PlayingMediaController::PlayingMediaController(ModelManager &modelManager, ViewManager &viewManager) : modelManager(modelManager), viewManager(viewManager) {}
 
-void PlayingMediaController::playMediaFile(MediaFile &file) {
+// Destructor
+PlayingMediaController::~PlayingMediaController()
+{
+    // Cleanup if necessary
+}
+
+// Method to play a specific media file
+void PlayingMediaController::playMediaFile(MediaFile &file)
+{
+    // Access the ModelManager to set the current media to the provided file
     modelManager.getPlayingMedia().setCurrentMediaFile(&file);
     modelManager.getPlayingMedia().play();
     std::cout << "Playing: " << file.getName() << std::endl;
 }
 
-void PlayingMediaController::play() {
+// Method to play the current media
+void PlayingMediaController::play()
+{
+    // Access the current PlayingMedia and play it
     modelManager.getPlayingMedia().play();
     std::cout << "Resuming playback." << std::endl;
 }
 
-void PlayingMediaController::pause() {
-    try {
-        modelManager.getPlayingMedia().pause();
-    } catch (const std::exception &e) {
-        std::cerr << "Error while pausing: " << e.what() << std::endl;
-    }
+// Method to pause the current media
+void PlayingMediaController::pause()
+{
+    // Access the current PlayingMedia and pause it
+    modelManager.getPlayingMedia().pause();
+    std::cout << "Playback paused." << std::endl;
 }
+void PlayingMediaController::resume()
 
-void PlayingMediaController::resume() {
-    if (modelManager.getPlayingMedia().getIsPaused()) {
-        modelManager.getPlayingMedia().resume();
-        std::cout << "Playback resumed." << std::endl;
-    } else {
+{
+
+    if (modelManager.getPlayingMedia().getIsPaused()) // Kiểm tra trạng thái tạm dừng
+
+    {
+
+        modelManager.getPlayingMedia().play(); // Tiếp tục phát
+    }
+
+    else
+
+    {
+
         std::cout << "No media is paused currently." << std::endl;
     }
 }
 
-void PlayingMediaController::stop() {
-    try {
-        modelManager.getPlayingMedia().stop();
-    } catch (const std::exception &e) {
-        std::cerr << "Error while stopping: " << e.what() << std::endl;
-    }
+// Method to stop the current media
+void PlayingMediaController::stop()
+{
+    // Access the current PlayingMedia and stop it
+    modelManager.getPlayingMedia().stop();
+    std::cout << "Playback stopped." << std::endl;
 }
 
-void PlayingMediaController::skipToNext() {
-    try {
-        modelManager.getPlayingMedia().skipToNext();
-    } catch (const std::exception &e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
+// Method to skip to the next media in the playlist
+void PlayingMediaController::skipToNext()
+{
+    // Access the current PlayingMedia and skip to the next media
+    modelManager.getPlayingMedia().skipToNext();
+    std::cout << "Skipped to the next media." << std::endl;
 }
 
-void PlayingMediaController::skipToPrevious() {
-    try {
-        modelManager.getPlayingMedia().skipToPrevious();
-    } catch (const std::exception &e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
+// Method to skip to the previous media in the playlist
+void PlayingMediaController::skipToPrevious()
+{
+    // Access the current PlayingMedia and skip to the previous media
+    modelManager.getPlayingMedia().skipToPrevious();
+    std::cout << "Skipped to the previous media." << std::endl;
 }
+void PlayingMediaController::adjustVolume(int newVolume)
 
-void PlayingMediaController::adjustVolume(int newVolume) {
+{
+
     modelManager.getPlayingMedia().adjustVolume(newVolume);
-    std::cout << "Volume adjusted to: " << newVolume << std::endl;
+
+    std::cout << "Update volume to: " << newVolume << std::endl;
 }
 
-void PlayingMediaController::play_Playlist(PlaylistLibrary &library) {
-    unsigned int playlistIndex;
-
-    std::cout << "Available Playlists:\n";
-    for (const auto &[index, playlist] : library.getAllPlaylists()) {
-        std::cout << index << ": " << playlist->getName() << "\n";
-    }
-
-    std::cout << "Enter the index of the playlist you want to play: ";
-    std::cin >> playlistIndex;
-
-    try {
-        auto playlist = library.getPlaylistByIndex(playlistIndex);
-        modelManager.getPlayingMedia().setPlaylist(playlist);
-        std::cout << "Playing playlist: " << playlist->getName() << "\n";
-        modelManager.getPlayingMedia().play();
-    } catch (const std::exception &e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
-}
-
-void PlayingMediaController::handleInput() {
+void PlayingMediaController::handleInput()
+{
+    modelManager.getMediaLibrary().clearScreen();
     int choice;
+    auto &playingMedia = modelManager.getPlayingMedia();
 
-    do {
-        std::cout << "\n=== Media Playback Menu ===\n"
-                  << "1. Play Current Media\n"
-                  << "2. Pause Current Media\n"
-                  << "3. Resume Current Media\n"
-                  << "4. Stop Current Media\n"
-                  << "5. Play Specific Media File\n"
-                  << "6. Play Playlist\n"
-                  << "7. Skip to Next Media\n"
-                  << "8. Skip to Previous Media\n"
-                  << "9. Adjust Volume\n"
-                  << "0. Exit Playback Menu\n"
-                  << "Enter your choice: ";
+    do
+    {
+        // Hiển thị menu lựa chọn
+
+        std::cout << "\n=== Media Playback Menu ===\n";
+
+        std::cout << "1. Play Current Media\n";
+
+        std::cout << "2. Pause Current Media\n";
+
+        std::cout << "3. Resume Current Media\n";
+
+        std::cout << "4. Stop Current Media\n";
+
+        std::cout << "5. Play Specific Media File\n";
+
+        std::cout << "6. Skip to Next Media\n";
+
+        std::cout << "7. Skip to Previous Media\n";
+
+        std::cout << "8. Adjust Volume\n";
+
+        std::cout << "0. Exit Playback Menu\n";
+
+        std::cout << "Enter your choice: ";
 
         std::cin >> choice;
-        if (std::cin.fail()) {
+        if (std::cin.fail())
+        {
+            std::cout << "Invalid input. Please enter a number." << std::endl;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Invalid input. Please enter a number." << std::endl;
             continue;
         }
 
-        switch (choice) {
+        std::cin.ignore();
+
+        switch (choice)
+        {
         case 1:
-            if (!modelManager.getPlayingMedia().getCurrentMediaFile()) {
-                std::cout << "Error: No media file is currently loaded." << std::endl;
-            } else {
+
+            if (!modelManager.getPlayingMedia().getCurrentMediaFile())
+
+            {
+
+                std::cout << "Error: No media file is currently loaded in the playlist." << std::endl;
+            }
+
+            else
+
+            {
+
                 play();
             }
+
             break;
+
         case 2:
+
             pause();
+
             break;
+
         case 3:
+
             resume();
+
             break;
+
         case 4:
+
             stop();
+
             break;
-        case 5: {
+
+        case 5:
+
+        {
+
             const auto &mediaFiles = modelManager.getMediaLibrary().getAllMediaFiles();
-            if (mediaFiles.empty()) {
+
+            if (mediaFiles.empty())
+
+            {
+
                 std::cout << "No media files available." << std::endl;
+
                 break;
             }
 
-            std::cout << "=== Available Media Files ===\n";
-            for (const auto &[id, mediaFile] : mediaFiles) {
-                std::cout << id << ": " << mediaFile->getName() << " (" << mediaFile->getType() << ")\n";
+            std::cout << "=== Available Media Files ===" << std::endl;
+
+            for (const auto &[id, mediaFile] : mediaFiles)
+
+            {
+
+                std::cout << id << ": " << mediaFile->getName() << " (" << mediaFile->getType() << ")" << std::endl;
             }
+
+            // Yêu cầu người dùng nhập ID của tệp cần phát
+
+            std::cout << "Enter the ID of the media file to play: ";
 
             unsigned int fileID;
-            std::cout << "Enter the ID of the media file to play: ";
+
             std::cin >> fileID;
 
-            if (auto mediaFile = modelManager.getMediaLibrary().getMediaFileByIndex(fileID)) {
-                playMediaFile(*mediaFile);
-            } else {
+            // Kiểm tra input
+
+            if (std::cin.fail())
+
+            {
+
+                std::cout << "Invalid input. Please enter a valid number." << std::endl;
+
+                std::cin.clear();
+
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                break;
+            }
+
+            // Lấy tệp từ MediaLibrary bằng ID
+
+            auto mediaFile = modelManager.getMediaLibrary().getMediaFileByIndex(fileID);
+
+            if (!mediaFile)
+
+            {
+
                 std::cout << "Media file not found." << std::endl;
             }
+
+            else
+
+            {
+
+                playMediaFile(*mediaFile); // Gọi hàm phát tệp
+            }
+
             break;
         }
+
         case 6:
-            play_Playlist(modelManager.getPlaylistLibrary());
-            break;
-        case 7:
+
             skipToNext();
+
             break;
-        case 8:
+
+        case 7:
+
             skipToPrevious();
+
             break;
-        case 9: {
+
+        case 8:
+
+        {
+
             int newVolume;
+
             std::cout << "Enter volume level (0 to 128): ";
+
             std::cin >> newVolume;
-            if (std::cin.fail() || newVolume < 0 || newVolume > 128) {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            if (std::cin.fail())
+
+            {
+
                 std::cout << "Invalid input. Please enter a number between 0 and 128." << std::endl;
-            } else {
-                adjustVolume(newVolume);
+
+                std::cin.clear();
+
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                break;
             }
+
+            adjustVolume(newVolume);
+
             break;
         }
         case 0:
@@ -183,5 +287,6 @@ void PlayingMediaController::handleInput() {
         default:
             std::cout << "Invalid choice, please try again." << std::endl;
         }
+
     } while (choice != 0);
 }

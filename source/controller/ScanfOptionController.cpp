@@ -40,6 +40,7 @@ void ScanfOptionController::handleUSBScan() {
 }
 
 void ScanfOptionController::handleInput() {
+    modelManager.getMediaLibrary().clearScreen();
     const std::string filename = "dataUser.txt";
 
     // Sử dụng hàm từ ControllerManager
