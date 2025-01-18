@@ -44,6 +44,7 @@ private:
     std::string path;
     std::string type;
     Metadata metadata;
+     int duration;
 
 public:
     // Constructor
@@ -54,11 +55,13 @@ public:
     std::string getPath() const;
     std::string getType() const;
     Metadata getMetadata() const;
+    int getDuration();
+    
 
     // Setters
     void setMetadata(const Metadata& metadata);
     void setType(const std::string& type);
-    
+    void setDuration(int duration);
     // Toán tử so sánh ==
     bool operator==(const MediaFile& other) const;
 

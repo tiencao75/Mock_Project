@@ -4,12 +4,15 @@
 #include <SDL2/SDL_mixer.h>
 #include <stdexcept>
 #include <iostream>
-#include <fstream>
 #include <filesystem>
+#include <thread>
+#include <chrono>
 namespace fs = std::filesystem;
 
 // Constructor
-PlayingMedia::PlayingMedia() : music(nullptr), isPlaying(false), isPaused(false), currentMediaFile(nullptr) 
+PlayingMedia::PlayingMedia()
+    : isPlaying(false), isPaused(false), stopPlayback(false), currentTime(0), volume(100),
+      music(nullptr), currentPlaylist(nullptr), currentMediaFile(nullptr)
 {
     if (SDL_Init(SDL_INIT_AUDIO) < 0)
     {
@@ -24,334 +27,368 @@ PlayingMedia::PlayingMedia() : music(nullptr), isPlaying(false), isPaused(false)
 // Destructor
 PlayingMedia::~PlayingMedia()
 {
+    stop(); // Dừng playback trước khi hủy đối tượng
     Mix_CloseAudio();
     SDL_Quit();
 }
+void PlayingMedia::clearScreen()
+{
+    system("clear"); // Lệnh xóa màn hình cho Linux
+}
 
-// Get the current media file
-MediaFile *PlayingMedia::getCurrentMediaFile() const
+// Singleton instance
+PlayingMedia &PlayingMedia::getInstance()
+{
+    static PlayingMedia instance;
+    return instance;
+}
+
+// Helper function to convert MP4 to audio
+std::string convertToAudio(const std::string &filePath)
+{
+    std::string extractedAudioPath = "./extracted_audio.wav";
+    std::string command = "ffmpeg -y -hide_banner -loglevel quiet -i \"" + filePath + "\" -vn -acodec pcm_s16le \"" + extractedAudioPath + "\"";
+    if (system(command.c_str()) != 0 || !fs::exists(extractedAudioPath))
+    {
+        throw std::runtime_error("Failed to extract audio from video.");
+    }
+    return extractedAudioPath;
+}
+const MediaFile *PlayingMedia::getCurrentMediaFile() const
 {
     return currentMediaFile;
 }
 
-// Set the current media file
-void PlayingMedia::setCurrentMediaFile(MediaFile *mediaFile)
+// Get current media file
+void PlayingMedia::setCurrentMediaFile(const MediaFile *mediaFile)
 {
-    if (!mediaFile)
+    if (!mediaFile || !std::filesystem::exists(mediaFile->getPath()))
     {
-        throw std::runtime_error("Media file cannot be null.");
+        throw std::runtime_error("Invalid or non-existent media file.");
     }
 
-    std::string filePath = mediaFile->getPath();
-    // std::ifstream file(filePath);
-    // if (!file.good())
-    // {
-    //     throw std::runtime_error("Invalid media file: " + filePath);
-    // }
+    currentMediaFile = const_cast<MediaFile *>(mediaFile);
 
-    if (!std::filesystem::exists(filePath))
-    {
-        throw std::runtime_error("Media file does not exist: " + filePath);
-    }
+    // Lấy tên bài hát từ đường dẫn file
+    currentSongName = std::filesystem::path(mediaFile->getPath()).stem().string();
 
-    currentMediaFile = mediaFile;
-    std::cout << "Media file loaded: " << filePath << std::endl;
+    std::cout << "Media file loaded: " << currentSongName << std::endl;
 }
-
-// Get the current playback time
-int PlayingMedia::getCurrentTime() const
+const std::string &PlayingMedia::getCurrentSongName() const
 {
-    return currentTime;
+    return currentSongName;
 }
 
-// Set the current playback time
-void PlayingMedia::setCurrentTime(int time)
-{
-    if (!currentMediaFile)
-    {
-        throw std::runtime_error("No media file is currently playing.");
-    }
-    // Note: SDL_Mixer does not support seeking. Implement custom behavior if needed.
-    currentTime = time;
-}
-
-// Check if a media file is playing
-bool PlayingMedia::getIsPlaying() const
-{
-    return isPlaying;
-}
-
-// Set the playing state
-void PlayingMedia::setIsPlaying(bool playing)
-{
-    isPlaying = playing;
-
-    if (!playing)
-
-    {
-
-        isPaused = false; // Đặt trạng thái tạm dừng về false nếu ngừng phát
-
-        std::cout << "Playback stopped or finished." << std::endl;
-    }
-}
-// Check if a media file is paused
 bool PlayingMedia::getIsPaused() const
 {
     return isPaused;
 }
-
-
-void PlayingMedia::onMusicFinished()
-
+// Set current playlist
+void PlayingMedia::setPlaylist(std::shared_ptr<Playlist> playlist)
 {
-
-    std::cout << "Playback finished." << std::endl;
-
-    // Lấy đối tượng PlayingMedia thông qua singleton
-
-    PlayingMedia &instance = PlayingMedia::getInstance();
-
-    // Cập nhật trạng thái và giải phóng tài nguyên nếu cần
-
-    instance.isPlaying = false;
-
-    if (instance.currentMediaFile)
-
+    currentPlaylist = playlist;
+    if (currentPlaylist && !currentPlaylist->getSongs().empty())
     {
-
-        std::string type = instance.currentMediaFile->getType();
-
-        if (type == "mp3" || type == "wav")
-
-        {
-
-            Mix_FreeMusic(instance.music);
-
-            instance.music = nullptr;
-        }
+        currentSong = currentPlaylist->getSongs().begin();
+        setCurrentMediaFile(&(currentSong->second));
     }
-
-    std::cout << "Ready to play the current media again." << std::endl;
-}
-
-PlayingMedia &PlayingMedia::getInstance()
-
-{
-
-    static PlayingMedia instance;
-
-    return instance;
+    else
+    {
+        currentMediaFile = nullptr;
+        std::cerr << "Warning: Playlist is empty or invalid." << std::endl;
+    }
 }
 
 // Play the current media file
-void PlayingMedia::play() {
-    try {
-        if (!currentMediaFile) {
+void PlayingMedia::play()
+{
+    std::lock_guard<std::mutex> lock(mtx);
+
+    try
+    {
+        if (!currentMediaFile)
+        {
             throw std::runtime_error("No media file is currently loaded.");
         }
 
-        // Nếu nhạc đã phát
-        if (isPlaying) {
-            if (Mix_PlayingMusic() == 0) {
-                isPlaying = false; // Cập nhật trạng thái
-            } else {
-                std::cout << "Media is already playing." << std::endl;
-                return;
-            }
-        }
-
-        // Nếu đang tạm dừng, tiếp tục phát
-        if (isPaused) {
-            Mix_ResumeMusic();
-            isPlaying = true;
-            isPaused = false;
-            std::cout << "Playback resumed." << std::endl;
-            return;
+        if (isPlaying)
+        {
+            stop();
         }
 
         std::string filePath = currentMediaFile->getPath();
-        std::string fileType = currentMediaFile->getType();
-
-        // Nếu là video, trích xuất audio
-        if (fileType == "video" || fileType == "mp4") {
-            std::string extractedAudioPath = "./extracted_audio.wav";
-            std::string command = "ffmpeg -y -hide_banner -loglevel quiet -i \"" + filePath + "\" -vn -acodec pcm_s16le \"" + extractedAudioPath + "\"";
-
-            std::cout << "Executing FFmpeg command: " << command << std::endl;
-            int result = system(command.c_str());
-
-            if (result != 0 || !std::filesystem::exists(extractedAudioPath)) {
-                throw std::runtime_error("Failed to extract audio from video.");
-            }
-
-            // Chuyển đổi file WAV sang định dạng SDL2-mixer
-            std::string convertedAudioPath = "./converted_audio.wav";
-            std::string convertCommand = "ffmpeg -y -hide_banner -loglevel quiet -i \"" + extractedAudioPath + "\" -ar 44100 -ac 2 -sample_fmt s16 \"" + convertedAudioPath + "\"";
-
-            std::cout << "Converting audio to SDL2-compatible format: " << convertCommand << std::endl;
-            int convertResult = system(convertCommand.c_str());
-
-            if (convertResult != 0 || !std::filesystem::exists(convertedAudioPath)) {
-                throw std::runtime_error("Failed to convert audio file to SDL2-mixer compatible format.");
-            }
-
-            filePath = convertedAudioPath;
+        if (currentMediaFile->getType() == "video" || currentMediaFile->getType() == "mp4")
+        {
+            filePath = convertToAudio(filePath);
         }
 
-        // Giải phóng nhạc trước đó nếu có
-  if (music) {
-    std::cout << "Freeing music: " << music << std::endl;
-    Mix_FreeMusic(music);
-    music = nullptr;  // Đặt lại con trỏ về nullptr để tránh sử dụng lại
-} else {
-    std::cerr << "Warning: Attempting to free an invalid or null music pointer." << std::endl;
-}
+        if (music)
+        {
+            Mix_FreeMusic(music);
+            music = nullptr;
+        }
 
-
-        // Tải file audio
         music = Mix_LoadMUS(filePath.c_str());
-if (!music) {
-    std::cerr << "SDL_Mixer Error (Load): " << Mix_GetError() << std::endl;
-    return;  // Trả về nếu không tải được
-}
+        if (!music)
+        {
+            throw std::runtime_error("SDL_Mixer Error (Load): " + std::string(Mix_GetError()));
+        }
 
-
-        // Phát nhạc
-        if (Mix_PlayMusic(music, 1) == -1) {
+        if (Mix_PlayMusic(music, 1) == -1)
+        {
             throw std::runtime_error("Failed to play music: " + std::string(Mix_GetError()));
         }
 
         isPlaying = true;
         isPaused = false;
-        std::cout << "Audio is playing: " << currentMediaFile->getName() << std::endl;
-
-    } catch (const std::exception &e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
-}
-
-
-
-
-// Pause the current media file
-void PlayingMedia::pause()
-{
-    if (isPlaying)
-
-    {
-
-        Mix_PauseMusic();
-
-        isPlaying = false;
-
-        isPaused = true; // Đánh dấu trạng thái tạm dừng
-
-        std::cout << "Playback paused." << std::endl;
-    }
-}
-
-// Stop the current media file
-void PlayingMedia::stop()
-{
-    if (currentMediaFile)
-
-    {
-
-        // Dừng phát nhạc
-
-        Mix_HaltMusic();
-
-        // Không xóa file tạm, chỉ dừng playback
-
-        isPlaying = false;
-
+        stopPlayback = false;
         currentTime = 0;
+        std::cout << "Playback started." << std::endl;
 
-        std::cout << "Playback stopped." << std::endl;
+        if (playbackThread.joinable())
+        {
+            playbackThread.join(); // Dừng thread cũ trước khi tạo thread mới
+        }
+
+        playbackThread = std::thread(&PlayingMedia::playbackLoop, this);
     }
-
-    else
-
+    catch (const std::exception &e)
     {
-
-        std::cout << "No media file is currently loaded or playing." << std::endl;
+        std::cerr << "Error in play(): " << e.what() << std::endl;
     }
 }
 
-// Skip to the next file
+// Playback loop
+void PlayingMedia::playbackLoop()
+{
+    try
+    {
+        int duration = currentMediaFile->getDuration();
+
+        while (!stopPlayback && currentTime < duration)
+        {
+            if (isPaused)
+            {
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                continue;
+            }
+
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                currentTime++;
+            }
+
+            clearScreen(); // Xóa màn hình trước khi in lại thông tin
+
+            // Cập nhật thanh tiến trình
+            displayPlaybackProgress(currentTime, duration);
+        }
+
+        if (currentTime >= duration && !stopPlayback)
+        {
+            std::cout << "\nPlayback finished." << std::endl;
+        }
+
+        stopPlayback = true;
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Error in playback loop: " << e.what() << std::endl;
+    }
+}
+
 void PlayingMedia::skipToNext()
 {
-    if (!currentMediaFile)
+    if (!currentPlaylist || currentPlaylist->getSongs().empty())
     {
-        throw std::runtime_error("No media file is currently playing.");
-    }
-
-    // Implement logic for skipping to the next media file if applicable
-    std::cout << "Skipping to next media file (logic to be implemented)." << std::endl;
-}
-
-// Skip to the previous file
-void PlayingMedia::skipToPrevious()
-{
-    if (!currentMediaFile)
-    {
-        throw std::runtime_error("No media file is currently playing.");
-    }
-
-    // Implement logic for skipping to the previous media file if applicable
-    std::cout << "Skipping to previous media file (logic to be implemented)." << std::endl;
-}
-
-// Skip forward by a number of seconds
-void PlayingMedia::skipForward(int seconds)
-{
-    if (!currentMediaFile)
-    {
-        throw std::runtime_error("No media file is currently playing.");
-    }
-
-    int newTime = currentTime + seconds;
-    currentTime = newTime;
-    std::cout << "Skipped forward to: " << currentTime << " seconds." << std::endl;
-}
-
-// Skip backward by a number of seconds
-void PlayingMedia::skipBackward(int seconds)
-{
-    if (!currentMediaFile)
-    {
-        throw std::runtime_error("No media file is currently playing.");
-    }
-
-    int newTime = currentTime - seconds;
-
-    if (newTime < 0)
-    {
-        newTime = 0;
-    }
-
-    currentTime = newTime;
-    std::cout << "Skipped backward to: " << currentTime << " seconds." << std::endl;
-}
-// Adjust volume
-
-void PlayingMedia::adjustVolume(int newVolume)
-
-{
-
-    if (newVolume < 0 || newVolume > 128)
-
-    {
-
-        std::cout << "Volume must be between 0 (mute) and 128 (maximum)." << std::endl;
-
+        std::cout << "No playlist loaded or playlist is empty." << std::endl;
         return;
     }
+    ++currentSong;
+    if (currentSong == currentPlaylist->getSongs().end())
+    {
+        currentSong = currentPlaylist->getSongs().begin();
+    }
+    setCurrentMediaFile(&(currentSong->second));
+    stop();
+    play();
+}
 
+void PlayingMedia::skipToPrevious()
+{
+    if (!currentPlaylist || currentPlaylist->getSongs().empty())
+    {
+        std::cout << "No playlist loaded or playlist is empty." << std::endl;
+        return;
+    }
+    if (currentSong == currentPlaylist->getSongs().begin())
+    {
+        currentSong = currentPlaylist->getSongs().end();
+    }
+    --currentSong;
+    setCurrentMediaFile(&(currentSong->second));
+    stop();
+    play();
+}
+
+void PlayingMedia::adjustVolume(int newVolume)
+{
+    if (newVolume < 0 || newVolume > 128)
+    {
+        std::cout << "Volume must be between 0 and 128." << std::endl;
+        return;
+    }
     volume = newVolume;
-
     Mix_VolumeMusic(volume);
-
     std::cout << "Volume adjusted to: " << volume << std::endl;
+}
+
+// Pause the playback
+void PlayingMedia::pause()
+{
+    std::lock_guard<std::mutex> lock(mtx);
+
+    if (isPlaying && Mix_PlayingMusic())
+    {
+        Mix_PauseMusic();
+        isPaused = true;
+        std::cout << "Playback paused." << std::endl;
+    }
+    else
+    {
+        std::cout << "No media is currently playing to pause." << std::endl;
+    }
+}
+
+// Resume the playback
+void PlayingMedia::resume()
+{
+    std::lock_guard<std::mutex> lock(mtx);
+
+    if (isPaused)
+    {
+        Mix_ResumeMusic();
+        isPaused = false;
+        isPlaying = true;
+        std::cout << "Playback resumed." << std::endl;
+    }
+    else
+    {
+        std::cout << "No media is currently paused." << std::endl;
+    }
+}
+
+// Stop the playback
+void PlayingMedia::stop()
+{
+    {
+        std::lock_guard<std::mutex> lock(mtx);
+
+        if (!isPlaying && !isPaused)
+        {
+            std::cout << "Không có nội dung nào đang phát để dừng." << std::endl;
+            return;
+        }
+
+        stopPlayback = true; // Đặt cờ dừng vòng lặp phát nhạc
+        isPlaying = false;
+        isPaused = false;
+        currentTime = 0; // Đặt lại thời gian phát
+    }
+
+    // Chờ thread phát nhạc kết thúc
+    if (playbackThread.joinable())
+    {
+        playbackThread.join();
+    }
+
+    // Dừng thread hiển thị tiến trình
+    stopProgressDisplayThread();
+
+    // Giải phóng nhạc nếu cần
+    if (music)
+    {
+        Mix_FreeMusic(music);
+        music = nullptr;
+    }
+
+    std::cout << "Đã dừng phát nhạc và giải phóng tài nguyên." << std::endl;
+}
+
+void PlayingMedia::startProgressDisplayThread()
+{
+    if (progressThread.joinable())
+    {
+        stopProgressDisplayThread();
+    }
+
+    isDisplaying = true;
+    progressThread = std::thread([this]()
+                                 {
+                                     while (isDisplaying)
+                                     {
+                                         std::lock_guard<std::mutex> lock(mtx);
+                                         displayPlaybackProgress(currentTime, currentMediaFile->getDuration());
+                                         std::this_thread::sleep_for(std::chrono::seconds(1));
+                                     } });
+}
+
+void PlayingMedia::stopProgressDisplayThread()
+{
+    isDisplaying = false;
+    if (progressThread.joinable())
+    {
+        progressThread.join();
+    }
+}
+void PlayingMedia::displayPlaybackProgress(int currentTime, int duration)
+{
+    clearScreen(); // Xóa màn hình trước khi hiển thị tiến trình
+                   // Hiển thị tên bài hát
+    // Hiển thị tên bài hát
+    std::cout << "\n=======================================\n";
+    std::cout << "            🎵 NOW PLAYING 🎵           \n";
+    std::cout << "=======================================\n";
+    std::cout << "              " << currentSongName << "              \n";
+    std::cout << "=======================================\n\n";
+
+    int currentMinutes = currentTime / 60;
+    int currentSeconds = currentTime % 60;
+    int durationMinutes = duration / 60;
+    int durationSeconds = duration % 60;
+
+    int barWidth = 50;
+    float progress = static_cast<float>(currentTime) / duration;
+    int pos = barWidth * progress;
+
+    // Hiển thị thanh tiến trình
+    std::cout << "[";
+    for (int i = 0; i < barWidth; ++i)
+    {
+        if (i < pos)
+            std::cout << "=";
+        else if (i == pos)
+            std::cout << ">";
+        else
+            std::cout << " ";
+    }
+    std::cout << "] "
+              << (currentMinutes < 10 ? "0" : "") << currentMinutes << ":"
+              << (currentSeconds < 10 ? "0" : "") << currentSeconds << "/"
+              << (durationMinutes < 10 ? "0" : "") << durationMinutes << ":"
+              << (durationSeconds < 10 ? "0" : "") << durationSeconds
+              << " " << std::flush;
+    std::cout << "\n=== Media Playback Menu ===\n"
+              << "1. Play Current Media\n"
+              << "2. Pause Current Media\n"
+              << "3. Resume Current Media\n"
+              << "4. Stop Current Media\n"
+              << "5. Play Specific Media File\n"
+              << "6. Play Playlist\n"
+              << "7. Skip to Next Media\n"
+              << "8. Skip to Previous Media\n"
+              << "9. Adjust Volume\n"
+              << "0. Exit Playback Menu\n"
+              << "Enter your choice: ";
 }

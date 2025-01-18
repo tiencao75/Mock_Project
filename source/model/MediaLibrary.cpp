@@ -27,11 +27,6 @@ const std::map<unsigned int, std::shared_ptr<MediaFile>>& MediaLibrary::getAllMe
     return mediaFiles;
 }
 
-// void clearScreen() {
-//     std::cout << "\033[2J\033[1;1H";
-// }
-
-
 // Add a media file
 void MediaLibrary::addMediaFile(int index, const std::shared_ptr<MediaFile>& file) {
     try {
@@ -63,6 +58,7 @@ std::shared_ptr<MediaFile> MediaLibrary::getMediaFileByIndex(unsigned int index)
     if (it != mediaFiles.end()) {
         return it->second; // Trả về shared_ptr<MediaFile>
     }
+
     throw std::out_of_range("Index not found in mediaFiles.");
 }
 
@@ -227,4 +223,3 @@ void MediaLibrary::displayPaginatedFiles(const std::map<unsigned int, std::share
         }
     }
 }
-

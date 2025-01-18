@@ -1,11 +1,10 @@
-#ifndef PLAYINGMEDIACONTROLLER_HPP
-#define PLAYINGMEDIACONTROLLER_HPP
+#ifndef PLAYINGMEDIA_CONTROLLER_HPP
+#define PLAYINGMEDIA_CONTROLLER_HPP
 
 #include "ModelManager.hpp"
 #include "ViewManager.hpp"
 #include "MediaFile.hpp"
-#include "PlayingMedia.hpp"
-#include <vector>
+#include "PlaylistLibrary.hpp"
 
 class PlayingMediaController
 {
@@ -15,37 +14,19 @@ private:
     ViewManager &viewManager;
 
 public:
-    // Constructor
-    // PlayingMediaController(ControllerManager* manager);
-    PlayingMediaController(ModelManager &, ViewManager &);
-
-    // Destructor
+    PlayingMediaController(ModelManager &modelManager, ViewManager &viewManager);
     ~PlayingMediaController();
 
-    // Method to play a media file
     void playMediaFile(MediaFile &file);
-
-    // Method to play the current media
     void play();
-
-    // Method to pause the current media
     void pause();
     void resume();
-
-    // Method to stop the current media
     void stop();
-
-    // Method to skip to the next media in the playlist
     void skipToNext();
-
-    // Method to skip to the previous media in the playlist
     void skipToPrevious();
-
-    // Method to adjust the volume level
-    void adjustVolume(int newvolume);
-
-    // function to handle input
+    void adjustVolume(int newVolume);
+    void play_Playlist(PlaylistLibrary &library);
     void handleInput();
 };
 
-#endif // PLAYINGMEDIACONTROLLER_HPP
+#endif // PLAYINGMEDIA_CONTROLLER_HPP

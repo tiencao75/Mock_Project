@@ -168,6 +168,7 @@ void MediaFileController::handleInput()
             break;
         }
 
+
         case MediaMenuOption::BackToMainMenu:
         { // Back to Main Menu
             isRunning = false;
