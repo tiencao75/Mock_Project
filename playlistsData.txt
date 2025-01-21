@@ -1,6 +1,7 @@
-Playlist: hieu
-1,/home/huyhoa308/mp3_mp4/NgayTetQueEm-DangKhoifeatFEEZY-14872672 (5th copy).mp3,audio
-2,/home/huyhoa308/mp3_mp4/smrq3j1s3m (5th copy).mp3,audio
----
 Playlist: Tien
+1,/media/tienck/USB_Hieu/audio1.mp3,audio
+---
+Playlist: Hoa
+---
+Playlist: Tien2
 ---

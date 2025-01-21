@@ -11,8 +11,12 @@ CFLAGS = -Wall -g \
 
 # Các thư viện cần liên kết
 LDFLAGS = -L/usr/local/lib -L/usr/lib/x86_64-linux-gnu \
-    -ltag -lavcodec -lavformat -lavutil -lswscale -lswresample \
-    -lSDL2 -lSDL2_mixer -lSDL2_ttf -lstdc++fs -lm -pthread -lz
+    -lavformat -lavcodec -lavutil -lswresample -lswscale \
+    -ltag -lSDL2 -lSDL2_mixer -lSDL2_ttf -lSDL2_image -lstdc++fs -lz -lm -pthread
+
+
+
+
 
 
 

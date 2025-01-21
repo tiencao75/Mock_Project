@@ -19,11 +19,6 @@ PlaylistController::~PlaylistController() {}
 void PlaylistController::handleInput() {
     viewManager.getCurrentView()->hide();
     const std::string filename = "playlistsData.txt";
-    // try {
-    //     readPlaylistsFromFile(filename);
-    // } catch (const std::exception& e) {
-    //     std::cerr << "Error: " << e.what() << "\n";
-    // }
     bool isManagingPlaylist = true;
 
     while (isManagingPlaylist) {

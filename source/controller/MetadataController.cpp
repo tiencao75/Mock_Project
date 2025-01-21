@@ -46,10 +46,6 @@ void MetadataController::handleInput()
 
     viewManager.getCurrentView()->hide();
     metadataView->update("=== Available Media Files ===");
-    // for (const auto &[id, mediaFile] : mediaFiles)
-    // {
-    //     metadataView->update(std::to_string(id) + ": " + mediaFile->getName());
-    // }
     modelManager.getMediaLibrary().displayPaginatedFiles(mediaFiles);
 
     size_t fileID;
@@ -67,6 +63,7 @@ void MetadataController::handleInput()
     size_t choice;
     do
     {
+        viewManager.getCurrentView()->hide();
         // Hiển thị metadata hiện tại
         metadataView->update("\n=== Current Metadata ===");
 
@@ -78,7 +75,6 @@ void MetadataController::handleInput()
                     << "\n";
         }
 
-        viewManager.getCurrentView()->hide();
         viewManager.getView("ViewMetadata")->show();
 
         Exception_Handler("Enter your choice: ", choice, validateEditAudioMenu);

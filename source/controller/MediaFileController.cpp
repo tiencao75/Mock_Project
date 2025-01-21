@@ -138,8 +138,6 @@ void MediaFileController::handleInput()
                             }
 
                             std::cout << "======================================================================\n";
-                            std::cout << "Enter 0 to exit: ";
-
 
                             while (true)
                             {

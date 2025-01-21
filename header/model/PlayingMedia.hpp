@@ -9,7 +9,7 @@
 #include <mutex>
 #include <cstdlib>
 #include <SDL2/SDL_ttf.h>
-
+#include <vector>
 #include <SDL2/SDL_mixer.h>
 #include "MediaFile.hpp"
 #include "PlayList.hpp"
@@ -32,6 +32,7 @@ public:
     int getCurrentTime(); // Trả về currentTime và tự động tăng
     const std::string &getCurrentSongName() const;
     bool getIsPaused() const;
+    std::vector<MediaFile *> &getMediaFiles();
 
     // Playback Controls
     void setCurrentMediaFile(const MediaFile *mediaFile);
@@ -76,7 +77,9 @@ private:
     std::mutex mtx;
     std::shared_ptr<Playlist> currentPlaylist;
     std::map<unsigned int, MediaFile>::const_iterator currentSong;
-    MediaFile *currentMediaFile;
+    MediaFile *currentMediaFile = nullptr;
+    std::vector<MediaFile *> mediaFiles;
+
     std::string currentSongName; // Lưu tên bài hát hiện tại
     std::mutex coutMutex;
 };

@@ -11,7 +11,6 @@ void ViewScanfOption::show() {
     std::cout << "  3. Enter custom directory path             \n";
     std::cout << "  4. Scan USB devices                        \n";
     std::cout << "=============================================\n";
-    std::cout << "👉 Please select an option (1-4): ";
 }
 
 // void ViewScanfOption::hide() {

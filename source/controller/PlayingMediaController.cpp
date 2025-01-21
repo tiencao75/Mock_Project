@@ -8,6 +8,10 @@
 #include <iostream>
 #include <limits>
 #include <thread>
+#include <filesystem>
+#include <algorithm>
+
+namespace fs = std::filesystem;
 
 PlayingMediaController::PlayingMediaController(ModelManager &modelManager, ViewManager &viewManager)
     : modelManager(modelManager), viewManager(viewManager) {}
@@ -64,30 +68,70 @@ void PlayingMediaController::stop()
         std::cerr << "Error while stopping: " << e.what() << std::endl;
     }
 }
-void PlayingMediaController::playVideoInThread(const std::string &filePath) {
-    std::thread videoThread([filePath]() {
+
+void PlayingMediaController::playVideoInThread(const std::string &filePath)
+{
+    std::thread videoThread([filePath]()
+                            {
         try {
-            PlayingMedia::getInstance().playVideo(filePath.c_str());
+            // Lấy tên tệp từ đường dẫn
+            std::string fileName = std::filesystem::path(filePath).stem().string();
+
+            // Xác định loại tệp dựa trên phần mở rộng
+            std::string fileType = "unknown";
+            if (filePath.find(".mp4") != std::string::npos)
+            {
+                fileType = "video";
+            }
+            else if (filePath.find(".mp3") != std::string::npos)
+            {
+                fileType = "audio";
+            }
+
+            // Kiểm tra loại tệp hợp lệ
+            if (fileType == "unknown")
+            {
+                throw std::runtime_error("Unsupported file type: " + filePath);
+            }
+
+            // Tạo đối tượng MediaFile
+            MediaFile mediaFile(fileName, filePath, fileType);
+
+            // Kiểm tra sự tồn tại của tệp
+            if (!std::filesystem::exists(mediaFile.getPath()))
+            {
+                throw std::runtime_error("File does not exist: " + filePath);
+            }
+
+            // Thiết lập MediaFile hiện tại
+            PlayingMedia &playingMedia = PlayingMedia::getInstance();
+            playingMedia.setCurrentMediaFile(&mediaFile);
+
+            // Hiển thị debug
+            std::cout << "[DEBUG] Current Media File set to: " << mediaFile.getPath() << std::endl;
+            std::cout << "[DEBUG] Current Song Name: " << playingMedia.getCurrentSongName() << std::endl;
+
+            // Gọi hàm phát video
+            playingMedia.playVideo(filePath.c_str());
         } catch (const std::exception &e) {
             std::cerr << "Error during video playback: " << e.what() << std::endl;
-        }
-    });
-    videoThread.detach(); // Chạy thread độc lập
+        } });
+
+    // Chạy thread độc lập
+    videoThread.detach();
 }
 
 void PlayingMediaController::skipToNext()
 {
-    try
-    {
-        modelManager.getPlayingMedia().skipToNext();
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
+    modelManager.getPlayingMedia().skipToNext();
 }
 
 void PlayingMediaController::skipToPrevious()
+{
+    modelManager.getPlayingMedia().skipToPrevious();
+}
+
+void PlayingMediaController::play_Playlist(PlaylistLibrary &library)
 {
     try
     {
@@ -165,16 +209,32 @@ void PlayingMediaController::handleInput()
         case PlayingOption::PlaySpecific:
         {
             const auto &mediaFiles = modelManager.getMediaLibrary().getAllMediaFiles();
-            if (mediaFiles.empty()) {
+            if (mediaFiles.empty())
+            {
                 std::cout << "No media files available." << std::endl;
                 break;
             }
 
             std::cout << "=== Available Media Files ===\n";
-            for (const auto &[id, mediaFile] : mediaFiles) {
+            for (const auto &[id, mediaFile] : mediaFiles)
+            {
                 std::cout << id << ": " << mediaFile->getName() << " (" << mediaFile->getType() << ")\n";
             }
 
+            // Lưu tất cả các tệp vào vector currentMediaFiles
+            auto &playingMedia = modelManager.getPlayingMedia();
+            auto &currentMediaFiles = playingMedia.getMediaFiles(); // Giả định bạn đã có vector này
+
+            currentMediaFiles.clear(); // Xóa danh sách cũ
+            for (const auto &[id, mediaFile] : mediaFiles)
+            {
+                if (std::find(currentMediaFiles.begin(), currentMediaFiles.end(), mediaFile.get()) == currentMediaFiles.end())
+                {
+                    currentMediaFiles.push_back(mediaFile.get()); // Sử dụng con trỏ thô
+                }
+            }
+
+            // Yêu cầu người dùng chọn tệp để phát
             unsigned int fileID;
             std::cout << "Enter the ID of the media file to play: ";
             std::cin >> fileID;

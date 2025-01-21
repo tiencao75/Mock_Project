@@ -4,8 +4,17 @@
 
 #include <string>
 #include <map>
+extern "C"
+{
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#include <libavutil/avutil.h>
+#include <libswresample/swresample.h>
+#include <libswscale/swscale.h>
+}
 
-class Metadata {
+class Metadata
+{
 private:
     std::map<std::string, std::string> data;
 
@@ -23,7 +32,8 @@ public:
     void setValue(const std::string& key, const std::string& value);
 
     // Load metadata from a media file
-    void loadFromFile(const std::string& filePath);
+    void loadFromFile(const std::string &filePath);
+    void loadFromMp4(const std::string &filePath);
 
     // Save metadata back to a media file
     void saveToFile(const std::string& filePath) const;

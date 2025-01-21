@@ -10,8 +10,16 @@ extern "C" {
 
 // Constructor
 MediaFile::MediaFile(const std::string &name, const std::string &path, const std::string &type)
-    : name(name), path(path), type(type) {
-    metadata.loadFromFile(path); // Load metadata tự động
+    : name(name), path(path), type(type)
+{
+    if (type == "audio" || path.find(".mp3") != std::string::npos)
+    {
+        metadata.loadFromFile(path);
+    }
+    else if (type == "video" || path.find(".mp4") != std::string::npos)
+    {
+        metadata.loadFromMp4(path);
+    }
 }
 
 // Getters

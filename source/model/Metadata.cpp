@@ -52,8 +52,40 @@ void Metadata::loadFromFile(const std::string& filePath) {
     data["SampleRate"] = std::to_string(audioProperties->sampleRate());
     data["Channels"] = std::to_string(audioProperties->channels());
 }
+void Metadata::loadFromMp4(const std::string &filePath)
+{
+    if (!fs::exists(filePath))
+    {
+        throw std::runtime_error("File not found: " + filePath);
+    }
 
-void Metadata::saveToFile(const std::string& filePath) const {
+    AVFormatContext *formatContext = nullptr;
+
+    if (avformat_open_input(&formatContext, filePath.c_str(), nullptr, nullptr) < 0)
+    {
+        throw std::runtime_error("Could not open file: " + filePath);
+    }
+
+    if (avformat_find_stream_info(formatContext, nullptr) < 0)
+    {
+        avformat_close_input(&formatContext);
+        throw std::runtime_error("Could not find stream info.");
+    }
+
+    if (formatContext->metadata)
+    {
+        AVDictionaryEntry *tag = nullptr;
+        while ((tag = av_dict_get(formatContext->metadata, "", tag, AV_DICT_IGNORE_SUFFIX)))
+        {
+            data[tag->key] = tag->value;
+        }
+    }
+
+    avformat_close_input(&formatContext);
+}
+
+void Metadata::saveToFile(const std::string &filePath) const
+{
     TagLib::FileRef fileRef(filePath.c_str());
     if (fileRef.isNull() || !fileRef.tag()) {
         throw std::runtime_error("Invalid media file: " + filePath);
