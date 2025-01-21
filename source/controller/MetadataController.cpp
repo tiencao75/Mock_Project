@@ -78,56 +78,46 @@ void MetadataController::handleInput()
                     << "\n";
         }
 
-
-        // Hiển thị menu chỉnh sửa
-        // metadataView->update("\nChoose an option to edit metadata:");
-        // metadataView->update("1. Edit Title");
-        // metadataView->update("2. Edit Artist");
-        // metadataView->update("3. Edit Album");
-        // metadataView->update("4. Edit Genre");
-        // metadataView->update("5. Edit Year");
-        // metadataView->update("6. Edit Track");
-        // metadataView->update("7. Restore Original Values");
-        // metadataView->update("0. Exit Editing");
         viewManager.getCurrentView()->hide();
         viewManager.getView("ViewMetadata")->show();
 
         Exception_Handler("Enter your choice: ", choice, validateEditAudioMenu);
 
         std::string newValue;
-        switch (choice)
+        auto input = static_cast<MetadataOption>(choice);
+        switch (input)
         {
-        case 1:
+        case MetadataOption::Title:
             Exception_Handler("Enter new title: ", newValue, validateAlphaSring);
             currentMetadata["Title"] = newValue;
             viewManager.getCurrentView()->pauseScreen();
             break;
-        case 2:
+        case MetadataOption::Artist:
             Exception_Handler("Enter new artist: ", newValue, validateAlphaSring);
             currentMetadata["Artist"] = newValue;
             viewManager.getCurrentView()->pauseScreen();
             break;
-        case 3:
+        case MetadataOption::Album:
             Exception_Handler("Enter new album: ", newValue, validateAlphaSring);
             currentMetadata["Album"] = newValue;
             viewManager.getCurrentView()->pauseScreen();
             break;
-        case 4:
+        case MetadataOption::Genre:
             Exception_Handler("Enter new genre: ", newValue, validateAlphaSring);
             currentMetadata["Genre"] = newValue;
             viewManager.getCurrentView()->pauseScreen();
             break;
-        case 5:
+        case MetadataOption::Year:
             Exception_Handler("Enter new year: ", newValue, validateYear);
             currentMetadata["Year"] = newValue;
             viewManager.getCurrentView()->pauseScreen();
             break;
-        case 6:
+        case MetadataOption::Track:
             Exception_Handler("Enter new track: ", newValue, validateTrack);
             currentMetadata["Track"] = newValue;
             viewManager.getCurrentView()->pauseScreen();
             break;
-        case 7:
+        case MetadataOption::Restore:
             metadataView->update("Restoring original values...");
             for (const auto &[key, value] : originalMetadata)
             {
@@ -137,7 +127,7 @@ void MetadataController::handleInput()
             currentMetadata = originalMetadata;
             viewManager.getCurrentView()->pauseScreen();
             break;
-        case 0:
+        case MetadataOption::Exit:
             metadataView->update("Exiting editing...");
             viewManager.getCurrentView()->pauseScreen();
             break;

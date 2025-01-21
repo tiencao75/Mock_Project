@@ -32,14 +32,6 @@ Metadata MediaFile::getMetadata() const {
 }
 
 int MediaFile::getDuration() {
-    // std::cout << "Debug: Starting getDuration() for file: " << path << std::endl;
-
-    // Nếu duration đã được thiết lập, trả về ngay
-    // if (duration > 0) {
-    //     std::cout << "Debug: Duration already set, returning: " << duration << " seconds" << std::endl;
-    //     return duration;
-    // }
-
     // Kiểm tra tệp có tồn tại không
     if (!std::filesystem::exists(path)) {
         std::cerr << "Error: File does not exist: " << path << std::endl;

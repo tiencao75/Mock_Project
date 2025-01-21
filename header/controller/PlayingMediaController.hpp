@@ -5,6 +5,20 @@
 #include "ModelManager.hpp"
 #include "ViewManager.hpp"
 
+enum class PlayingOption {
+    Exit,
+    Play,
+    Pause,
+    Resume,
+    Stop,
+    PlaySpecific,
+    PlayPlaylist,
+    Next,
+    Previous,
+    Volume
+    
+};
+
 class PlayingMediaController {
 public:
     // Constructor & Destructor

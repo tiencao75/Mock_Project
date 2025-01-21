@@ -105,31 +105,6 @@ void PlayingMediaController::adjustVolume(size_t newVolume)
     //std::cout << "Volume adjusted to: " << newVolume << std::endl;
 }
 
-// void PlayingMediaController::play_Playlist(PlaylistLibrary &library)
-// {
-//     unsigned int playlistIndex;
-
-//     std::cout << "Available Playlists:\n";
-//     for (const auto &[index, playlist] : library.getAllPlaylists())
-//     {
-//         std::cout << index << ": " << playlist->getName() << "\n";
-//     }
-
-//     std::cout << "Enter the index of the playlist you want to play: ";
-//     std::cin >> playlistIndex;
-
-//     try
-//     {
-//         auto playlist = library.getPlaylistByIndex(playlistIndex);
-//         modelManager.getPlayingMedia().setPlaylist(playlist);
-//         std::cout << "Playing playlist: " << playlist->getName() << "\n";
-//         modelManager.getPlayingMedia().play();
-//     }
-//     catch (const std::exception &e)
-//     {
-//         std::cerr << "Error: " << e.what() << std::endl;
-//     }
-// }
 
 void PlayingMediaController::handleInput()
 {
@@ -149,9 +124,11 @@ void PlayingMediaController::handleInput()
             continue;
         }
 
-        switch (choice)
+        auto selection = static_cast<PlayingOption>(choice);
+
+        switch (selection)
         {
-        case 1:
+        case PlayingOption::Play:
         {
             if (!modelManager.getPlayingMedia().getCurrentMediaFile())
             {
@@ -163,13 +140,13 @@ void PlayingMediaController::handleInput()
             }
             break;
         }
-        case 2:
+        case PlayingOption::Pause:
         {
             pause();
             s32kInterface.sendTime(99, 99);
             break;
         }
-        case 3:
+        case PlayingOption::Resume:
         {
             resume();
             try {
@@ -179,13 +156,13 @@ void PlayingMediaController::handleInput()
                 }
             break;
         }
-        case 4:
+        case PlayingOption::Stop:
         {
             stop();
             s32kInterface.sendTime(00, 00);
             break;
         }
-        case 5:
+        case PlayingOption::PlaySpecific:
         {
             const auto &mediaFiles = modelManager.getMediaLibrary().getAllMediaFiles();
             if (mediaFiles.empty()) {
@@ -224,7 +201,7 @@ void PlayingMediaController::handleInput()
             }
             break;
         }
-       case 6:
+       case PlayingOption::PlayPlaylist:
         {
             unsigned int playlistIndex;
 
@@ -270,17 +247,17 @@ void PlayingMediaController::handleInput()
             }
             break;
         }
-        case 7:
+        case PlayingOption::Next:
         {
             skipToNext();
             break;
         }
-        case 8:
+        case PlayingOption::Previous:
         {
             skipToPrevious();
             break;
         }
-        case 9:
+        case PlayingOption::Volume:
         {
             int newVolume;
             std::cout << "Enter volume level (0 to 128): ";
@@ -297,7 +274,7 @@ void PlayingMediaController::handleInput()
             }
             break;
         }
-        case 0:
+        case PlayingOption::Exit:
         {
             //s32kInterface.stopReadingSignal();
             PlayingMedia::getInstance().clearScreen();

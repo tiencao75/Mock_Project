@@ -21,7 +21,7 @@ public:
     ScanfOptionController(ModelManager& modelManager, ViewManager& viewManager);
     ~ScanfOptionController();
 
-    void handleDirectoryScan(); // Xử lý quét thư mục
+    // void handleDirectoryScan(); // Xử lý quét thư mục
     void handleUSBScan();       // Xử lý quét USB
     void handleInput(); // Kiểm tra file media
 };
