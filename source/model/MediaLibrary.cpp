@@ -1,19 +1,12 @@
 #include "MediaLibrary.hpp"
+#include "ExceptionLib.hpp"
 #include <algorithm>
 #include <stdexcept>
 #include <filesystem>
 #include <iostream>
 
 #include <iomanip>
-#include <cstdlib> // Để sử dụng system()
 
-void MediaLibrary::clearScreen() {
-#ifdef _WIN32
-    system("cls"); // Windows
-#else
-    system("clear"); // Linux/MacOS
-#endif
-}
 namespace fs = std::filesystem;
 
 // Constructor
@@ -67,6 +60,7 @@ std::shared_ptr<MediaFile> MediaLibrary::getMediaFileByIndex(unsigned int index)
 
 void MediaLibrary::scanDirectory(const std::string& directory) {
     std::cout << "\n[INFO] Scanning Directory: " << directory << "\n";
+    mediaFiles.clear();
     unsigned int index = mediaFiles.empty() ? 1 : mediaFiles.rbegin()->first + 1;
 
     for (const auto& entry : std::filesystem::directory_iterator(directory)) {
@@ -88,11 +82,78 @@ void MediaLibrary::scanDirectory(const std::string& directory) {
 
 
 
+// void MediaLibrary::scanUSBDevice() {
+//     try {
+//         std::string mountBase = "/media";
+//         std::vector<std::string> usbDevices;
+
+//         for (const auto& entry : std::filesystem::directory_iterator(mountBase)) {
+//             if (std::filesystem::is_directory(entry)) {
+//                 usbDevices.push_back(entry.path().string());
+//             }
+//         }
+
+//         if (usbDevices.empty()) {
+//             std::cerr << "[ERROR] No USB devices found or mounted in /media.\n";
+//             return;
+//         }
+
+//         std::cout << "\n[INFO] Available USB Devices:\n";
+//         for (size_t i = 0; i < usbDevices.size(); ++i) {
+//             std::cout << " [" << i + 1 << "] " << usbDevices[i] << "\n";
+//         }
+
+//         // Biến lựa chọn của người dùng
+//         size_t selection = 0;
+
+//         // Sử dụng Exception_Handler để xử lý đầu vào
+//         Exception_Handler(
+//             "Select a USB device to scan (enter number): ",
+//             selection,
+//             [](const size_t& value) {
+//                 if (value < 1) throw InvalidInputIntegerException();
+//             }
+//         );
+
+//         // Kiểm tra lựa chọn có hợp lệ hay không
+//         validateScanUSB(selection, usbDevices.size());
+
+//         // Lấy đường dẫn USB được chọn
+//         std::string selectedUSB = usbDevices[selection - 1];
+//         std::cout << "\n[INFO] You selected USB Device: " << selectedUSB << "\n";
+
+//         // Bắt đầu quét các file trong USB
+//         unsigned int index = mediaFiles.empty() ? 1 : mediaFiles.rbegin()->first + 1;
+//         for (const auto& entry : std::filesystem::directory_iterator(selectedUSB)) {
+//             if (std::filesystem::is_regular_file(entry)) {
+//                 std::string extension = entry.path().extension().string();
+//                 if (extension == ".mp3" || extension == ".mp4") {
+//                     auto mediaFile = std::make_shared<MediaFile>(
+//                         entry.path().filename().string(),
+//                         entry.path().string(),
+//                         (extension == ".mp3") ? "audio" : "video"
+//                     );
+//                     mediaFiles[index++] = mediaFile;
+//                 }
+//             }
+//         }
+
+//         // Gọi hàm phân trang để hiển thị danh sách media files
+//         if (!mediaFiles.empty()) {
+//             displayPaginatedFiles(mediaFiles);
+//         } else {
+//             std::cout << "[INFO] No MP3/MP4 files found in the selected USB device.\n";
+//         }
+//     } catch (const std::exception& e) {
+//         std::cerr << "[ERROR] Error while scanning USB: " << e.what() << "\n";
+//     }
+// }
 void MediaLibrary::scanUSBDevice() {
     try {
         std::string mountBase = "/media";
         std::vector<std::string> usbDevices;
 
+        // Lấy danh sách các USB devices trong /media
         for (const auto& entry : std::filesystem::directory_iterator(mountBase)) {
             if (std::filesystem::is_directory(entry)) {
                 usbDevices.push_back(entry.path().string());
@@ -104,47 +165,97 @@ void MediaLibrary::scanUSBDevice() {
             return;
         }
 
+        // Hiển thị danh sách các thiết bị USB
         std::cout << "\n[INFO] Available USB Devices:\n";
         for (size_t i = 0; i < usbDevices.size(); ++i) {
             std::cout << " [" << i + 1 << "] " << usbDevices[i] << "\n";
         }
 
-        std::cout << "Select a USB device to scan (enter number): ";
-        int selection1;
-        std::cin >> selection1;
+        // Lựa chọn thiết bị USB
+        size_t selection = 0;
 
-        if (selection1 < 1 || selection1 > usbDevices.size()) {
-            std::cerr << "[ERROR] Invalid selection. Please try again.\n";
-            return;
-        }
+        Exception_Handler(
+            "Select a USB device to scan (enter number): ",
+            selection,
+            [](const size_t& value) {
+                if (value < 1) throw InvalidInputIntegerException();
+            }
+        );
 
-        std::string selectedUSB = usbDevices[selection1 - 1];
+        // Kiểm tra lựa chọn
+        validateScanUSB(selection, usbDevices.size());
+
+        // Đường dẫn USB được chọn
+        std::string selectedUSB = usbDevices[selection - 1];
         std::cout << "\n[INFO] You selected USB Device: " << selectedUSB << "\n";
 
-        unsigned int index = mediaFiles.empty() ? 1 : mediaFiles.rbegin()->first + 1;
+        // Lấy danh sách các thư mục con bên trong USB được chọn
+        std::vector<std::string> subFolders;
         for (const auto& entry : std::filesystem::directory_iterator(selectedUSB)) {
-            if (std::filesystem::is_regular_file(entry)) {
-                std::string extension = entry.path().extension().string();
-                if (extension == ".mp3" || extension == ".mp4") {
-                    auto mediaFile = std::make_shared<MediaFile>(
-                        entry.path().filename().string(),
-                        entry.path().string(),
-                        (extension == ".mp3") ? "audio" : "video");
-                    mediaFiles[index++] = mediaFile;
-                }
+            if (std::filesystem::is_directory(entry)) {
+                subFolders.push_back(entry.path().string());
             }
         }
 
-        // Gọi hàm phân trang để hiển thị danh sách
+        if (subFolders.empty()) {
+            std::cerr << "[ERROR] No subfolders found in the selected USB device.\n";
+            return;
+        }
+
+        // Hiển thị danh sách các thư mục con
+        std::cout << "\n[INFO] Available Folders:\n";
+        for (size_t i = 0; i < subFolders.size(); ++i) {
+            std::cout << " [" << i + 1 << "] " << subFolders[i] << "\n";
+        }
+
+        // Lựa chọn thư mục con
+        Exception_Handler(
+            "Select a folder to scan (enter number): ",
+            selection,
+            [](const size_t& value) {
+                if (value < 1) throw InvalidInputIntegerException();
+            }
+        );
+
+        // Kiểm tra lựa chọn thư mục con
+        validateScanUSB(selection, subFolders.size());
+
+        // Đường dẫn thư mục con được chọn
+        std::string selectedFolder = subFolders[selection - 1];
+        std::cout << "\n[INFO] You selected Folder: " << selectedFolder << "\n";
+        //Xoa bo cac media cu
+        mediaFiles.clear();
+        // Quét tất cả các file MP3/MP4 trong thư mục con
+        unsigned int index = mediaFiles.empty() ? 1 : mediaFiles.rbegin()->first + 1;
+        for (const auto& entry : std::filesystem::recursive_directory_iterator(selectedFolder)) {
+            try {
+                if (std::filesystem::is_regular_file(entry)) {
+                    std::string extension = entry.path().extension().string();
+                    if (extension == ".mp3" || extension == ".mp4") {
+                        auto mediaFile = std::make_shared<MediaFile>(
+                            entry.path().filename().string(),
+                            entry.path().string(),
+                            (extension == ".mp3") ? "audio" : "video"
+                        );
+                        mediaFiles[index++] = mediaFile;
+                    }
+                }
+            } catch (const std::exception& e) {
+                std::cerr << "[WARNING] Error accessing: " << entry.path().string() << " - " << e.what() << "\n";
+            }
+        }
+
+        // Hiển thị danh sách các file media nếu tìm thấy
         if (!mediaFiles.empty()) {
             displayPaginatedFiles(mediaFiles);
         } else {
-            std::cout << "[INFO] No MP3/MP4 files found in the selected USB device.\n";
+            std::cout << "[INFO] No MP3/MP4 files found in the selected folder.\n";
         }
     } catch (const std::exception& e) {
         std::cerr << "[ERROR] Error while scanning USB: " << e.what() << "\n";
     }
 }
+
 
 
 std::string MediaLibrary::truncateString(const std::string& str, size_t width) {
@@ -167,7 +278,7 @@ void MediaLibrary::displayPaginatedFiles(const std::map<unsigned int, std::share
     size_t currentPage = 1;
 
     while (true) {
-        clearScreen();
+        system("clear");
         // Tính khoảng file cho trang hiện tại
         size_t startIndex = (currentPage - 1) * pageSize;
         size_t endIndex = std::min(currentPage * pageSize, totalFiles);

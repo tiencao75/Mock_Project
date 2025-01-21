@@ -66,10 +66,12 @@ public:
     void handleInputData(); // Xử lý dữ liệu từ người dùng và điều hướng logic
     ModelManager& getModelManager();               // Getter cho ModelManager
     ViewManager& getViewManager();                 // Getter cho ViewManager
+    PlayingMediaController& getPlayingMediaController();
 
     // Hàm đọc và ghi dữ liệu
     static std::map<std::string, std::string> readDataFromFile(const std::string& filename);
     static void writeDataToFile(const std::string& filename, const std::map<std::string, std::string>& data);
+    void readPlaylistsFromFile(const std::string& filename) ;
 
 };
 

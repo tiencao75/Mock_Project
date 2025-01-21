@@ -4,14 +4,13 @@
 #include "MediaLibrary.hpp"
 #include "PlaylistLibrary.hpp"
 #include "PlayingMedia.hpp"
-#include "DeviceManager.hpp"
+
 
 class ModelManager {
 private:
     MediaLibrary mediaLibrary;
     PlaylistLibrary playlistLibrary;
     PlayingMedia playingMedia;
-    DeviceManager deviceManager;
     
 
 public:
@@ -19,7 +18,6 @@ public:
     MediaLibrary& getMediaLibrary();
     PlaylistLibrary& getPlaylistLibrary();
     PlayingMedia& getPlayingMedia();
-    DeviceManager& getDeviceManger();
 };
 
 #endif // MODEL_MANAGER_HPP

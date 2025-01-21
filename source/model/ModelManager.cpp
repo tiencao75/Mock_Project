@@ -13,8 +13,5 @@ PlayingMedia& ModelManager::getPlayingMedia() {
     return playingMedia;
 }
 
-DeviceManager& ModelManager::getDeviceManger() {
-    return deviceManager;
-}
 
 

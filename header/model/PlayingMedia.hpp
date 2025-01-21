@@ -8,6 +8,7 @@
 #include <atomic>
 #include <mutex>
 #include <cstdlib>
+#include <SDL2/SDL_ttf.h>
 
 #include <SDL2/SDL_mixer.h>
 #include "MediaFile.hpp"
@@ -23,7 +24,8 @@ public:
     // Singleton Instance
     static PlayingMedia &getInstance();
 
-    void clearScreen(); // 
+    void clearScreen();   //
+    void showMp3Window(); // Hàm hiển thị cửa sổ MP3
 
     // Getters
     const MediaFile *getCurrentMediaFile() const;
@@ -35,6 +37,7 @@ public:
     void setCurrentMediaFile(const MediaFile *mediaFile);
     void setPlaylist(std::shared_ptr<Playlist> playlist);
     void play();
+    void playVideo(const char *filePath); // Play video file (MP4)
     void pause();
     void resume();
     void stop();
@@ -75,9 +78,10 @@ private:
     std::map<unsigned int, MediaFile>::const_iterator currentSong;
     MediaFile *currentMediaFile;
     std::string currentSongName; // Lưu tên bài hát hiện tại
+    std::mutex coutMutex;
 };
 
 // Utility Function
-std::string convertToAudio(const std::string &filePath);
+// std::string convertToAudio(const std::string &filePath);
 
 #endif // PLAYINGMEDIA_HPP

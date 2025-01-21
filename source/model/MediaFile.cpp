@@ -1,11 +1,20 @@
-#include "MediaFile.hpp"
-
-
-MediaFile::MediaFile(const std::string& name, const std::string& path, const std::string& type)
-    : name(name), path(path), type(type) {
-    metadata.loadFromFile(path); // Automatically load metadata
+extern "C" {
+    #include <libavformat/avformat.h>
+    #include <libavutil/avutil.h>
 }
 
+#include "MediaFile.hpp"
+#include <iostream>
+#include <string>
+#include <filesystem>
+
+// Constructor
+MediaFile::MediaFile(const std::string &name, const std::string &path, const std::string &type)
+    : name(name), path(path), type(type) {
+    metadata.loadFromFile(path); // Load metadata tự động
+}
+
+// Getters
 std::string MediaFile::getName() const {
     return name;
 }
@@ -22,7 +31,54 @@ Metadata MediaFile::getMetadata() const {
     return metadata;
 }
 
-void MediaFile::setMetadata(const Metadata& metadata) {
+int MediaFile::getDuration() {
+    // std::cout << "Debug: Starting getDuration() for file: " << path << std::endl;
+
+    // Nếu duration đã được thiết lập, trả về ngay
+    // if (duration > 0) {
+    //     std::cout << "Debug: Duration already set, returning: " << duration << " seconds" << std::endl;
+    //     return duration;
+    // }
+
+    // Kiểm tra tệp có tồn tại không
+    if (!std::filesystem::exists(path)) {
+        std::cerr << "Error: File does not exist: " << path << std::endl;
+        return 0;
+    }
+
+    AVFormatContext *formatContext = nullptr;
+
+    // Mở tệp media
+    if (avformat_open_input(&formatContext, path.c_str(), nullptr, nullptr) != 0) {
+        std::cerr << "Error: Could not open file: " << path << std::endl;
+        return 0;
+    }
+
+    // Lấy thông tin về tệp
+    if (avformat_find_stream_info(formatContext, nullptr) < 0) {
+        std::cerr << "Error: Could not retrieve stream info for file: " << path << std::endl;
+        avformat_close_input(&formatContext);
+        return 0;
+    }
+
+    // Lấy thời lượng tệp
+    if (formatContext->duration != AV_NOPTS_VALUE) {
+        int64_t durationInMicroseconds = formatContext->duration;
+        duration = static_cast<int>(durationInMicroseconds / AV_TIME_BASE); // Chuyển micro giây sang giây
+        // std::cout << "Debug: Duration in seconds = " << duration << std::endl;
+    } else {
+        std::cerr << "Error: Duration not available (AV_NOPTS_VALUE)." << std::endl;
+        duration = 0;
+    }
+
+    // Giải phóng tài nguyên
+    avformat_close_input(&formatContext);
+
+    return duration;
+}
+
+// Setters
+void MediaFile::setMetadata(const Metadata &metadata) {
     this->metadata = metadata;
     metadata.saveToFile(path); // Save updated metadata to file
 }
@@ -34,40 +90,8 @@ void MediaFile::setDuration(int duration) {
     this->duration = duration;
 }
 
-int MediaFile::getDuration() {
-      if (duration > 0) {
-        return duration; // Trả về nếu đã được thiết lập
-    }
-
-    // Lệnh FFmpeg để lấy thông tin thời lượng
-    std::string command = "ffprobe -i \"" + path + "\" -show_entries format=duration -v quiet -of csv=\"p=0\"";
-    FILE* pipe = popen(command.c_str(), "r");
-    if (!pipe) {
-        fprintf(stderr, "Failed to execute ffprobe command.\n");
-
-        return 0;
-    }
-
-    char buffer[128];
-    std::string result = "";
-    while (fgets(buffer, 128, pipe) != nullptr) {
-        result += buffer;
-    }
-    pclose(pipe);
-
-    // Xử lý kết quả để lấy thời lượng
-    try {
-        duration = static_cast<int>(std::stod(result)); // Chuyển đổi chuỗi thành số
-    } catch (const std::exception& e) {
-        fprintf(stderr, "Failed to execute ffprobe command.\n");
-
-        duration = 0;
-    }
-
-    return duration;
-}
-// Toán tử so sánh ==
-bool MediaFile:: operator==(const MediaFile& other) const {
+// Operators
+bool MediaFile::operator==(const MediaFile &other) const {
     return this->name == other.name;
 }
 

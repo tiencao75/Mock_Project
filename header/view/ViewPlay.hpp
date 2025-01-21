@@ -8,7 +8,7 @@
 class ViewPlay : public ViewBase {
 public:
     void show() override;
-    void hide() override;
+    // void hide() override;
     void update(const std::string& data) override;
     std::string getName() const override;
 

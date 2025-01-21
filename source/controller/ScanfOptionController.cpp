@@ -1,7 +1,10 @@
 #include "ScanfOptionController.hpp"
 #include "ControllerManager.hpp"
 #include "ViewScanfOption.hpp"
+#include "ExceptionLib.hpp"
 #include <iostream>
+#include <filesystem>
+#include <stdexcept>
 
 ScanfOptionController::ScanfOptionController(ModelManager& modelManager, ViewManager& viewManager)
     : modelManager(modelManager), viewManager(viewManager) {}
@@ -9,20 +12,20 @@ ScanfOptionController::ScanfOptionController(ModelManager& modelManager, ViewMan
 ScanfOptionController::~ScanfOptionController() {}
 
 void ScanfOptionController::handleDirectoryScan() {
-    auto* scanOptionView = dynamic_cast<ViewScanfOption*>(viewManager.getView("ViewScanfOption"));
+    // auto* scanOptionView = dynamic_cast<ViewScanfOption*>(viewManager.getView("ViewScanfOption"));
 
-    if (scanOptionView) {
-        scanOptionView->update("Enter directory path:");
-    }
+    // if (scanOptionView) {
+    //     scanOptionView->update("Enter directory path:");
+    // }
 
-    std::string path;
-    std::cin >> path;
+    // std::string path;
+    // Exception_Handler("Enter a valid directory path: ", path, validatePath);
 
-    modelManager.getMediaLibrary().scanDirectory(path);
+    // modelManager.getMediaLibrary().scanDirectory(path);
 
-    if (scanOptionView) {
-        scanOptionView->update("Scan completed for directory: " + path);
-    }
+    // if (scanOptionView) {
+    //     scanOptionView->update("Scan completed for directory: " + path);
+    // }
 }
 
 void ScanfOptionController::handleUSBScan() {
@@ -40,20 +43,19 @@ void ScanfOptionController::handleUSBScan() {
 }
 
 void ScanfOptionController::handleInput() {
-    modelManager.getMediaLibrary().clearScreen();
+    viewManager.getCurrentView()->hide();
     const std::string filename = "dataUser.txt";
 
-    // Sử dụng hàm từ ControllerManager
+    // Load data from file
     auto data = ControllerManager::readDataFromFile(filename);
     std::string defaultDirectory = data["defaultDirectory"];
 
     auto* scanOptionView = dynamic_cast<ViewScanfOption*>(viewManager.getView("ViewScanfOption"));
     if (!scanOptionView) {
-        std::cerr << "ViewScanfOption not found." << std::endl;
-        return;
+        throw std::runtime_error("ViewScanfOption not found.");
     }
 
-    // Hiển thị thư mục mặc định hiện tại
+    // Display current default directory
     if (defaultDirectory.empty()) {
         scanOptionView->update("Default directory is empty.");
     } else {
@@ -61,32 +63,35 @@ void ScanfOptionController::handleInput() {
     }
 
     while (true) {
-        // Hiển thị menu tùy chọn
-        std::cout << "1. Add or update default directory\n";
-        std::cout << "2. Use default directory\n";
-        std::cout << "3. Enter custom directory path\n";
-        std::cout << "4. Scan USB devices\n";
-        std::cout << "Enter your choice (1-4): ";
+        viewManager.getView("ViewScanfOption")->show();
+        // viewManager.getCurrentView()->show();
+        size_t choice;
+        Exception_Handler("Enter your choice (1-4): ", choice, validateScanfMenu);
 
-        int choiceInput;
-        std::cin >> choiceInput;
 
-        auto choice = static_cast<ScanOption>(choiceInput);
-
-        switch (choice) {
+        bool backToMenu = false; // Thêm cờ quay lại menu
+        switch (static_cast<ScanOption>(choice)) {
             case ScanOption::AddOrUpdateDefaultDir: {
-                std::cout << "Enter the new default directory path: ";
+                // std::string newPath;
+                // Exception_Handler("Enter the new default directory path: ", newPath, validatePath);
+                // defaultDirectory = newPath;
+                // data["defaultDirectory"] = defaultDirectory;
+                // ControllerManager::writeDataToFile(filename, data);
+                // modelManager.getMediaLibrary().scanDirectory(defaultDirectory);
+                // scanOptionView->update("Default directory updated: " + defaultDirectory);
+                while (true) {
                 std::string newPath;
-                std::cin >> newPath;
+                Exception_Handler("Enter the new default directory path: ", newPath, validatePath, backToMenu);
 
-                if (std::filesystem::exists(newPath) && std::filesystem::is_directory(newPath)) {
-                    defaultDirectory = newPath;
-                    data["defaultDirectory"] = defaultDirectory;
-                    ControllerManager::writeDataToFile(filename, data);
-                    modelManager.getMediaLibrary().scanDirectory(defaultDirectory);
-                    scanOptionView->update("Default directory updated: " + defaultDirectory);
-                } else {
-                    scanOptionView->update("Error: Invalid directory path.");
+                if (backToMenu) {
+                    break;
+                }
+                defaultDirectory = newPath;
+                data["defaultDirectory"] = defaultDirectory;
+                ControllerManager::writeDataToFile(filename, data);
+                modelManager.getMediaLibrary().scanDirectory(defaultDirectory);
+                scanOptionView->update("Default directory updated: " + defaultDirectory);
+                break;
                 }
                 break;
             }
@@ -100,15 +105,21 @@ void ScanfOptionController::handleInput() {
                 break;
             }
             case ScanOption::EnterCustomDir: {
-                std::cout << "Enter the directory path to scan: ";
-                std::string customPath;
-                std::cin >> customPath;
+                // std::string customPath;
+                // Exception_Handler("Enter the directory path to scan: ", customPath, validatePath);
 
-                if (std::filesystem::exists(customPath) && std::filesystem::is_directory(customPath)) {
-                    modelManager.getMediaLibrary().scanDirectory(customPath);
-                    scanOptionView->update("Scanned custom directory: " + customPath);
-                } else {
-                    scanOptionView->update("Error: Invalid directory path.");
+                // modelManager.getMediaLibrary().scanDirectory(customPath);
+                // scanOptionView->update("Scanned custom directory: " + customPath);
+                while (true) {
+                std::string customPath;
+                Exception_Handler("Enter the directory path to scan: ", customPath, validatePath, backToMenu);
+
+                if (backToMenu) {
+                    break; 
+                }
+                modelManager.getMediaLibrary().scanDirectory(customPath);
+                scanOptionView->update("Scanned custom directory: " + customPath);
+                break;
                 }
                 break;
             }
@@ -123,7 +134,7 @@ void ScanfOptionController::handleInput() {
                 break;
         }
 
-        if (choice >= ScanOption::AddOrUpdateDefaultDir && choice <= ScanOption::ScanUSB) {
+        if (static_cast<ScanOption>(choice) >= ScanOption::AddOrUpdateDefaultDir && static_cast<ScanOption>(choice) <= ScanOption::ScanUSB && (backToMenu == false)) {
             break;
         }
     }

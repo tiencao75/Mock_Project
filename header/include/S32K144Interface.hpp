@@ -1,22 +1,42 @@
-// S32K144Interface.hpp
+// S32K144Interface.hpp (Cập nhật đầy đủ với con trỏ player)
 #ifndef S32K144INTERFACE_HPP
 #define S32K144INTERFACE_HPP
 
-#include <string>
+#include <boost/asio.hpp>
+#include <thread>
+#include <mutex>
+#include <cstdint>
+
+class PlayingMediaController; // Forward declaration
 
 class S32K144Interface {
 public:
-    // Constructor
-    S32K144Interface();
+    static S32K144Interface& getInstance(PlayingMediaController& playerController);
 
-    // Destructor
-    virtual ~S32K144Interface();
+    void startReadingSignal();
+    void stopReadingSignal();
+    void sendTime(uint8_t minutes, uint8_t seconds);
+    //boost::asio::deadline_timer timer; // Timer quản lý timeout
+private:
+    S32K144Interface(PlayingMediaController& playerController);
+    ~S32K144Interface();
 
-    // Set the volume on the hardware
-    virtual void setVolume(int level) = 0;
+    S32K144Interface(const S32K144Interface&) = delete;
+    S32K144Interface& operator=(const S32K144Interface&) = delete;
 
-    // Update the hardware display
-    virtual void updateDisplay(const std::string& info) = 0;
+    void readSignal();
+
+    PlayingMediaController* player; // Con trỏ đến PlayingMediaController
+    boost::asio::io_service io;
+    boost::asio::serial_port serial;
+    std::thread readingThread;
+    bool running;
+    boost::asio::deadline_timer timer; // Thêm timer để quản lý timeout
+
+    static std::mutex instanceMutex;
+    static std::mutex signalMutex;
+    static S32K144Interface* instance;
+    bool connected; // Trạng thái kết nối
 };
 
 #endif // S32K144INTERFACE_HPP

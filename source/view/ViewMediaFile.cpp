@@ -4,12 +4,20 @@
 ViewMediaFile::ViewMediaFile() : currentPage(0) {}
 
 void ViewMediaFile::show() {
-    std::cout << "Displaying Media File View..." << std::endl;
+    std::cout << "\n";
+    std::cout << "=============================================\n";
+    std::cout << "              📂 Media Options Menu 📂       \n";
+    std::cout << "=============================================\n";
+    std::cout << "  1. Show All Media Files                    \n";
+    std::cout << "  2. Show Metadata                           \n";
+    std::cout << "  0. Back to Main Menu                       \n";
+    std::cout << "=============================================\n";
+
 }
 
-void ViewMediaFile::hide() {
-    std::cout << "Hiding Media File View..." << std::endl;
-}
+// void ViewMediaFile::hide() {
+//     std::cout << "Hiding Media File View..." << std::endl;
+// }
 
 void ViewMediaFile::update(const std::string& data) {
     std::cout << data << std::endl;

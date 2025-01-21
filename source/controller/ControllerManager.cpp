@@ -7,8 +7,12 @@
 #include "ViewDetailedPlaylist.hpp"
 #include "ViewPlay.hpp"
 #include "ViewMetadata.hpp"
+#include "ExceptionLib.hpp"
+#include "PlayingMediaController.hpp"
+#include "S32K144Interface.hpp"
 #include <fstream>
 #include <iostream>
+#include <mutex>
 
 ControllerManager::ControllerManager()
     : scanfOptionController(modelManager, viewManager),
@@ -36,6 +40,10 @@ ModelManager& ControllerManager::getModelManager() {
 // Getter cho ViewManager
 ViewManager& ControllerManager::getViewManager() {
     return viewManager;
+}
+
+PlayingMediaController& ControllerManager::getPlayingMediaController() {
+    return playingMediaController;
 }
 
 std::map<std::string, std::string> ControllerManager::readDataFromFile(const std::string& filename) {
@@ -71,199 +79,141 @@ void ControllerManager::writeDataToFile(const std::string& filename, const std::
     }
 }
 
-void ControllerManager::handleInputData() {
-    // Bước 1: Gọi hàm handleInput trong ScanfOptionController
-    scanfOptionController.handleInput();
+void ControllerManager::readPlaylistsFromFile(const std::string& filename) {
+    std::ifstream inFile(filename);
+    if (!inFile) {
+        std::cerr << "Error: Unable to open file " << filename << " for reading.\n";
+        return;
+    }
 
-    // Bước 2: Hiển thị menu chính
-    bool isRunning = true;
-    while (isRunning) {
-        modelManager.getMediaLibrary().clearScreen();
-        // Hiển thị Main Menu
-        mainMenuController.showMainMenu();
+    std::map<unsigned int, std::shared_ptr<Playlist>> playlists;
+    std::string line;
+    std::shared_ptr<Playlist> currentPlaylist = nullptr;
+    unsigned int playlistIndex = 1;
 
-        // Đọc lựa chọn của người dùng
-        int selectionInput;
-        std::cin >> selectionInput;
-        auto selection = static_cast<MainMenuOption>(selectionInput);
+    while (std::getline(inFile, line)) {
+        try {
+            if (line.rfind("Playlist: ", 0) == 0) { // Bắt đầu một playlist mới
+                std::string playlistName = line.substr(10);
+                currentPlaylist = std::make_shared<Playlist>(playlistName);
+                playlists[playlistIndex++] = currentPlaylist;
+            } else if (line == "---") { // Dấu phân cách playlist
+                currentPlaylist = nullptr;
+            } else if (currentPlaylist && !line.empty()) { // Đọc bài hát
+                std::istringstream ss(line);
+                unsigned int songID;
+                std::string songPath, songType;
 
-        switch (selection) {
-            case MainMenuOption::SacanfOption:{
-                scanfOptionController.handleInput();
-                break;
-            }
-            case MainMenuOption::MediaFiledData: {
-                mediaFileController.handleInput();
-                break;
-            }
-            case MainMenuOption::EditMetadata: {
-                metadataController.handleInput();
-                break;
-            }
-            // case MainMenuOption::ManagerPlayList: {
-            // auto* playlistView = dynamic_cast<ViewPlaylist*>(viewManager.getView("ViewPlaylist"));
-            // if (playlistView) {
-            //     bool isManagingPlaylist = true;
-            //     while (isManagingPlaylist) {
-            //         // Hiển thị menu Playlist
-            //         std::cout << "\nPlaylist Menu: [1] Create [2] Delete [3] View [4] Add Song [5] Remove Song [0] Exit\n";
-            //         std::cout << "Enter your choice: ";
-            //         int playlistMenuOption;
-            //         std::cin >> playlistMenuOption;
-
-            //         switch (playlistMenuOption) {
-            //             case 1: { // Create Playlist
-            //                 std::cout << "Enter the name of the new playlist: ";
-            //                 std::string playlistName;
-            //                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
-            //                 std::getline(std::cin, playlistName);
-
-            //                 Playlist newPlaylist(playlistName);
-            //                 try {
-            //                     modelManager.getPlaylistLibrary().addPlaylist(newPlaylist);
-            //                     std::cout << "Playlist '" << playlistName << "' created successfully!\n";
-            //                 } catch (const std::exception& e) {
-            //                     std::cerr << "Error: " << e.what() << "\n";
-            //                 }
-            //                 break;
-            //             }
-            //             case 2: { // Delete Playlist
-            //                 std::cout << "Enter the name of the playlist to delete: ";
-            //                 std::string playlistName;
-            //                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
-            //                 std::getline(std::cin, playlistName);
-
-            //                 try {
-            //                     modelManager.getPlaylistLibrary().removePlaylist(playlistName);
-            //                     std::cout << "Playlist '" << playlistName << "' deleted successfully!\n";
-            //                 } catch (const std::exception& e) {
-            //                     std::cerr << "Error: " << e.what() << "\n";
-            //                 }
-            //                 break;
-            //             }
-            //             case 3: { // View Playlists
-            //                 auto playlists = modelManager.getPlaylistLibrary().getAllPlaylists();
-            //                 if (playlists.empty()) {
-            //                     std::cout << "No playlists available.\n";
-            //                 } else {
-            //                     std::cout << "Playlists:\n";
-            //                     for (const auto& playlist : playlists) {
-            //                         std::cout << " - " << playlist->getName() << "\n";
-            //                     }
-
-            //                     std::cout << "\nEnter the name of the playlist to view details: ";
-            //                     std::string playlistName;
-            //                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
-            //                     std::getline(std::cin, playlistName);
-
-            //                     try {
-            //                         auto selectedPlaylist = modelManager.getPlaylistLibrary().getPlaylistByName(playlistName);
-
-            //                         std::cout << "Songs in playlist '" << playlistName << "':\n";
-            //                         auto songs = selectedPlaylist->getSongs();
-            //                         if (songs.empty()) {
-            //                             std::cout << "No songs in this playlist.\n";
-            //                         } else {
-            //                             for (const auto& song : songs) {
-            //                                 std::cout << " - " << song.getName() << " (" << song.getType() << ")\n";
-            //                             }
-            //                         }
-            //                     } catch (const std::exception& e) {
-            //                         std::cerr << "Error: " << e.what() << "\n";
-            //                     }
-            //                 }
-            //                 break;
-            //             }
-            //             case 4: { // Add Song to Playlist
-            //                 std::cout << "Enter the name of the playlist to add a song: ";
-            //                 std::string playlistName;
-            //                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
-            //                 std::getline(std::cin, playlistName);
-
-            //                 try {
-            //                     auto playlist = modelManager.getPlaylistLibrary().getPlaylistByName(playlistName);
-
-            //                     std::cout << "Enter the name of the song to add: ";
-            //                     std::string songName;
-            //                     std::getline(std::cin, songName);
-
-            //                     auto mediaFile = modelManager.getMediaLibrary().getMediaFileByName(songName);
-            //                     if (mediaFile) {
-            //                         playlist->addSong(*mediaFile);
-            //                         std::cout << "Song '" << songName << "' added to playlist '" << playlistName << "' successfully!\n";
-            //                     } else {
-            //                         std::cerr << "Error: Song not found in media library.\n";
-            //                     }
-            //                 } catch (const std::exception& e) {
-            //                     std::cerr << "Error: " << e.what() << "\n";
-            //                 }
-            //                 break;
-            //             }
-            //             case 5: { // Remove Song from Playlist
-            //                 std::cout << "Enter the name of the playlist to remove a song: ";
-            //                 std::string playlistName;
-            //                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
-            //                 std::getline(std::cin, playlistName);
-
-            //                 try {
-            //                     auto playlist = modelManager.getPlaylistLibrary().getPlaylistByName(playlistName);
-
-            //                     std::cout << "Enter the name of the song to remove: ";
-            //                     std::string songName;
-            //                     std::getline(std::cin, songName);
-
-            //                     auto mediaFile = modelManager.getMediaLibrary().getMediaFileByName(songName);
-            //                     if (mediaFile) {
-            //                         playlist->removeSong(*mediaFile);
-            //                         std::cout << "Song '" << songName << "' removed from playlist '" << playlistName << "' successfully!\n";
-            //                     } else {
-            //                         std::cerr << "Error: Song not found in media library.\n";
-            //                     }
-            //                 } catch (const std::exception& e) {
-            //                     std::cerr << "Error: " << e.what() << "\n";
-            //                 }
-            //                 break;
-            //             }
-            //             case 0: { // Exit Playlist Menu
-            //                 isManagingPlaylist = false;
-            //                 break;
-            //             }
-            //             default: {
-            //                 std::cout << "Invalid option. Please try again.\n";
-            //             }
-            //         }
-            //     }
-            // } else {
-            //     std::cerr << "Error: Playlist View not found.\n";
-            // }
-            // break;
-            // }
-            case MainMenuOption::ManagerPlayList: { // Manage playlists
-                playlistController.handleInput(); // Delegate to PlaylistController
-                break;
-            }
-            case MainMenuOption::PlayingMedia:{
-                playingMediaController.handleInput();
-                break;
-            }
-
-            case MainMenuOption::Exit: { // Thoát chương trình
-                auto* mainMenuView = dynamic_cast<ViewMainMenu*>(viewManager.getView("ViewMainMenu"));
-                if (mainMenuView) {
-                    mainMenuView->update("Exiting application...");
+                if (std::getline(ss, line, ',') && std::stringstream(line) >> songID &&
+                    std::getline(ss, songPath, ',') &&
+                    std::getline(ss, songType)) {
+                    MediaFile song(songPath.substr(songPath.find_last_of("/") + 1), songPath, songType);
+                    currentPlaylist->addSong(songID, song);
+                } else {
+                    std::cerr << "Warning: Invalid song format in line: " << line << "\n";
                 }
-                isRunning = false;
-                break;
             }
-   
-            default: { // Lựa chọn không hợp lệ
-                auto* mainMenuView = dynamic_cast<ViewMainMenu*>(viewManager.getView("ViewMainMenu"));
-                if (mainMenuView) {
-                    mainMenuView->update("Invalid option. Please try again.");
-                }
-                break;
-            }
+        } catch (const std::exception& e) {
+            std::cerr << "Error processing line: " << line << "\n";
+            std::cerr << "Exception: " << e.what() << "\n";
         }
     }
+
+    inFile.close();
+
+    // Cập nhật danh sách playlist
+    modelManager.getPlaylistLibrary().setPlaylists(playlists);
+    std::cout << "Playlists loaded from file: " << filename << "\n";
 }
 
+void ControllerManager::handleInputData() {
+    const std::string filename = "playlistsData.txt";
+    try {
+        readPlaylistsFromFile(filename);
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << "\n";
+    }
+    try {
+        // Step 1: Call handleInput in ScanfOptionController
+        scanfOptionController.handleInput();
+        auto& s32kInterface = S32K144Interface::getInstance(playingMediaController);
+        s32kInterface.startReadingSignal();
+
+        // Step 2: Display main menu
+        bool isRunning = true;
+        while (isRunning) {
+            // viewManager.getCurrentView()->pauseScreen();
+            viewManager.getCurrentView()->hide();
+
+            // Display Main Menu
+            mainMenuController.showMainMenu();
+            // Read user input and validate
+            size_t selectionInput;
+            Exception_Handler("Enter main menu choice: ", selectionInput, validateMainMenu);
+
+            auto selection = static_cast<MainMenuOption>(selectionInput);
+
+            switch (selection) {
+                case MainMenuOption::SacanfOption: {
+                    try {
+                        scanfOptionController.handleInput();
+                    } catch (const std::exception& e) {
+                        std::cerr << "Error handling ScanfOption: " << e.what() << std::endl;
+                    }
+                    break;
+                }
+                case MainMenuOption::MediaFiledData: {
+                    try {
+                        mediaFileController.handleInput();
+                    } catch (const std::exception& e) {
+                        std::cerr << "Error handling MediaFileData: " << e.what() << std::endl;
+                    }
+                    break;
+                }
+                case MainMenuOption::EditMetadata: {
+                    try {
+                        metadataController.handleInput();
+                    } catch (const std::exception& e) {
+                        std::cerr << "Error handling EditMetadata: " << e.what() << std::endl;
+                    }
+                    break;
+                }
+                case MainMenuOption::ManagerPlayList: {
+                    try {
+                        playlistController.handleInput();
+                    } catch (const std::exception& e) {
+                        std::cerr << "Error handling PlaylistManager: " << e.what() << std::endl;
+                    }
+                    break;
+                }
+                case MainMenuOption::PlayingMedia: {
+                    try {
+                        
+                        playingMediaController.handleInput();
+                    } catch (const std::exception& e) {
+                        std::cerr << "Error handling PlayingMedia: " << e.what() << std::endl;
+                    }
+                    break;
+                }
+                case MainMenuOption::Exit: {
+                    auto* mainMenuView = dynamic_cast<ViewMainMenu*>(viewManager.getView("ViewMainMenu"));
+                    if (mainMenuView) {
+                        s32kInterface.stopReadingSignal();
+                        mainMenuView->update("Exiting application...");
+                    }
+                    isRunning = false;
+                    break;
+                }
+                default: {
+                    auto* mainMenuView = dynamic_cast<ViewMainMenu*>(viewManager.getView("ViewMainMenu"));
+                    if (mainMenuView) {
+                        mainMenuView->update("Invalid option. Please try again.");
+                    }
+                    break;
+                }
+            }
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Critical error in handleInputData: " << e.what() << std::endl;
+    }
+}

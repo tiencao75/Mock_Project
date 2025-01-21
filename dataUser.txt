@@ -1,1 +1,1 @@
-defaultDirectory=/home/hieuphan/HP/model/video/
+defaultDirectory=/home/tienck/Documents/Music

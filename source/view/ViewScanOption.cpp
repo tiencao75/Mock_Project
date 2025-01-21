@@ -2,12 +2,21 @@
 #include <iostream>
 
 void ViewScanfOption::show() {
-    std::cout << "Displaying Scan Option Menu..." << std::endl;
+    std::cout << "\n";
+    std::cout << "=============================================\n";
+    std::cout << "               📂 SCAN MENU 📂               \n";
+    std::cout << "=============================================\n";
+    std::cout << "  1. Add or update default directory         \n";
+    std::cout << "  2. Use default directory                   \n";
+    std::cout << "  3. Enter custom directory path             \n";
+    std::cout << "  4. Scan USB devices                        \n";
+    std::cout << "=============================================\n";
+    std::cout << "👉 Please select an option (1-4): ";
 }
 
-void ViewScanfOption::hide() {
-    std::cout << "Hiding Scan Option Menu..." << std::endl;
-}
+// void ViewScanfOption::hide() {
+//     std::cout << "Hiding Scan Option Menu..." << std::endl;
+// }
 
 void ViewScanfOption::update(const std::string& data) {
     std::cout << "Updating Scan Option View with data: " << data << std::endl;

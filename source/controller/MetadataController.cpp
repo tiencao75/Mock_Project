@@ -1,5 +1,7 @@
 #include "MetadataController.hpp"
+#include "ExceptionLib.hpp"
 #include <iostream>
+#include <iomanip> // Để sử dụng std::setw và std::left
 #include <limits>
 
 // Constructor
@@ -26,11 +28,11 @@ void MetadataController::updateMediaFileMetadata(MediaFile &file, const std::str
 }
 void MetadataController::handleInput()
 {
-    modelManager.getMediaLibrary().clearScreen();
+    viewManager.getCurrentView()->hide();
     auto *metadataView = dynamic_cast<ViewMetadata *>(viewManager.getView("ViewMetadata"));
     if (!metadataView)
     {
-        throw std::runtime_error("ViewMetadata not found.");
+        throw ViewNotFoundException("ViewMetadata not found.");
     }
 
     // Hiển thị danh sách các tệp media
@@ -38,103 +40,92 @@ void MetadataController::handleInput()
     if (mediaFiles.empty())
     {
         metadataView->update("No media files available.");
+        viewManager.getCurrentView()->pauseScreen();
         return;
     }
 
+    viewManager.getCurrentView()->hide();
     metadataView->update("=== Available Media Files ===");
-    for (const auto &[id, mediaFile] : mediaFiles)
-    {
-        metadataView->update(std::to_string(id) + ": " + mediaFile->getName());
-    }
+    // for (const auto &[id, mediaFile] : mediaFiles)
+    // {
+    //     metadataView->update(std::to_string(id) + ": " + mediaFile->getName());
+    // }
+    modelManager.getMediaLibrary().displayPaginatedFiles(mediaFiles);
 
-    // Yêu cầu người dùng chọn tệp bằng ID
-    metadataView->update("Enter the ID of the media file to edit metadata: ");
-    unsigned int fileID;
-    std::cin >> fileID;
-    if (std::cin.fail())
-    {
-        metadataView->update("Invalid input. Please enter a valid number.");
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        return;
-    }
+    size_t fileID;
+    Exception_Handler("Enter the ID of the media file to edit metadata: ", fileID, validateID);
 
     auto mediaFile = modelManager.getMediaLibrary().getMediaFileByIndex(fileID);
     if (!mediaFile)
     {
-        metadataView->update("Media file not found.");
-        return;
+        throw MediaFileNotFoundException("Media file with the provided ID does not exist.");
     }
 
-    // Lấy metadata hiện tại
-    std::map<std::string, std::string> currentMetadata = getMediaFileMetadata(*mediaFile);
-    const std::map<std::string, std::string> originalMetadata = currentMetadata;
+    auto currentMetadata = getMediaFileMetadata(*mediaFile);
+    const auto originalMetadata = currentMetadata;
 
-    int choice;
+    size_t choice;
     do
     {
         // Hiển thị metadata hiện tại
         metadataView->update("\n=== Current Metadata ===");
-        for (const auto &[key, value] : currentMetadata)
-        {
-            metadataView->update(key + ": " + value);
+
+        for (const auto &[key, value] : currentMetadata) {
+            std::cout << std::setw(20) << std::left // Key canh lề trái, độ dài tối đa 20 ký tự
+                    << key 
+                    << ": " 
+                    << (value.empty() ? "unknown" : value) // Giá trị hiển thị "unknown" nếu rỗng
+                    << "\n";
         }
+
 
         // Hiển thị menu chỉnh sửa
-        metadataView->update("\nChoose an option to edit metadata:");
-        metadataView->update("1. Edit Title");
-        metadataView->update("2. Edit Artist");
-        metadataView->update("3. Edit Album");
-        metadataView->update("4. Edit Genre");
-        metadataView->update("5. Edit Year");
-        metadataView->update("6. Edit Track");
-        metadataView->update("7. Restore Original Values");
-        metadataView->update("0. Exit Editing");
-        metadataView->update("Enter your choice: ");
+        // metadataView->update("\nChoose an option to edit metadata:");
+        // metadataView->update("1. Edit Title");
+        // metadataView->update("2. Edit Artist");
+        // metadataView->update("3. Edit Album");
+        // metadataView->update("4. Edit Genre");
+        // metadataView->update("5. Edit Year");
+        // metadataView->update("6. Edit Track");
+        // metadataView->update("7. Restore Original Values");
+        // metadataView->update("0. Exit Editing");
+        viewManager.getCurrentView()->hide();
+        viewManager.getView("ViewMetadata")->show();
 
-        std::cin >> choice;
-        if (std::cin.fail())
-        {
-            metadataView->update("Invalid input. Please enter a number.");
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            continue;
-        }
-
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
+        Exception_Handler("Enter your choice: ", choice, validateEditAudioMenu);
 
         std::string newValue;
         switch (choice)
         {
         case 1:
-            metadataView->update("Enter new title: ");
-            std::getline(std::cin, newValue);
+            Exception_Handler("Enter new title: ", newValue, validateAlphaSring);
             currentMetadata["Title"] = newValue;
+            viewManager.getCurrentView()->pauseScreen();
             break;
         case 2:
-            metadataView->update("Enter new artist: ");
-            std::getline(std::cin, newValue);
+            Exception_Handler("Enter new artist: ", newValue, validateAlphaSring);
             currentMetadata["Artist"] = newValue;
+            viewManager.getCurrentView()->pauseScreen();
             break;
         case 3:
-            metadataView->update("Enter new album: ");
-            std::getline(std::cin, newValue);
+            Exception_Handler("Enter new album: ", newValue, validateAlphaSring);
             currentMetadata["Album"] = newValue;
+            viewManager.getCurrentView()->pauseScreen();
             break;
         case 4:
-            metadataView->update("Enter new genre: ");
-            std::getline(std::cin, newValue);
+            Exception_Handler("Enter new genre: ", newValue, validateAlphaSring);
             currentMetadata["Genre"] = newValue;
+            viewManager.getCurrentView()->pauseScreen();
             break;
         case 5:
-            metadataView->update("Enter new year: ");
-            std::getline(std::cin, newValue);
+            Exception_Handler("Enter new year: ", newValue, validateYear);
             currentMetadata["Year"] = newValue;
+            viewManager.getCurrentView()->pauseScreen();
             break;
         case 6:
-            metadataView->update("Enter new track: ");
-            std::getline(std::cin, newValue);
+            Exception_Handler("Enter new track: ", newValue, validateTrack);
             currentMetadata["Track"] = newValue;
+            viewManager.getCurrentView()->pauseScreen();
             break;
         case 7:
             metadataView->update("Restoring original values...");
@@ -144,12 +135,15 @@ void MetadataController::handleInput()
             }
             metadataView->update("Original metadata restored successfully.");
             currentMetadata = originalMetadata;
+            viewManager.getCurrentView()->pauseScreen();
             break;
         case 0:
             metadataView->update("Exiting editing...");
+            viewManager.getCurrentView()->pauseScreen();
             break;
         default:
             metadataView->update("Invalid choice, please try again.");
+            viewManager.getCurrentView()->pauseScreen();
         }
 
         // Cập nhật metadata nếu có thay đổi

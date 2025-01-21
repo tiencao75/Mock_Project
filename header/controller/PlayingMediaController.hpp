@@ -1,22 +1,17 @@
-#ifndef PLAYINGMEDIA_CONTROLLER_HPP
-#define PLAYINGMEDIA_CONTROLLER_HPP
+#ifndef PLAYING_MEDIA_CONTROLLER_HPP
+#define PLAYING_MEDIA_CONTROLLER_HPP
 
+#include <string>
 #include "ModelManager.hpp"
 #include "ViewManager.hpp"
-#include "MediaFile.hpp"
-#include "PlaylistLibrary.hpp"
 
-class PlayingMediaController
-{
-private:
-    // ControllerManager* controllerManager;
-    ModelManager &modelManager;
-    ViewManager &viewManager;
-
+class PlayingMediaController {
 public:
+    // Constructor & Destructor
     PlayingMediaController(ModelManager &modelManager, ViewManager &viewManager);
     ~PlayingMediaController();
 
+    // Existing functions
     void playMediaFile(MediaFile &file);
     void play();
     void pause();
@@ -24,9 +19,16 @@ public:
     void stop();
     void skipToNext();
     void skipToPrevious();
-    void adjustVolume(int newVolume);
+    void adjustVolume(size_t newVolume);
     void play_Playlist(PlaylistLibrary &library);
     void handleInput();
+
+    // New function to play video in a separate thread
+    void playVideoInThread(const std::string &filePath);
+
+private:
+    ModelManager &modelManager;
+    ViewManager &viewManager;
 };
 
-#endif // PLAYINGMEDIA_CONTROLLER_HPP
+#endif

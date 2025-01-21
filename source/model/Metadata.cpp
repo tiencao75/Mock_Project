@@ -62,13 +62,13 @@ void Metadata::saveToFile(const std::string& filePath) const {
     TagLib::Tag* tag = fileRef.tag();
 
     if (data.find("Title") != data.end()) {
-        tag->setTitle(TagLib::String(data.at("Title")));
+        tag->setTitle(TagLib::String(data.at("Title").c_str(), TagLib::String::UTF8));
     }
     if (data.find("Artist") != data.end()) {
-        tag->setArtist(TagLib::String(data.at("Artist")));
+        tag->setArtist(TagLib::String(data.at("Artist").c_str(), TagLib::String::UTF8));
     }
     if (data.find("Album") != data.end()) {
-        tag->setAlbum(TagLib::String(data.at("Album")));
+        tag->setAlbum(TagLib::String(data.at("Album").c_str(), TagLib::String::UTF8));
     }
     if (data.find("Year") != data.end()) {
         tag->setYear(std::stoi(data.at("Year")));
@@ -77,7 +77,7 @@ void Metadata::saveToFile(const std::string& filePath) const {
         tag->setTrack(std::stoi(data.at("Track")));
     }
     if (data.find("Genre") != data.end()) {
-        tag->setGenre(TagLib::String(data.at("Genre")));
+        tag->setGenre(TagLib::String(data.at("Genre").c_str(), TagLib::String::UTF8));
     }
 
     if (!fileRef.save()) {

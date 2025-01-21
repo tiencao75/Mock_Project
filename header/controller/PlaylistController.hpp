@@ -136,7 +136,7 @@ public:
 
     // Save playlist data to a file (formatted)
     void writePlaylistsToFile(const std::string& filename) ;
-    void readPlaylistsFromFile(const std::string& filename) ;
+    // void readPlaylistsFromFile(const std::string& filename) ;
 };
 
 #endif // PLAYLISTCONTROLLER_HPP

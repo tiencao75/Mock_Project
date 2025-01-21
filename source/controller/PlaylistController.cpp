@@ -1,4 +1,5 @@
 #include "PlaylistController.hpp"
+#include "ExceptionLib.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -13,39 +14,25 @@ PlaylistController::PlaylistController(ModelManager& modelManager, ViewManager& 
 // Destructor
 PlaylistController::~PlaylistController() {}
 
-// Handle user input for playlist management
+
+
 void PlaylistController::handleInput() {
-    modelManager.getMediaLibrary().clearScreen();
+    viewManager.getCurrentView()->hide();
     const std::string filename = "playlistsData.txt";
-    try {
-        readPlaylistsFromFile(filename);
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << "\n";
-    }
+    // try {
+    //     readPlaylistsFromFile(filename);
+    // } catch (const std::exception& e) {
+    //     std::cerr << "Error: " << e.what() << "\n";
+    // }
     bool isManagingPlaylist = true;
 
     while (isManagingPlaylist) {
-        std::cout << "\n=== Playlist Menu ===\n";
-        std::cout << "[1] Create Playlist\n";
-        std::cout << "[2] Delete Playlist\n";
-        std::cout << "[3] View All Playlists\n";
-        std::cout << "[4] Add Song to Playlist\n";
-        std::cout << "[5] Remove Song from Playlist\n";
-        std::cout << "[6] View Songs in a Playlist\n";
-        std::cout << "[0] Exit Playlist Menu\n";
-        std::cout << "Enter your choice: ";
+        viewManager.getCurrentView()->hide();
+        viewManager.getView("ViewPlaylist")->show();
 
-        int choice;
-        std::cin >> choice;
 
-        if (std::cin.fail()) {
-            std::cout << "Invalid input. Please enter a number.\n";
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            continue;
-        }
-
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
+        size_t choice;
+        Exception_Handler("Enter your choice: ", choice, validatePlaylistsMenu);
 
         try {
             switch (choice) {
@@ -68,6 +55,7 @@ void PlaylistController::handleInput() {
 
                     if (isDuplicate) {
                         std::cout << "Error: A playlist with the name '" << playlistName << "' already exists.\n";
+                        viewManager.getCurrentView()->pauseScreen();
                     } else {
                         // Thêm playlist mới nếu tên không trùng lặp
                         modelManager.getPlaylistLibrary().addPlaylist(
@@ -76,45 +64,57 @@ void PlaylistController::handleInput() {
                         );
                         std::cout << "Playlist '" << playlistName << "' created successfully!\n";
                     }
+                    viewManager.getCurrentView()->pauseScreen();
 
                     break;
                 }
 
 
                 case 2: { // Delete Playlist
+                    viewManager.getCurrentView()->hide();
                     auto playlists = modelManager.getPlaylistLibrary().getAllPlaylists();
 
                     // Kiểm tra nếu không có playlist nào
                     if (playlists.empty()) {
                         std::cout << "No playlists available to delete.\n";
+                        viewManager.getCurrentView()->pauseScreen();
                         break;
                     }
 
-                    // // Hiển thị danh sách playlist
-                    // std::cout << "Available Playlists:\n";
-                    // for (const auto& [index, playlist] : playlists) {
-                    //     std::cout << "Index: " << index << ", Name: " << playlist->getName() << "\n";
-                    // }
-                    std::cout << std::left << std::setw(10) << "Index"<< std::setw(30) << "Playlist Name" << "\n";
-                    std::cout << std::string(40, '-') << "\n"; // Dòng gạch ngang phân cách
+                    // Hiển thị danh sách playlist
+                    std::cout << std::left << std::setw(10) << "Index" << std::setw(30) << "Playlist Name" << "\n";
+                    std::cout << std::string(40, '-') << "\n";
+                    for (const auto& [index, playlist] : playlists) {
+                        std::cout << std::left << std::setw(10) << index << std::setw(30) << playlist->getName() << "\n";
+                    }
 
-                    for (const auto& [index, playlist] : playlists) {std::cout << std::left << std::setw(10) << index<< std::setw(30) << playlist->getName() << "\n";
-}
-
-                    // Yêu cầu người dùng nhập index để xóa
-                    std::cout << "Enter the index of the playlist to delete: ";
-                    unsigned int index;
-                    std::cin >> index;
+                    size_t index;
+                    Exception_Handler("Enter the index of the playlist to delete: ", index, validatePosInteger);
 
                     // Kiểm tra nếu index hợp lệ
                     if (playlists.find(index) == playlists.end()) {
-                        std::cout << "Error: Playlist with index " << index << " does not exist.\n";
+                        std::cout << "[ERROR] Playlist with index " << index << " does not exist.\n";
                     } else {
+                        // Xác nhận xóa playlist
+                        std::cout << "Are you sure you want to delete the playlist '" << playlists[index]->getName()
+                                << "'? (y/n): ";
+                        char confirmation;
+                        std::cin >> confirmation;
+                        std::cin.ignore();
+
+                        if (std::tolower(confirmation) != 'y') {
+                            std::cout << "[INFO] Deletion canceled.\n";
+                            viewManager.getCurrentView()->pauseScreen();
+                            break;
+                        }
+
                         // Xóa playlist
                         modelManager.getPlaylistLibrary().removePlaylist(index);
-                        std::cout << "Playlist with index " << index << " deleted successfully!\n";
+                        viewManager.getCurrentView()->hide();
+                        std::cout << "[INFO] Playlist with index " << index << " has been deleted successfully!\n";
 
-                        // Cập nhật lại index của các playlist còn lại
+                        // Cập nhật lại danh sách
+                        std::cout << "[INFO] Updating playlist indexes...\n";
                         auto updatedPlaylists = modelManager.getPlaylistLibrary().getAllPlaylists();
                         std::map<unsigned int, std::shared_ptr<Playlist>> reorderedPlaylists;
                         unsigned int newIndex = 1;
@@ -123,23 +123,28 @@ void PlaylistController::handleInput() {
                             reorderedPlaylists[newIndex++] = playlist;
                         }
 
-                        // Ghi lại thứ tự mới vào PlaylistLibrary
                         modelManager.getPlaylistLibrary().setPlaylists(reorderedPlaylists);
 
-                        // Hiển thị danh sách sau khi cập nhật
-                        std::cout << "Updated Playlist Indexes:\n";
+                        // Hiển thị danh sách đã cập nhật
+                        std::cout << "\n=== Updated Playlist Indexes ===\n";
+                        std::cout << std::left << std::setw(10) << "Index" << std::setw(30) << "Playlist Name" << "\n";
+                        std::cout << std::string(40, '-') << "\n";
                         for (const auto& [newIndex, playlist] : reorderedPlaylists) {
-                            std::cout << "Index: " << newIndex << ", Name: " << playlist->getName() << "\n";
+                            std::cout << std::left << std::setw(10) << newIndex << std::setw(30) << playlist->getName() << "\n";
                         }
                     }
 
+                    // Tạm dừng trước khi quay lại menu
+                    viewManager.getCurrentView()->pauseScreen();
                     break;
                 }
 
                 case 3: { // View All Playlists
+                    viewManager.getCurrentView()->hide();
                     auto playlists = modelManager.getPlaylistLibrary().getAllPlaylists();
                     if (playlists.empty()) {
                         std::cout << "No playlists available.\n";
+                        viewManager.getCurrentView()->pauseScreen();
                         break;
                     }
 
@@ -153,97 +158,18 @@ void PlaylistController::handleInput() {
                         std::cout << std::left << std::setw(10) << index
                                 << std::setw(30) << playlist->getName() << "\n";
                     }
+                    viewManager.getCurrentView()->pauseScreen();
                     break;
                 }
 
-
-
-
-                // case 3: { // View All Playlists
-                //     auto playlists = modelManager.getPlaylistLibrary().getAllPlaylists();
-                //     if (playlists.empty()) {
-                //         std::cout << "No playlists available.\n";
-                //         break;
-                //     }
-
-                //     std::cout << "Available Playlists:\n";
-                //     for (const auto& [index, playlist] : playlists) {
-                //         std::cout << "Index: " << index << ", Name: " << playlist->getName() << "\n";
-                //     }
-                //     break;
-                // }
-
-                // case 4: { // Add Song to Playlist
-                //     auto playlists = modelManager.getPlaylistLibrary().getAllPlaylists();
-
-                //     // Kiểm tra nếu không có playlist nào
-                //     if (playlists.empty()) {
-                //         std::cout << "No playlists available. Please create a playlist first.\n";
-                //         break;
-                //     }
-
-                //     // Hiển thị danh sách playlist
-                //     std::cout << "Available Playlists:\n";
-                //     for (const auto& [index, playlist] : playlists) {
-                //         std::cout << "Index: " << index << ", Name: " << playlist->getName() << "\n";
-                //     }
-
-                //     // Yêu cầu người dùng nhập index để chọn playlist
-                //     std::cout << "Enter the index of the playlist to add a song to: ";
-                //     unsigned int playlistIndex;
-                //     std::cin >> playlistIndex;
-
-                //     // Kiểm tra nếu index hợp lệ
-                //     if (playlists.find(playlistIndex) == playlists.end()) {
-                //         std::cout << "Error: Playlist with index " << playlistIndex << " does not exist.\n";
-                //         break;
-                //     }
-
-                //     auto playlist = playlists[playlistIndex];
-
-                //     // Lấy danh sách các tệp media
-                //     const auto& mediaFiles = modelManager.getMediaLibrary().getAllMediaFiles();
-                //     if (mediaFiles.empty()) {
-                //         std::cout << "No media files available to add.\n";
-                //         break;
-                //     }
-
-                //     // Hiển thị danh sách các tệp media
-                //     std::cout << "Available Media Files (ID: Name):\n";
-                //     for (const auto& [id, file] : mediaFiles) {
-                //         std::cout << id << ": " << file->getName() << "\n";
-                //     }
-
-                //     // Yêu cầu người dùng nhập ID bài hát cần thêm
-                //     std::cout << "Enter the ID of the song to add: ";
-                //     unsigned int fileID;
-                //     std::cin >> fileID;
-
-                //     // Kiểm tra và lấy bài hát từ MediaLibrary
-                //     auto mediaFile = modelManager.getMediaLibrary().getMediaFileByIndex(fileID);
-                //     if (!mediaFile) {
-                //         std::cout << "Error: No media file found with the given ID.\n";
-                //         break;
-                //     }
-
-                //     // Tính toán ID mới cho bài hát trong playlist
-                //     unsigned int newSongID = playlist->getSongs().size() + 1;
-
-                //     // Thêm bài hát vào playlist với ID tự động tăng
-                //     playlist->addSong(newSongID, *mediaFile);
-                //     std::cout << "Song '" << mediaFile->getName() << "' added successfully to playlist '"
-                //             << playlist->getName() << "' with ID " << newSongID << ".\n";
-
-                //     break;
-                // }
-
-
                 case 4: { // Add Song to Playlist
+                    viewManager.getCurrentView()->hide();
                     auto playlists = modelManager.getPlaylistLibrary().getAllPlaylists();
 
                     // Kiểm tra nếu không có playlist nào
                     if (playlists.empty()) {
                         std::cout << "No playlists available. Please create a playlist first.\n";
+                        viewManager.getCurrentView()->pauseScreen();
                         break;
                     }
 
@@ -257,61 +183,64 @@ void PlaylistController::handleInput() {
                                 << std::setw(30) << playlist->getName() << "\n";
                     }
 
-                    // Yêu cầu người dùng nhập index để chọn playlist
-                    std::cout << "\nEnter the index of the playlist to add a song to: ";
-                    unsigned int playlistIndex;
-                    std::cin >> playlistIndex;
+                    size_t playlistIndex;
+                    Exception_Handler("Enter the index of the playlist to add a song to: ", playlistIndex, validatePosInteger);
 
                     // Kiểm tra nếu index hợp lệ
                     if (playlists.find(playlistIndex) == playlists.end()) {
                         std::cout << "Error: Playlist with index " << playlistIndex << " does not exist.\n";
+                        viewManager.getCurrentView()->pauseScreen();
                         break;
                     }
 
                     auto playlist = playlists[playlistIndex];
 
-                    // Lấy danh sách các tệp media
                     const auto& mediaFiles = modelManager.getMediaLibrary().getAllMediaFiles();
                     if (mediaFiles.empty()) {
                         std::cout << "No media files available to add.\n";
+                        viewManager.getCurrentView()->pauseScreen();
                         break;
                     }
 
-                    // Hiển thị danh sách các tệp media
-                    std::cout << "\nAvailable Media Files:\n";
-                    std::cout << std::left << std::setw(10) << "ID"
-                            << std::setw(30) << "Name" << "\n";
-                    std::cout << std::string(40, '-') << "\n";
-                    for (const auto& [id, file] : mediaFiles) {
-                        std::cout << std::left << std::setw(10) << id
-                                << std::setw(30) << file->getName() << "\n";
-                    }
+                    // std::cout << "\nAvailable Media Files:\n";
+                    // std::cout << std::left << std::setw(10) << "ID"
+                    //         << std::setw(30) << "Name" << "\n";
+                    // std::cout << std::string(40, '-') << "\n";
+                    // for (const auto& [id, file] : mediaFiles) {
+                    //     std::cout << std::left << std::setw(10) << id
+                    //             << std::setw(30) << file->getName() << "\n";
+                    // }
+                    viewManager.getCurrentView()->hide();
+                    modelManager.getMediaLibrary().displayPaginatedFiles(mediaFiles);
 
-                    // Yêu cầu người dùng nhập ID bài hát cần thêm
-                    std::cout << "\nEnter the ID of the song to add: ";
-                    unsigned int fileID;
-                    std::cin >> fileID;
+                    size_t fileID;
+                    Exception_Handler("Enter the ID of the song to add: ", fileID, validatePosInteger);
 
-                    // Kiểm tra và lấy bài hát từ MediaLibrary
-                    auto mediaFile = modelManager.getMediaLibrary().getMediaFileByIndex(fileID);
-                    if (!mediaFile) {
+                    try {
+                        auto mediaFile = modelManager.getMediaLibrary().getMediaFileByIndex(fileID);
+                        if (!mediaFile) {
+                            std::cout << "Error: No media file found with the given ID.\n";
+                            viewManager.getCurrentView()->pauseScreen();
+                            break;
+                        }
+                        // Tiếp tục xử lý mediaFile...
+                        unsigned int newSongID = playlist->getSongs().size() + 1;
+
+                        playlist->addSong(newSongID, *mediaFile);
+                        // std::cout << "\nSong '" << mediaFile->getName() << "' added successfully to playlist '"
+                        //         << playlist->getName() << "' with ID " << newSongID << ".\n";
+                        viewManager.getCurrentView()->pauseScreen();
+
+                        break;
+                    } catch (const std::out_of_range& e) {
                         std::cout << "Error: No media file found with the given ID.\n";
+                        viewManager.getCurrentView()->pauseScreen();
                         break;
                     }
 
-                    // Tính toán ID mới cho bài hát trong playlist
-                    unsigned int newSongID = playlist->getSongs().size() + 1;
 
-                    // Thêm bài hát vào playlist với ID tự động tăng
-                    playlist->addSong(newSongID, *mediaFile);
-                    std::cout << "\nSong '" << mediaFile->getName() << "' added successfully to playlist '"
-                            << playlist->getName() << "' with ID " << newSongID << ".\n";
 
-                    break;
                 }
-
-
-
                 // case 5: { // Remove Song from Playlist
                 //     auto playlists = modelManager.getPlaylistLibrary().getAllPlaylists();
 
@@ -389,43 +318,49 @@ void PlaylistController::handleInput() {
                 // }
 
                 case 5: { // Remove Song from Playlist
+                    viewManager.getCurrentView()->hide();
                     auto playlists = modelManager.getPlaylistLibrary().getAllPlaylists();
 
                     // Kiểm tra nếu không có playlist nào
                     if (playlists.empty()) {
                         std::cout << "No playlists available. Please create a playlist first.\n";
+                        viewManager.getCurrentView()->pauseScreen();
                         break;
                     }
 
                     // Hiển thị danh sách playlist
-                    std::cout << "\nAvailable Playlists:\n";
-                    std::cout << std::left << std::setw(10) << "Index"
-                            << std::setw(30) << "Playlist Name" << "\n";
-                    std::cout << std::string(40, '-') << "\n";
-                    for (const auto& [index, playlist] : playlists) {
-                        std::cout << std::left << std::setw(10) << index
-                                << std::setw(30) << playlist->getName() << "\n";
-                    }
+                    while (true) {
+                        viewManager.getCurrentView()->hide();
+                        std::cout << "\nAvailable Playlists:\n";
+                        std::cout << std::left << std::setw(10) << "Index"
+                                << std::setw(30) << "Playlist Name" << "\n";
+                        std::cout << std::string(40, '-') << "\n";
+                        for (const auto& [index, playlist] : playlists) {
+                            std::cout << std::left << std::setw(10) << index
+                                    << std::setw(30) << playlist->getName() << "\n";
+                        }
 
-                    // Yêu cầu người dùng nhập index để chọn playlist
-                    std::cout << "\nEnter the index of the playlist to remove a song from: ";
-                    unsigned int playlistIndex;
-                    std::cin >> playlistIndex;
+                        // Nhập playlist index với xử lý lỗi
+                        size_t playlistIndex;
+                        Exception_Handler("Enter the index of the playlist to remove a song from: ", playlistIndex, validatePosInteger);
 
-                    // Kiểm tra nếu index hợp lệ
-                    if (playlists.find(playlistIndex) == playlists.end()) {
-                        std::cout << "Error: Playlist with index " << playlistIndex << " does not exist.\n";
-                        break;
-                    }
+                        if (playlists.find(playlistIndex) == playlists.end()) {
+                            std::cout << "Error: Playlist with index " << playlistIndex << " does not exist.\n";
+                            viewManager.getCurrentView()->pauseScreen();
+                            continue; // Hiển thị lại danh sách và cho nhập lại
+                        }
 
                     auto playlist = playlists[playlistIndex];
 
-                    // Hiển thị danh sách bài hát trong playlist
-                    const auto& songs = playlist->getSongs();
-                    if (songs.empty()) {
-                        std::cout << "No songs in the selected playlist.\n";
-                        break;
-                    }
+                        // Lấy danh sách bài hát trong playlist
+                        const auto& songs = playlist->getSongs();
+                        if (songs.empty()) {
+                            std::cout << "No songs in the selected playlist.\n";
+                            viewManager.getCurrentView()->pauseScreen();
+                            break;
+                        }
+
+                    viewManager.getCurrentView()->hide();
 
                     std::cout << "\nSongs in playlist '" << playlist->getName() << "':\n";
                     std::cout << std::left << std::setw(10) << "ID"
@@ -436,16 +371,27 @@ void PlaylistController::handleInput() {
                                 << std::setw(30) << song.getName() << "\n";
                     }
 
-                    // Yêu cầu người dùng nhập ID bài hát cần xóa
-                    std::cout << "\nEnter the ID of the song to remove: ";
-                    unsigned int songID;
-                    std::cin >> songID;
+                        // Nhập song ID với xử lý lỗi
+                        size_t songID;
+                        Exception_Handler("Enter the ID of the song to remove: ", songID, validatePosInteger);
 
-                    // Kiểm tra nếu ID hợp lệ
-                    if (songs.find(songID) == songs.end()) {
-                        std::cout << "Error: Song with ID " << songID << " does not exist in the playlist.\n";
-                        break;
-                    }
+                        if (songs.find(songID) == songs.end()) {
+                            std::cout << "Error: Song with ID " << songID << " does not exist in the playlist.\n";
+                            viewManager.getCurrentView()->pauseScreen();
+                            continue; // Hiển thị lại danh sách và cho nhập lại
+                        }
+
+                        // Xác nhận xóa bài hát
+                        char confirm;
+                        std::cout << "Are you sure you want to remove the song '" << songs.at(songID).getName()
+                                << "' from playlist '" << playlist->getName() << "'? (y/n): ";
+                        std::cin >> confirm;
+
+                        if (confirm != 'y' && confirm != 'Y') {
+                            std::cout << "Operation cancelled.\n";
+                            viewManager.getCurrentView()->pauseScreen();
+                            break;
+                        }
 
                     // Xóa bài hát
                     playlist->removeSong(songID);
@@ -474,7 +420,11 @@ void PlaylistController::handleInput() {
                                 << std::setw(30) << song.getName() << "\n";
                     }
 
-                    break;
+                        viewManager.getCurrentView()->pauseScreen();
+                        break; // Thoát khỏi case sau khi hoàn tất
+                    }
+
+                    break; // Thoát khỏi case chính
                 }
 
 
@@ -526,37 +476,44 @@ void PlaylistController::handleInput() {
                     // Kiểm tra nếu không có playlist nào
                     if (playlists.empty()) {
                         std::cout << "No playlists available. Please create a playlist first.\n";
+                        viewManager.getCurrentView()->pauseScreen();
                         break;
                     }
 
-                    // Hiển thị danh sách playlist
-                    std::cout << "\nAvailable Playlists:\n";
-                    std::cout << std::left << std::setw(10) << "Index"
-                            << std::setw(30) << "Playlist Name" << "\n";
-                    std::cout << std::string(40, '-') << "\n";
-                    for (const auto& [index, playlist] : playlists) {
-                        std::cout << std::left << std::setw(10) << index
-                                << std::setw(30) << playlist->getName() << "\n";
-                    }
+                    while (true) {
+                        viewManager.getCurrentView()->hide(); // Ẩn menu hiện tại
+                        std::cout << "\nAvailable Playlists:\n";
+                        std::cout << std::left << std::setw(10) << "Index"
+                                << std::setw(30) << "Playlist Name" << "\n";
+                        std::cout << std::string(40, '-') << "\n";
+                        for (const auto& [index, playlist] : playlists) {
+                            std::cout << std::left << std::setw(10) << index
+                                    << std::setw(30) << playlist->getName() << "\n";
+                        }
 
-                    // Yêu cầu người dùng nhập index để chọn playlist
-                    std::cout << "\nEnter the index of the playlist to view songs: ";
-                    unsigned int playlistIndex;
-                    std::cin >> playlistIndex;
+                        // Nhập playlist index với xử lý lỗi
+                        size_t playlistIndex;
+                        Exception_Handler("Enter the index of the playlist to view songs: ", playlistIndex, validatePosInteger);
 
-                    // Kiểm tra nếu index hợp lệ
-                    if (playlists.find(playlistIndex) == playlists.end()) {
-                        std::cout << "Error: Playlist with index " << playlistIndex << " does not exist.\n";
-                        break;
-                    }
+                        // Kiểm tra nếu index không tồn tại
+                        if (playlists.find(playlistIndex) == playlists.end()) {
+                            std::cout << "Error: Playlist with index " << playlistIndex << " does not exist.\n";
+                            viewManager.getCurrentView()->pauseScreen();
+                            continue; // Cho phép nhập lại
+                        }
 
                     auto playlist = playlists[playlistIndex];
 
-                    // Lấy danh sách bài hát trong playlist
-                    const auto& songs = playlist->getSongs();
-                    if (songs.empty()) {
-                        std::cout << "\nNo songs in playlist '" << playlist->getName() << "'.\n";
-                    } else {
+                        // Lấy danh sách bài hát trong playlist
+                        const auto& songs = playlist->getSongs();
+                        if (songs.empty()) {
+                            std::cout << "\nNo songs in playlist '" << playlist->getName() << "'.\n";
+                            viewManager.getCurrentView()->pauseScreen();
+                            break;
+                        }
+
+                        // Hiển thị danh sách bài hát
+                        viewManager.getCurrentView()->hide();
                         std::cout << "\nSongs in playlist '" << playlist->getName() << "':\n";
                         std::cout << std::left << std::setw(10) << "ID"
                                 << std::setw(30) << "Song Name" 
@@ -567,6 +524,9 @@ void PlaylistController::handleInput() {
                                     << std::setw(30) << song.getName()
                                     << std::setw(20) << song.getType() << "\n";
                         }
+
+                        viewManager.getCurrentView()->pauseScreen();
+                        break; // Thoát khi xem xong
                     }
 
                     break;
@@ -614,52 +574,52 @@ void PlaylistController::writePlaylistsToFile(const std::string& filename) {
 
 
 
-void PlaylistController::readPlaylistsFromFile(const std::string& filename) {
-    std::ifstream inFile(filename);
-    if (!inFile) {
-        std::cerr << "Error: Unable to open file " << filename << " for reading.\n";
-        return;
-    }
+// void PlaylistController::readPlaylistsFromFile(const std::string& filename) {
+//     std::ifstream inFile(filename);
+//     if (!inFile) {
+//         std::cerr << "Error: Unable to open file " << filename << " for reading.\n";
+//         return;
+//     }
 
-    std::map<unsigned int, std::shared_ptr<Playlist>> playlists;
-    std::string line;
-    std::shared_ptr<Playlist> currentPlaylist = nullptr;
-    unsigned int playlistIndex = 1;
+//     std::map<unsigned int, std::shared_ptr<Playlist>> playlists;
+//     std::string line;
+//     std::shared_ptr<Playlist> currentPlaylist = nullptr;
+//     unsigned int playlistIndex = 1;
 
-    while (std::getline(inFile, line)) {
-        try {
-            if (line.rfind("Playlist: ", 0) == 0) { // Bắt đầu một playlist mới
-                std::string playlistName = line.substr(10);
-                currentPlaylist = std::make_shared<Playlist>(playlistName);
-                playlists[playlistIndex++] = currentPlaylist;
-            } else if (line == "---") { // Dấu phân cách playlist
-                currentPlaylist = nullptr;
-            } else if (currentPlaylist && !line.empty()) { // Đọc bài hát
-                std::istringstream ss(line);
-                unsigned int songID;
-                std::string songPath, songType;
+//     while (std::getline(inFile, line)) {
+//         try {
+//             if (line.rfind("Playlist: ", 0) == 0) { // Bắt đầu một playlist mới
+//                 std::string playlistName = line.substr(10);
+//                 currentPlaylist = std::make_shared<Playlist>(playlistName);
+//                 playlists[playlistIndex++] = currentPlaylist;
+//             } else if (line == "---") { // Dấu phân cách playlist
+//                 currentPlaylist = nullptr;
+//             } else if (currentPlaylist && !line.empty()) { // Đọc bài hát
+//                 std::istringstream ss(line);
+//                 unsigned int songID;
+//                 std::string songPath, songType;
 
-                if (std::getline(ss, line, ',') && std::stringstream(line) >> songID &&
-                    std::getline(ss, songPath, ',') &&
-                    std::getline(ss, songType)) {
-                    MediaFile song(songPath.substr(songPath.find_last_of("/") + 1), songPath, songType);
-                    currentPlaylist->addSong(songID, song);
-                } else {
-                    std::cerr << "Warning: Invalid song format in line: " << line << "\n";
-                }
-            }
-        } catch (const std::exception& e) {
-            std::cerr << "Error processing line: " << line << "\n";
-            std::cerr << "Exception: " << e.what() << "\n";
-        }
-    }
+//                 if (std::getline(ss, line, ',') && std::stringstream(line) >> songID &&
+//                     std::getline(ss, songPath, ',') &&
+//                     std::getline(ss, songType)) {
+//                     MediaFile song(songPath.substr(songPath.find_last_of("/") + 1), songPath, songType);
+//                     currentPlaylist->addSong(songID, song);
+//                 } else {
+//                     std::cerr << "Warning: Invalid song format in line: " << line << "\n";
+//                 }
+//             }
+//         } catch (const std::exception& e) {
+//             std::cerr << "Error processing line: " << line << "\n";
+//             std::cerr << "Exception: " << e.what() << "\n";
+//         }
+//     }
 
-    inFile.close();
+//     inFile.close();
 
-    // Cập nhật danh sách playlist
-    modelManager.getPlaylistLibrary().setPlaylists(playlists);
-    std::cout << "Playlists loaded from file: " << filename << "\n";
-}
+//     // Cập nhật danh sách playlist
+//     modelManager.getPlaylistLibrary().setPlaylists(playlists);
+//     std::cout << "Playlists loaded from file: " << filename << "\n";
+// }
 
 
 

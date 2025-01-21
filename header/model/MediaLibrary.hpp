@@ -28,7 +28,7 @@ public:
     // Pagination display
     void displayPaginatedFiles(const std::map<unsigned int, std::shared_ptr<MediaFile>>& files, size_t pageSize = 25);
 
-    void clearScreen() ;
+
 
     // // Helper function to truncate long strings
     // std::string truncateString(const std::string& str, size_t width);

@@ -5,9 +5,9 @@ void ViewDetailedPlaylist::show() {
     std::cout << "Displaying Detailed Playlist View..." << std::endl;
 }
 
-void ViewDetailedPlaylist::hide() {
-    std::cout << "Hiding Detailed Playlist View..." << std::endl;
-}
+// void ViewDetailedPlaylist::hide() {
+//     std::cout << "Hiding Detailed Playlist View..." << std::endl;
+// }
 
 void ViewDetailedPlaylist::update(const std::string& data) {
     std::cout << "Updating Detailed Playlist View with data: " << data << std::endl;
