@@ -1,0 +1,94 @@
+@startuml
+package Model {
+    class MediaFile {
+        - name: string
+        - path: string
+        - type: string
+        - metadata: Metadata
+        - duration: int
+        + getName(): string
+        + getPath(): string
+        + getType(): string
+        + getMetadata(): Metadata
+        + getDuration(): int
+        + setMetadata(metadata: Metadata): void
+        + setType(type: string): void
+        + setDuration(duration: int): void
+    }
+
+    class Metadata {
+        - data: map<string, string>
+        + getData(): map<string, string>
+        + getValue(key: string): string
+        + setData(data: map<string, string>): void
+        + setValue(key: string, value: string): void
+        + loadFromFile(filePath: string): void
+        + saveToFile(filePath: string): void
+    }
+
+    class Playlist {
+        - name: string
+        - songs: map<unsigned int, MediaFile>
+        + getName(): string
+        + getSongs(): map<unsigned int, MediaFile>
+        + addSong(id: unsigned int, song: MediaFile): void
+        + removeSong(id: unsigned int): void
+        + getSongById(id: unsigned int): MediaFile
+        + setSongs(newSongs: map<unsigned int, MediaFile>): void
+    }
+
+    class PlaylistLibrary {
+        - playlists: map<unsigned int, Playlist>
+        + getAllPlaylists(): map<unsigned int, Playlist>
+        + addPlaylist(index: unsigned int, playlist: Playlist): void
+        + removePlaylist(index: unsigned int): void
+        + getPlaylistByIndex(index: unsigned int): Playlist
+        + setPlaylists(newPlaylists: map<unsigned int, Playlist>): void
+    }
+
+    class MediaLibrary {
+        - mediaFiles: map<unsigned int, MediaFile>
+        + getAllMediaFiles(): map<unsigned int, MediaFile>
+        + addMediaFile(index: unsigned int, file: MediaFile): void
+        + removeMediaFile(index: unsigned int): void
+        + getMediaFileByIndex(index: unsigned int): MediaFile
+        + scanDirectory(directory: string): void
+        + scanUSBDevice(): void
+        + displayPaginatedFiles(files: map<unsigned int, MediaFile>, pageSize: size_t): void
+    }
+
+    class PlayingMedia {
+        - currentMediaFile: MediaFile
+        - currentTime: int
+        - isPlaying: bool
+        - isPaused: bool
+        - volume: int
+        + getCurrentMediaFile(): MediaFile
+        + setCurrentMediaFile(mediaFile: MediaFile): void
+        + play(): void
+        + pause(): void
+        + resume(): void
+        + stop(): void
+        + skipToNext(): void
+        + skipToPrevious(): void
+        + adjustVolume(newVolume: int): void
+    }
+
+    class ModelManager {
+        - mediaLibrary: MediaLibrary
+        - playlistLibrary: PlaylistLibrary
+        - playingMedia: PlayingMedia
+        + getMediaLibrary(): MediaLibrary
+        + getPlaylistLibrary(): PlaylistLibrary
+        + getPlayingMedia(): PlayingMedia
+    }
+
+    ModelManager --> MediaLibrary
+    ModelManager --> PlaylistLibrary
+    ModelManager --> PlayingMedia
+    MediaLibrary o--> MediaFile
+    PlaylistLibrary o--> Playlist
+    Playlist o--> MediaFile
+    MediaFile o--> Metadata
+}
+@enduml

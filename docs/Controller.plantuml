@@ -1,0 +1,80 @@
+@startuml
+package Controller {
+    class ControllerManager {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
+        - scanfOptionController: ScanfOptionController
+        - mainMenuController: MainMenuController
+        - mediaFileController: MediaFileController
+        - metadataController: MetadataController
+        - playingMediaController: PlayingMediaController
+        - playlistController: PlaylistController
+        + handleInputData(): void
+        + getModelManager(): ModelManager
+        + getViewManager(): ViewManager
+        + getPlayingMediaController(): PlayingMediaController
+        + readDataFromFile(filename: string): map<string, string>
+        + writeDataToFile(filename: string, data: map<string, string>): void
+        + readPlaylistsFromFile(filename: string): void
+    }
+
+    class MainMenuController {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
+        + showMainMenu(): void
+    }
+
+    class MediaFileController {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
+        + getAllMediaFiles(): vector<MediaFile>
+        + getMediaFileDetails(index: unsigned int): MediaFile
+        + handleInput(): void
+    }
+
+    class MetadataController {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
+        + getMediaFileMetadata(file: MediaFile): map<string, string>
+        + updateMediaFileMetadata(file: MediaFile, key: string, value: string): void
+        + handleInput(): void
+    }
+
+    class PlayingMediaController {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
+        + playMediaFile(file: MediaFile): void
+        + play(): void
+        + pause(): void
+        + resume(): void
+        + stop(): void
+        + skipToNext(): void
+        + skipToPrevious(): void
+        + adjustVolume(newVolume: size_t): void
+        + play_Playlist(library: PlaylistLibrary): void
+        + handleInput(): void
+        + playVideoInThread(filePath: string): void
+    }
+
+    class PlaylistController {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
+        + handleInput(): void
+        + writePlaylistsToFile(filename: string): void
+    }
+
+    class ScanfOptionController {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
+        + handleUSBScan(): void
+        + handleInput(): void
+    }
+
+    ControllerManager --> MainMenuController
+    ControllerManager --> MediaFileController
+    ControllerManager --> MetadataController
+    ControllerManager --> PlayingMediaController
+    ControllerManager --> PlaylistController
+    ControllerManager --> ScanfOptionController
+}
+@enduml

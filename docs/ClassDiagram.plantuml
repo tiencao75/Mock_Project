@@ -5,93 +5,84 @@ package Model {
         - path: string
         - type: string
         - metadata: Metadata
-
+        - duration: int
         + getName(): string
         + getPath(): string
         + getType(): string
         + getMetadata(): Metadata
+        + getDuration(): int
         + setMetadata(metadata: Metadata): void
         + setType(type: string): void
-    }
-
-    class Playlist {
-        - name: string
-        - songs: vector<MediaFile>
-
-        + getName(): string
-        + getSongs(): vector<MediaFile>
-        + addSong(song: MediaFile): void
-        + removeSong(song: MediaFile): void
-    }
-
-    class MediaLibrary {
-        - mediaFiles: vector<MediaFile>
-
-        + getAllMediaFiles(): vector<MediaFile>
-        + addMediaFile(file: MediaFile): void
-        + removeMediaFile(file: MediaFile): void
-        + getMediaFileByName(name: string): MediaFile
-        + scanDirectory(path: string): void
-        + scanUSBDevice(): void
-    }
-
-    class PlaylistLibrary {
-        - playlists: vector<Playlist>
-
-        + getAllPlaylists(): vector<Playlist>
-        + addPlaylist(playlist: Playlist): void
-        + removePlaylist(playlist: Playlist): void
-        + getPlaylistByName(name: string): Playlist
-    }
-
-    class ModelManager {
-        - mediaLibrary: MediaLibrary*
-        - playlistLibrary: PlaylistLibrary*
-        - playingMedia: PlayingMedia*
-
-        + getMediaLibrary(): MediaLibrary*
-        + getPlaylistLibrary(): PlaylistLibrary*
-        + getPlayingMedia(): PlayingMedia*
-    }
-
-    class PlayingMedia {
-        - currentMediaFile: MediaFile*
-        - currentTime: int
-        - isPlaying: bool
-
-        + getCurrentMediaFile(): MediaFile*
-        + setCurrentMediaFile(mediaFile: MediaFile*): void
-        + getCurrentTime(): int
-        + setCurrentTime(time: int): void
-        + getIsPlaying(): bool
-        + setIsPlaying(playing: bool): void
-        + play(): void
-        + pause(): void
-        + stop(): void
-        + skiptoNext(): void
-        + skiptoPrevious(): void
-        + skipForward(seconds: int): void
-        + skipBackward(seconds: int): void
+        + setDuration(duration: int): void
     }
 
     class Metadata {
         - data: map<string, string>
-
         + getData(): map<string, string>
-        + setData(data: map<string, string>): void
         + getValue(key: string): string
+        + setData(data: map<string, string>): void
         + setValue(key: string, value: string): void
+        + loadFromFile(filePath: string): void
+        + saveToFile(filePath: string): void
     }
 
-    class DeviceManager {
+    class Playlist {
+        - name: string
+        - songs: map<unsigned int, MediaFile>
+        + getName(): string
+        + getSongs(): map<unsigned int, MediaFile>
+        + addSong(id: unsigned int, song: MediaFile): void
+        + removeSong(id: unsigned int): void
+        + getSongById(id: unsigned int): MediaFile
+        + setSongs(newSongs: map<unsigned int, MediaFile>): void
+    }
+
+    class PlaylistLibrary {
+        - playlists: map<unsigned int, std::shared_ptr<Playlist>> playlists>
+        + getAllPlaylists(): map<unsigned int, Playlist>
+        + addPlaylist(index: unsigned int, playlist: Playlist): void
+        + removePlaylist(index: unsigned int): void
+        + getPlaylistByIndex(index: unsigned int): Playlist
+        + setPlaylists(newPlaylists: map<unsigned int, Playlist>): void
+    }
+
+    class MediaLibrary {
+        - mediaFiles: map<unsigned int, MediaFile>
+        + getAllMediaFiles(): map<unsigned int, MediaFile>
+        + addMediaFile(index: unsigned int, file: MediaFile): void
+        + removeMediaFile(index: unsigned int): void
+        + getMediaFileByIndex(index: unsigned int): MediaFile
+        + scanDirectory(directory: string): void
+        + scanUSBDevice(): void
+        + displayPaginatedFiles(files: map<unsigned int, MediaFile>, pageSize: size_t): void
+    }
+
+    class PlayingMedia {
+        - currentMediaFile: MediaFile
+        - currentTime: int
+        - isPlaying: bool
+        - isPaused: bool
         - volume: int
-        - s32k144Connection: S32K144Interface*
-        + setVolume(level: int)
-        + getVolume(): int
-        + updateDisplay(info: string)
+        + getCurrentMediaFile(): MediaFile
+        + setCurrentMediaFile(mediaFile: MediaFile): void
+        + play(): void
+        + pause(): void
+        + resume(): void
+        + stop(): void
+        + skipToNext(): void
+        + skipToPrevious(): void
+        + adjustVolume(newVolume: int): void
     }
 
-    ' Liên kết giữa các lớp
+    class ModelManager {
+        - mediaLibrary: MediaLibrary
+        - playlistLibrary: PlaylistLibrary
+        - playingMedia: PlayingMedia
+        + getMediaLibrary(): MediaLibrary
+        + getPlaylistLibrary(): PlaylistLibrary
+        + getPlayingMedia(): PlayingMedia
+    }
+
     ModelManager --> MediaLibrary
     ModelManager --> PlaylistLibrary
     ModelManager --> PlayingMedia
@@ -102,74 +93,91 @@ package Model {
 }
 
 package Controller {
-    class FileController {
-        + scanDirectory(path: string): vector<MediaFile>
-        + scanUSBDevice(): vector<MediaFile>
-        
+    class ControllerManager {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
+        - scanfOptionController: ScanfOptionController
+        - mainMenuController: MainMenuController
+        - mediaFileController: MediaFileController
+        - metadataController: MetadataController
+        - playingMediaController: PlayingMediaController
+        - playlistController: PlaylistController
+        + handleInputData(): void
+        + getModelManager(): ModelManager
+        + getViewManager(): ViewManager
+        + getPlayingMediaController(): PlayingMediaController
+        + readDataFromFile(filename: string): map<string, string>
+        + writeDataToFile(filename: string, data: map<string, string>): void
+        + readPlaylistsFromFile(filename: string): void
     }
 
-    class PlaylistController {
-        + getAllPlaylists(): vector<Playlist>
-        + createPlaylist(name: string): void
-        + deletePlaylist(name: string): void
+    class MainMenuController {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
+        + showMainMenu(): void
     }
 
     class MediaFileController {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
         + getAllMediaFiles(): vector<MediaFile>
-        + getMediaFileDetails(name: string): MediaFile
-    }
-
-    class PlayingMediaController {
-        + playMediaFile(file: MediaFile)
-        + play(): void
-        + pause(): void
-        + stop(): void
-        + skipToNext(): void
-        + skipToPrevious(): void
-        + adjustVolume(level: int): void
-    }
-
-    class DetailedPlaylistController {
-        + getPlaylistDetails(playlistName: string): Playlist
-        + addSongToPlaylist(playlistName: string, song: MediaFile): void
-        + removeSongFromPlaylist(playlistName: string, song: MediaFile): void
+        + getMediaFileDetails(index: unsigned int): MediaFile
+        + handleInput(): void
     }
 
     class MetadataController {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
         + getMediaFileMetadata(file: MediaFile): map<string, string>
-        + updateMediaFileMetadata(file: MediaFile, metadata: map<string, string>): void
+        + updateMediaFileMetadata(file: MediaFile, key: string, value: string): void
+        + handleInput(): void
     }
 
-    class ControllerManager {
-        - fileController: FileController
-        - playlistController: PlaylistController
-        - mediaFileController: MediaFileController
-        - playingMediaController: PlayingMediaController
-        - detailedPlaylistController: DetailedPlaylistController
-        - metadataController: MetadataController
-
-        + getFileController(): FileController
-        + getPlaylistController(): PlaylistController
-        + getMediaFileController(): MediaFileController
-        + getPlayingMediaController(): PlayingMediaController
-        + getDetailedPlaylistController(): DetailedPlaylistController
-        + getMetadataController(): MetadataController
+    class PlayingMediaController {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
+        + playMediaFile(file: MediaFile): void
+        + play(): void
+        + pause(): void
+        + resume(): void
+        + stop(): void
+        + skipToNext(): void
+        + skipToPrevious(): void
+        + adjustVolume(newVolume: size_t): void
+        + play_Playlist(library: PlaylistLibrary): void
+        + handleInput(): void
+        + playVideoInThread(filePath: string): void
     }
 
-    ' Liên kết giữa các Controller
-    ControllerManager --> FileController
-    ControllerManager --> PlaylistController
+    class PlaylistController {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
+        + handleInput(): void
+        + writePlaylistsToFile(filename: string): void
+    }
+
+    class ScanfOptionController {
+        - modelManager: ModelManager
+        - viewManager: ViewManager
+        + handleUSBScan(): void
+        + handleInput(): void
+    }
+
+    ControllerManager --> MainMenuController
     ControllerManager --> MediaFileController
-    ControllerManager --> PlayingMediaController
-    ControllerManager --> DetailedPlaylistController
     ControllerManager --> MetadataController
+    ControllerManager --> PlayingMediaController
+    ControllerManager --> PlaylistController
+    ControllerManager --> ScanfOptionController
 }
 
 package View {
-    class ViewBase {
+    abstract class ViewBase {
         + show()
         + hide()
-        + handleInput(input: string)
+        + pauseScreen()
+        + update(data: string)
+        + getName(): string
     }
 
     class ViewScanfOption {
@@ -178,7 +186,6 @@ package View {
     }
 
     class ViewMediaFile {
-        - calculateTotalPages(totalFiles: int): int
         - currentPage: int
         + showMediaFilesPage(files: vector<MediaFile>, page: int)
         + nextPage()
@@ -209,11 +216,13 @@ package View {
 
     class ViewManager {
         - views: vector<ViewBase*>
-        + ShowMenu(): void
-        + switchView(view: ViewBase): void
-        + addView(view: ViewBase): void
-        + removeView(view: ViewBase): void
+        - currentView: ViewBase*
+        + addView(view: ViewBase)
+        + getView(name: string): ViewBase
+        + switchView(view: ViewBase)
+        + getCurrentView(): ViewBase
     }
+
     ViewManager o--> ViewBase
     ViewBase <|-- ViewScanfOption
     ViewBase <|-- ViewMediaFile
@@ -242,12 +251,12 @@ enum ButtonType {
     STOP
 }
 
-ViewManager -- ControllerManager
-ControllerManager -- ModelManager
-KL46ZBoard --> DeviceManager
-ControllerManager -- DeviceManager
+ViewManager <--* ControllerManager
+ControllerManager *--> ModelManager
+KL46ZBoard --> S32K144Interface
+ControllerManager *--> S32K144Interface
 
-DeviceManager --> ButtonType : handles >
+S32K144Interface --> ButtonType : handles >
 
 
 
