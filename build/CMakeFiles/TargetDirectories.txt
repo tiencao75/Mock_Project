@@ -1,0 +1,9 @@
+/media/sf_Shared_folder/Mock_Project/build/CMakeFiles/main.dir
+/media/sf_Shared_folder/Mock_Project/build/CMakeFiles/controller_lib.dir
+/media/sf_Shared_folder/Mock_Project/build/CMakeFiles/unit_tests.dir
+/media/sf_Shared_folder/Mock_Project/build/CMakeFiles/clean_all.dir
+/media/sf_Shared_folder/Mock_Project/build/CMakeFiles/coverage.dir
+/media/sf_Shared_folder/Mock_Project/build/CMakeFiles/build_all.dir
+/media/sf_Shared_folder/Mock_Project/build/CMakeFiles/test.dir
+/media/sf_Shared_folder/Mock_Project/build/CMakeFiles/edit_cache.dir
+/media/sf_Shared_folder/Mock_Project/build/CMakeFiles/rebuild_cache.dir
