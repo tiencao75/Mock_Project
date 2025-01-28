@@ -93,6 +93,9 @@ unit_tests_EXTERNAL_OBJECTS =
 unit_tests: CMakeFiles/unit_tests.dir/test/controller_manager_test.cpp.o
 unit_tests: CMakeFiles/unit_tests.dir/build.make
 unit_tests: /usr/local/lib/libgtest.a
+unit_tests: /usr/local/lib/libgtest_main.a
+unit_tests: /usr/local/lib/libgmock.a
+unit_tests: /usr/local/lib/libgmock_main.a
 unit_tests: libcontroller_lib.a
 unit_tests: /usr/local/lib/libgtest_main.a
 unit_tests: /usr/local/lib/libgtest.a

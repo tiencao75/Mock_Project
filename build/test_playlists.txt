@@ -1,0 +1,7 @@
+Playlist: Rock
+1,/path/to/song1.mp3,mp3
+2,/path/to/song2.mp3,mp3
+---
+Playlist: Jazz
+3,/path/to/song3.mp3,mp3
+---

@@ -426,6 +426,7 @@ source/include/S32K144Interface.o: source/include/S32K144Interface.cpp.o
 # target to build an object file
 source/include/S32K144Interface.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/include/S32K144Interface.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.o
 .PHONY : source/include/S32K144Interface.cpp.o
 
 source/include/S32K144Interface.i: source/include/S32K144Interface.cpp.i
@@ -434,6 +435,7 @@ source/include/S32K144Interface.i: source/include/S32K144Interface.cpp.i
 # target to preprocess a source file
 source/include/S32K144Interface.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/include/S32K144Interface.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.i
 .PHONY : source/include/S32K144Interface.cpp.i
 
 source/include/S32K144Interface.s: source/include/S32K144Interface.cpp.s
@@ -442,6 +444,7 @@ source/include/S32K144Interface.s: source/include/S32K144Interface.cpp.s
 # target to generate assembly for a file
 source/include/S32K144Interface.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/include/S32K144Interface.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.s
 .PHONY : source/include/S32K144Interface.cpp.s
 
 source/main.o: source/main.cpp.o
@@ -474,6 +477,7 @@ source/model/MediaFile.o: source/model/MediaFile.cpp.o
 # target to build an object file
 source/model/MediaFile.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/MediaFile.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.o
 .PHONY : source/model/MediaFile.cpp.o
 
 source/model/MediaFile.i: source/model/MediaFile.cpp.i
@@ -482,6 +486,7 @@ source/model/MediaFile.i: source/model/MediaFile.cpp.i
 # target to preprocess a source file
 source/model/MediaFile.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/MediaFile.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.i
 .PHONY : source/model/MediaFile.cpp.i
 
 source/model/MediaFile.s: source/model/MediaFile.cpp.s
@@ -490,6 +495,7 @@ source/model/MediaFile.s: source/model/MediaFile.cpp.s
 # target to generate assembly for a file
 source/model/MediaFile.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/MediaFile.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.s
 .PHONY : source/model/MediaFile.cpp.s
 
 source/model/MediaLibrary.o: source/model/MediaLibrary.cpp.o
@@ -498,6 +504,7 @@ source/model/MediaLibrary.o: source/model/MediaLibrary.cpp.o
 # target to build an object file
 source/model/MediaLibrary.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/MediaLibrary.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.o
 .PHONY : source/model/MediaLibrary.cpp.o
 
 source/model/MediaLibrary.i: source/model/MediaLibrary.cpp.i
@@ -506,6 +513,7 @@ source/model/MediaLibrary.i: source/model/MediaLibrary.cpp.i
 # target to preprocess a source file
 source/model/MediaLibrary.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/MediaLibrary.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.i
 .PHONY : source/model/MediaLibrary.cpp.i
 
 source/model/MediaLibrary.s: source/model/MediaLibrary.cpp.s
@@ -514,6 +522,7 @@ source/model/MediaLibrary.s: source/model/MediaLibrary.cpp.s
 # target to generate assembly for a file
 source/model/MediaLibrary.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/MediaLibrary.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.s
 .PHONY : source/model/MediaLibrary.cpp.s
 
 source/model/Metadata.o: source/model/Metadata.cpp.o
@@ -522,6 +531,7 @@ source/model/Metadata.o: source/model/Metadata.cpp.o
 # target to build an object file
 source/model/Metadata.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/Metadata.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.o
 .PHONY : source/model/Metadata.cpp.o
 
 source/model/Metadata.i: source/model/Metadata.cpp.i
@@ -530,6 +540,7 @@ source/model/Metadata.i: source/model/Metadata.cpp.i
 # target to preprocess a source file
 source/model/Metadata.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/Metadata.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.i
 .PHONY : source/model/Metadata.cpp.i
 
 source/model/Metadata.s: source/model/Metadata.cpp.s
@@ -538,6 +549,7 @@ source/model/Metadata.s: source/model/Metadata.cpp.s
 # target to generate assembly for a file
 source/model/Metadata.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/Metadata.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.s
 .PHONY : source/model/Metadata.cpp.s
 
 source/model/ModelManager.o: source/model/ModelManager.cpp.o
@@ -546,6 +558,7 @@ source/model/ModelManager.o: source/model/ModelManager.cpp.o
 # target to build an object file
 source/model/ModelManager.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/ModelManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.o
 .PHONY : source/model/ModelManager.cpp.o
 
 source/model/ModelManager.i: source/model/ModelManager.cpp.i
@@ -554,6 +567,7 @@ source/model/ModelManager.i: source/model/ModelManager.cpp.i
 # target to preprocess a source file
 source/model/ModelManager.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/ModelManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.i
 .PHONY : source/model/ModelManager.cpp.i
 
 source/model/ModelManager.s: source/model/ModelManager.cpp.s
@@ -562,6 +576,7 @@ source/model/ModelManager.s: source/model/ModelManager.cpp.s
 # target to generate assembly for a file
 source/model/ModelManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/ModelManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.s
 .PHONY : source/model/ModelManager.cpp.s
 
 source/model/PlayList.o: source/model/PlayList.cpp.o
@@ -570,6 +585,7 @@ source/model/PlayList.o: source/model/PlayList.cpp.o
 # target to build an object file
 source/model/PlayList.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/PlayList.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.o
 .PHONY : source/model/PlayList.cpp.o
 
 source/model/PlayList.i: source/model/PlayList.cpp.i
@@ -578,6 +594,7 @@ source/model/PlayList.i: source/model/PlayList.cpp.i
 # target to preprocess a source file
 source/model/PlayList.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/PlayList.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.i
 .PHONY : source/model/PlayList.cpp.i
 
 source/model/PlayList.s: source/model/PlayList.cpp.s
@@ -586,6 +603,7 @@ source/model/PlayList.s: source/model/PlayList.cpp.s
 # target to generate assembly for a file
 source/model/PlayList.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/PlayList.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.s
 .PHONY : source/model/PlayList.cpp.s
 
 source/model/PlayingMedia.o: source/model/PlayingMedia.cpp.o
@@ -594,6 +612,7 @@ source/model/PlayingMedia.o: source/model/PlayingMedia.cpp.o
 # target to build an object file
 source/model/PlayingMedia.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/PlayingMedia.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.o
 .PHONY : source/model/PlayingMedia.cpp.o
 
 source/model/PlayingMedia.i: source/model/PlayingMedia.cpp.i
@@ -602,6 +621,7 @@ source/model/PlayingMedia.i: source/model/PlayingMedia.cpp.i
 # target to preprocess a source file
 source/model/PlayingMedia.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/PlayingMedia.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.i
 .PHONY : source/model/PlayingMedia.cpp.i
 
 source/model/PlayingMedia.s: source/model/PlayingMedia.cpp.s
@@ -610,6 +630,7 @@ source/model/PlayingMedia.s: source/model/PlayingMedia.cpp.s
 # target to generate assembly for a file
 source/model/PlayingMedia.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/PlayingMedia.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.s
 .PHONY : source/model/PlayingMedia.cpp.s
 
 source/model/PlaylistLibrary.o: source/model/PlaylistLibrary.cpp.o
@@ -618,6 +639,7 @@ source/model/PlaylistLibrary.o: source/model/PlaylistLibrary.cpp.o
 # target to build an object file
 source/model/PlaylistLibrary.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/PlaylistLibrary.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.o
 .PHONY : source/model/PlaylistLibrary.cpp.o
 
 source/model/PlaylistLibrary.i: source/model/PlaylistLibrary.cpp.i
@@ -626,6 +648,7 @@ source/model/PlaylistLibrary.i: source/model/PlaylistLibrary.cpp.i
 # target to preprocess a source file
 source/model/PlaylistLibrary.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/PlaylistLibrary.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.i
 .PHONY : source/model/PlaylistLibrary.cpp.i
 
 source/model/PlaylistLibrary.s: source/model/PlaylistLibrary.cpp.s
@@ -634,6 +657,7 @@ source/model/PlaylistLibrary.s: source/model/PlaylistLibrary.cpp.s
 # target to generate assembly for a file
 source/model/PlaylistLibrary.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/model/PlaylistLibrary.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.s
 .PHONY : source/model/PlaylistLibrary.cpp.s
 
 source/view/ViewBase.o: source/view/ViewBase.cpp.o
@@ -642,6 +666,7 @@ source/view/ViewBase.o: source/view/ViewBase.cpp.o
 # target to build an object file
 source/view/ViewBase.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewBase.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.o
 .PHONY : source/view/ViewBase.cpp.o
 
 source/view/ViewBase.i: source/view/ViewBase.cpp.i
@@ -650,6 +675,7 @@ source/view/ViewBase.i: source/view/ViewBase.cpp.i
 # target to preprocess a source file
 source/view/ViewBase.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewBase.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.i
 .PHONY : source/view/ViewBase.cpp.i
 
 source/view/ViewBase.s: source/view/ViewBase.cpp.s
@@ -658,6 +684,7 @@ source/view/ViewBase.s: source/view/ViewBase.cpp.s
 # target to generate assembly for a file
 source/view/ViewBase.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewBase.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.s
 .PHONY : source/view/ViewBase.cpp.s
 
 source/view/ViewDetailedPlaylist.o: source/view/ViewDetailedPlaylist.cpp.o
@@ -666,6 +693,7 @@ source/view/ViewDetailedPlaylist.o: source/view/ViewDetailedPlaylist.cpp.o
 # target to build an object file
 source/view/ViewDetailedPlaylist.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewDetailedPlaylist.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.o
 .PHONY : source/view/ViewDetailedPlaylist.cpp.o
 
 source/view/ViewDetailedPlaylist.i: source/view/ViewDetailedPlaylist.cpp.i
@@ -674,6 +702,7 @@ source/view/ViewDetailedPlaylist.i: source/view/ViewDetailedPlaylist.cpp.i
 # target to preprocess a source file
 source/view/ViewDetailedPlaylist.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewDetailedPlaylist.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.i
 .PHONY : source/view/ViewDetailedPlaylist.cpp.i
 
 source/view/ViewDetailedPlaylist.s: source/view/ViewDetailedPlaylist.cpp.s
@@ -682,6 +711,7 @@ source/view/ViewDetailedPlaylist.s: source/view/ViewDetailedPlaylist.cpp.s
 # target to generate assembly for a file
 source/view/ViewDetailedPlaylist.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewDetailedPlaylist.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.s
 .PHONY : source/view/ViewDetailedPlaylist.cpp.s
 
 source/view/ViewMainMenu.o: source/view/ViewMainMenu.cpp.o
@@ -690,6 +720,7 @@ source/view/ViewMainMenu.o: source/view/ViewMainMenu.cpp.o
 # target to build an object file
 source/view/ViewMainMenu.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewMainMenu.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.o
 .PHONY : source/view/ViewMainMenu.cpp.o
 
 source/view/ViewMainMenu.i: source/view/ViewMainMenu.cpp.i
@@ -698,6 +729,7 @@ source/view/ViewMainMenu.i: source/view/ViewMainMenu.cpp.i
 # target to preprocess a source file
 source/view/ViewMainMenu.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewMainMenu.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.i
 .PHONY : source/view/ViewMainMenu.cpp.i
 
 source/view/ViewMainMenu.s: source/view/ViewMainMenu.cpp.s
@@ -706,6 +738,7 @@ source/view/ViewMainMenu.s: source/view/ViewMainMenu.cpp.s
 # target to generate assembly for a file
 source/view/ViewMainMenu.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewMainMenu.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.s
 .PHONY : source/view/ViewMainMenu.cpp.s
 
 source/view/ViewManager.o: source/view/ViewManager.cpp.o
@@ -714,6 +747,7 @@ source/view/ViewManager.o: source/view/ViewManager.cpp.o
 # target to build an object file
 source/view/ViewManager.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.o
 .PHONY : source/view/ViewManager.cpp.o
 
 source/view/ViewManager.i: source/view/ViewManager.cpp.i
@@ -722,6 +756,7 @@ source/view/ViewManager.i: source/view/ViewManager.cpp.i
 # target to preprocess a source file
 source/view/ViewManager.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.i
 .PHONY : source/view/ViewManager.cpp.i
 
 source/view/ViewManager.s: source/view/ViewManager.cpp.s
@@ -730,6 +765,7 @@ source/view/ViewManager.s: source/view/ViewManager.cpp.s
 # target to generate assembly for a file
 source/view/ViewManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.s
 .PHONY : source/view/ViewManager.cpp.s
 
 source/view/ViewMediaFile.o: source/view/ViewMediaFile.cpp.o
@@ -738,6 +774,7 @@ source/view/ViewMediaFile.o: source/view/ViewMediaFile.cpp.o
 # target to build an object file
 source/view/ViewMediaFile.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewMediaFile.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.o
 .PHONY : source/view/ViewMediaFile.cpp.o
 
 source/view/ViewMediaFile.i: source/view/ViewMediaFile.cpp.i
@@ -746,6 +783,7 @@ source/view/ViewMediaFile.i: source/view/ViewMediaFile.cpp.i
 # target to preprocess a source file
 source/view/ViewMediaFile.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewMediaFile.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.i
 .PHONY : source/view/ViewMediaFile.cpp.i
 
 source/view/ViewMediaFile.s: source/view/ViewMediaFile.cpp.s
@@ -754,6 +792,7 @@ source/view/ViewMediaFile.s: source/view/ViewMediaFile.cpp.s
 # target to generate assembly for a file
 source/view/ViewMediaFile.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewMediaFile.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.s
 .PHONY : source/view/ViewMediaFile.cpp.s
 
 source/view/ViewMetadata.o: source/view/ViewMetadata.cpp.o
@@ -762,6 +801,7 @@ source/view/ViewMetadata.o: source/view/ViewMetadata.cpp.o
 # target to build an object file
 source/view/ViewMetadata.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewMetadata.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.o
 .PHONY : source/view/ViewMetadata.cpp.o
 
 source/view/ViewMetadata.i: source/view/ViewMetadata.cpp.i
@@ -770,6 +810,7 @@ source/view/ViewMetadata.i: source/view/ViewMetadata.cpp.i
 # target to preprocess a source file
 source/view/ViewMetadata.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewMetadata.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.i
 .PHONY : source/view/ViewMetadata.cpp.i
 
 source/view/ViewMetadata.s: source/view/ViewMetadata.cpp.s
@@ -778,6 +819,7 @@ source/view/ViewMetadata.s: source/view/ViewMetadata.cpp.s
 # target to generate assembly for a file
 source/view/ViewMetadata.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewMetadata.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.s
 .PHONY : source/view/ViewMetadata.cpp.s
 
 source/view/ViewPlay.o: source/view/ViewPlay.cpp.o
@@ -786,6 +828,7 @@ source/view/ViewPlay.o: source/view/ViewPlay.cpp.o
 # target to build an object file
 source/view/ViewPlay.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewPlay.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.o
 .PHONY : source/view/ViewPlay.cpp.o
 
 source/view/ViewPlay.i: source/view/ViewPlay.cpp.i
@@ -794,6 +837,7 @@ source/view/ViewPlay.i: source/view/ViewPlay.cpp.i
 # target to preprocess a source file
 source/view/ViewPlay.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewPlay.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.i
 .PHONY : source/view/ViewPlay.cpp.i
 
 source/view/ViewPlay.s: source/view/ViewPlay.cpp.s
@@ -802,6 +846,7 @@ source/view/ViewPlay.s: source/view/ViewPlay.cpp.s
 # target to generate assembly for a file
 source/view/ViewPlay.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewPlay.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.s
 .PHONY : source/view/ViewPlay.cpp.s
 
 source/view/ViewPlaylist.o: source/view/ViewPlaylist.cpp.o
@@ -810,6 +855,7 @@ source/view/ViewPlaylist.o: source/view/ViewPlaylist.cpp.o
 # target to build an object file
 source/view/ViewPlaylist.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewPlaylist.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.o
 .PHONY : source/view/ViewPlaylist.cpp.o
 
 source/view/ViewPlaylist.i: source/view/ViewPlaylist.cpp.i
@@ -818,6 +864,7 @@ source/view/ViewPlaylist.i: source/view/ViewPlaylist.cpp.i
 # target to preprocess a source file
 source/view/ViewPlaylist.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewPlaylist.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.i
 .PHONY : source/view/ViewPlaylist.cpp.i
 
 source/view/ViewPlaylist.s: source/view/ViewPlaylist.cpp.s
@@ -826,6 +873,7 @@ source/view/ViewPlaylist.s: source/view/ViewPlaylist.cpp.s
 # target to generate assembly for a file
 source/view/ViewPlaylist.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewPlaylist.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.s
 .PHONY : source/view/ViewPlaylist.cpp.s
 
 source/view/ViewScanOption.o: source/view/ViewScanOption.cpp.o
@@ -834,6 +882,7 @@ source/view/ViewScanOption.o: source/view/ViewScanOption.cpp.o
 # target to build an object file
 source/view/ViewScanOption.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewScanOption.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.o
 .PHONY : source/view/ViewScanOption.cpp.o
 
 source/view/ViewScanOption.i: source/view/ViewScanOption.cpp.i
@@ -842,6 +891,7 @@ source/view/ViewScanOption.i: source/view/ViewScanOption.cpp.i
 # target to preprocess a source file
 source/view/ViewScanOption.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewScanOption.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.i
 .PHONY : source/view/ViewScanOption.cpp.i
 
 source/view/ViewScanOption.s: source/view/ViewScanOption.cpp.s
@@ -850,6 +900,7 @@ source/view/ViewScanOption.s: source/view/ViewScanOption.cpp.s
 # target to generate assembly for a file
 source/view/ViewScanOption.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/source/view/ViewScanOption.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/controller_lib.dir/build.make CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.s
 .PHONY : source/view/ViewScanOption.cpp.s
 
 test/controller_manager_test.o: test/controller_manager_test.cpp.o

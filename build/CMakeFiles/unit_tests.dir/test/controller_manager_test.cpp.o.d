@@ -272,4 +272,236 @@ CMakeFiles/unit_tests.dir/test/controller_manager_test.cpp.o: \
  /usr/local/include/gtest/gtest-test-part.h \
  /usr/local/include/gtest/gtest-typed-test.h \
  /usr/local/include/gtest/gtest_pred_impl.h \
- /usr/local/include/gtest/gtest_prod.h
+ /usr/local/include/gtest/gtest_prod.h \
+ /media/sf_Shared_folder/Mock_Project/header/controller/ControllerManager.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/model/ModelManager.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/model/MediaLibrary.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/model/MediaFile.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/model/Metadata.hpp \
+ /usr/include/x86_64-linux-gnu/libavcodec/avcodec.h \
+ /usr/include/x86_64-linux-gnu/libavutil/samplefmt.h \
+ /usr/include/x86_64-linux-gnu/libavutil/avutil.h \
+ /usr/include/x86_64-linux-gnu/libavutil/common.h /usr/include/inttypes.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/syslimits.h \
+ /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/local_lim.h \
+ /usr/include/linux/limits.h \
+ /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/uio_lim.h /usr/include/c++/11/math.h \
+ /usr/include/c++/11/cmath /usr/include/math.h \
+ /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+ /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+ /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+ /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+ /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+ /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+ /usr/include/c++/11/bits/specfun.h /usr/include/c++/11/tr1/gamma.tcc \
+ /usr/include/c++/11/tr1/special_function_util.h \
+ /usr/include/c++/11/tr1/bessel_function.tcc \
+ /usr/include/c++/11/tr1/beta_function.tcc \
+ /usr/include/c++/11/tr1/ell_integral.tcc \
+ /usr/include/c++/11/tr1/exp_integral.tcc \
+ /usr/include/c++/11/tr1/hypergeometric.tcc \
+ /usr/include/c++/11/tr1/legendre_function.tcc \
+ /usr/include/c++/11/tr1/modified_bessel_func.tcc \
+ /usr/include/c++/11/tr1/poly_hermite.tcc \
+ /usr/include/c++/11/tr1/poly_laguerre.tcc \
+ /usr/include/c++/11/tr1/riemann_zeta.tcc \
+ /usr/include/x86_64-linux-gnu/libavutil/attributes.h \
+ /usr/include/x86_64-linux-gnu/libavutil/macros.h \
+ /usr/include/x86_64-linux-gnu/libavutil/version.h \
+ /usr/include/x86_64-linux-gnu/libavutil/avconfig.h \
+ /usr/include/x86_64-linux-gnu/libavutil/mem.h \
+ /usr/include/x86_64-linux-gnu/libavutil/error.h \
+ /usr/include/x86_64-linux-gnu/libavutil/rational.h \
+ /usr/include/x86_64-linux-gnu/libavutil/mathematics.h \
+ /usr/include/x86_64-linux-gnu/libavutil/intfloat.h \
+ /usr/include/x86_64-linux-gnu/libavutil/log.h \
+ /usr/include/x86_64-linux-gnu/libavutil/pixfmt.h \
+ /usr/include/x86_64-linux-gnu/libavutil/attributes.h \
+ /usr/include/x86_64-linux-gnu/libavutil/avutil.h \
+ /usr/include/x86_64-linux-gnu/libavutil/buffer.h \
+ /usr/include/x86_64-linux-gnu/libavutil/cpu.h \
+ /usr/include/x86_64-linux-gnu/libavutil/channel_layout.h \
+ /usr/include/x86_64-linux-gnu/libavutil/dict.h \
+ /usr/include/x86_64-linux-gnu/libavutil/frame.h \
+ /usr/include/x86_64-linux-gnu/libavutil/buffer.h \
+ /usr/include/x86_64-linux-gnu/libavutil/dict.h \
+ /usr/include/x86_64-linux-gnu/libavutil/samplefmt.h \
+ /usr/include/x86_64-linux-gnu/libavutil/hwcontext.h \
+ /usr/include/x86_64-linux-gnu/libavutil/frame.h \
+ /usr/include/x86_64-linux-gnu/libavutil/log.h \
+ /usr/include/x86_64-linux-gnu/libavutil/pixfmt.h \
+ /usr/include/x86_64-linux-gnu/libavutil/rational.h \
+ /usr/include/x86_64-linux-gnu/libavcodec/bsf.h \
+ /usr/include/x86_64-linux-gnu/libavcodec/codec_id.h \
+ /usr/include/x86_64-linux-gnu/libavcodec/codec_par.h \
+ /usr/include/x86_64-linux-gnu/libavcodec/packet.h \
+ /usr/include/x86_64-linux-gnu/libavcodec/version.h \
+ /usr/include/x86_64-linux-gnu/libavutil/version.h \
+ /usr/include/x86_64-linux-gnu/libavcodec/codec.h \
+ /usr/include/x86_64-linux-gnu/libavcodec/codec_id.h \
+ /usr/include/x86_64-linux-gnu/libavcodec/codec_desc.h \
+ /usr/include/x86_64-linux-gnu/libavcodec/version.h \
+ /usr/include/x86_64-linux-gnu/libavformat/avformat.h \
+ /usr/include/x86_64-linux-gnu/libavformat/avio.h \
+ /usr/include/x86_64-linux-gnu/libavutil/common.h \
+ /usr/include/x86_64-linux-gnu/libavformat/version.h \
+ /usr/include/x86_64-linux-gnu/libswresample/swresample.h \
+ /usr/include/x86_64-linux-gnu/libswresample/version.h \
+ /usr/include/x86_64-linux-gnu/libswscale/swscale.h \
+ /usr/include/x86_64-linux-gnu/libswscale/version.h \
+ /media/sf_Shared_folder/Mock_Project/header/model/PlaylistLibrary.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/model/PlayList.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/model/PlayingMedia.hpp \
+ /usr/include/c++/11/thread /usr/include/c++/11/bits/std_thread.h \
+ /usr/include/c++/11/bits/this_thread_sleep.h /usr/include/SDL2/SDL_ttf.h \
+ /usr/include/SDL2/SDL.h /usr/include/SDL2/SDL_main.h \
+ /usr/include/SDL2/SDL_stdinc.h /usr/include/SDL2/SDL_config.h \
+ /usr/include/x86_64-linux-gnu/SDL2/_real_SDL_config.h \
+ /usr/include/SDL2/SDL_platform.h /usr/include/SDL2/begin_code.h \
+ /usr/include/SDL2/close_code.h /usr/include/SDL2/SDL_assert.h \
+ /usr/include/SDL2/SDL_atomic.h /usr/include/SDL2/SDL_platform.h \
+ /usr/include/SDL2/SDL_audio.h /usr/include/SDL2/SDL_error.h \
+ /usr/include/SDL2/SDL_endian.h /usr/include/SDL2/SDL_mutex.h \
+ /usr/include/SDL2/SDL_thread.h /usr/include/SDL2/SDL_rwops.h \
+ /usr/include/SDL2/SDL_clipboard.h /usr/include/SDL2/SDL_cpuinfo.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/immintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/x86gprintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/ia32intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/adxintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/bmiintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/bmi2intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/cetintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/cldemoteintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/clflushoptintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/clwbintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/clzerointrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/enqcmdintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/fxsrintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/lzcntintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/lwpintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/movdirintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/mwaitintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/mwaitxintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/pconfigintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/popcntintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/pkuintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/rdseedintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/rtmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/serializeintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/sgxintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/tbmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/tsxldtrkintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/uintrintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/waitpkgintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/wbnoinvdintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/xsaveintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/xsavecintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/xsaveoptintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/xsavesintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/xtestintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/hresetintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/mmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/xmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/mm_malloc.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/emmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/pmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/tmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/smmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/wmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avxintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avxvnniintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx2intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512fintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512erintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512pfintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512cdintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512bwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512dqintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vlbwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vldqintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512ifmaintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512ifmavlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vbmiintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vbmivlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx5124fmapsintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx5124vnniwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vpopcntdqintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vbmi2intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vbmi2vlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vnniintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vnnivlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vpopcntdqvlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512bitalgintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vp2intersectintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vp2intersectvlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/shaintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/fmaintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/f16cintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/gfniintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/vaesintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/vpclmulqdqintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512bf16vlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512bf16intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/amxtileintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/amxint8intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/amxbf16intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/prfchwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/keylockerintrin.h \
+ /usr/include/SDL2/SDL_events.h /usr/include/SDL2/SDL_video.h \
+ /usr/include/SDL2/SDL_pixels.h /usr/include/SDL2/SDL_rect.h \
+ /usr/include/SDL2/SDL_surface.h /usr/include/SDL2/SDL_blendmode.h \
+ /usr/include/SDL2/SDL_keyboard.h /usr/include/SDL2/SDL_keycode.h \
+ /usr/include/SDL2/SDL_scancode.h /usr/include/SDL2/SDL_mouse.h \
+ /usr/include/SDL2/SDL_joystick.h /usr/include/SDL2/SDL_gamecontroller.h \
+ /usr/include/SDL2/SDL_sensor.h /usr/include/SDL2/SDL_quit.h \
+ /usr/include/SDL2/SDL_gesture.h /usr/include/SDL2/SDL_touch.h \
+ /usr/include/SDL2/SDL_filesystem.h /usr/include/SDL2/SDL_haptic.h \
+ /usr/include/SDL2/SDL_hidapi.h /usr/include/SDL2/SDL_hints.h \
+ /usr/include/SDL2/SDL_loadso.h /usr/include/SDL2/SDL_log.h \
+ /usr/include/SDL2/SDL_messagebox.h /usr/include/SDL2/SDL_metal.h \
+ /usr/include/SDL2/SDL_power.h /usr/include/SDL2/SDL_render.h \
+ /usr/include/SDL2/SDL_shape.h /usr/include/SDL2/SDL_system.h \
+ /usr/include/SDL2/SDL_timer.h /usr/include/SDL2/SDL_version.h \
+ /usr/include/SDL2/SDL_locale.h /usr/include/SDL2/SDL_misc.h \
+ /usr/include/SDL2/SDL_mixer.h \
+ /media/sf_Shared_folder/Mock_Project/header/view/ViewManager.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/view/ViewBase.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/view/ViewScanfOption.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/view/ViewMainMenu.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/controller/ScanfOptionController.hpp \
+ /usr/include/c++/11/filesystem /usr/include/c++/11/bits/fs_fwd.h \
+ /usr/include/c++/11/bits/fs_path.h /usr/include/c++/11/iomanip \
+ /usr/include/c++/11/bits/quoted_string.h /usr/include/c++/11/codecvt \
+ /usr/include/c++/11/bits/fs_dir.h /usr/include/c++/11/bits/fs_ops.h \
+ /media/sf_Shared_folder/Mock_Project/header/controller/MainMenuController.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/controller/MediaFileController.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/view/ViewMediaFile.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/model/MediaFile.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/view/ViewMetadata.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/controller/MetadataController.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/controller/PlayingMediaController.hpp \
+ /media/sf_Shared_folder/Mock_Project/header/controller/PlaylistController.hpp \
+ /usr/local/include/gmock/gmock.h \
+ /usr/local/include/gmock/gmock-actions.h /usr/include/c++/11/algorithm \
+ /usr/include/c++/11/pstl/glue_algorithm_defs.h \
+ /usr/local/include/gmock/internal/gmock-internal-utils.h \
+ /usr/local/include/gmock/internal/gmock-port.h \
+ /usr/local/include/gmock/internal/custom/gmock-port.h \
+ /usr/local/include/gmock/internal/gmock-pp.h \
+ /usr/local/include/gmock/gmock-cardinalities.h \
+ /usr/local/include/gmock/gmock-function-mocker.h \
+ /usr/local/include/gmock/gmock-spec-builders.h \
+ /usr/local/include/gmock/gmock-matchers.h \
+ /usr/local/include/gmock/internal/custom/gmock-matchers.h \
+ /usr/local/include/gmock/gmock-more-actions.h \
+ /usr/local/include/gmock/internal/custom/gmock-generated-actions.h \
+ /usr/local/include/gmock/gmock-more-matchers.h \
+ /usr/local/include/gmock/gmock-nice-strict.h

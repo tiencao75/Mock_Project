@@ -181,6 +181,244 @@ CMakeFiles/controller_lib.dir/source/controller/ScanfOptionController.cpp.s: cma
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/controller/ScanfOptionController.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/controller/ScanfOptionController.cpp -o CMakeFiles/controller_lib.dir/source/controller/ScanfOptionController.cpp.s
 
+CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.o: ../source/model/MediaFile.cpp
+CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.o -MF CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.o.d -o CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/model/MediaFile.cpp
+
+CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/model/MediaFile.cpp > CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.i
+
+CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/model/MediaFile.cpp -o CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.s
+
+CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.o: ../source/model/MediaLibrary.cpp
+CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.o -MF CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.o.d -o CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/model/MediaLibrary.cpp
+
+CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/model/MediaLibrary.cpp > CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.i
+
+CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/model/MediaLibrary.cpp -o CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.s
+
+CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.o: ../source/model/Metadata.cpp
+CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.o -MF CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.o.d -o CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/model/Metadata.cpp
+
+CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/model/Metadata.cpp > CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.i
+
+CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/model/Metadata.cpp -o CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.s
+
+CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.o: ../source/model/ModelManager.cpp
+CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.o -MF CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.o.d -o CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/model/ModelManager.cpp
+
+CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/model/ModelManager.cpp > CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.i
+
+CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/model/ModelManager.cpp -o CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.s
+
+CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.o: ../source/model/PlayList.cpp
+CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.o -MF CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.o.d -o CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/model/PlayList.cpp
+
+CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/model/PlayList.cpp > CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.i
+
+CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/model/PlayList.cpp -o CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.s
+
+CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.o: ../source/model/PlayingMedia.cpp
+CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.o -MF CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.o.d -o CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/model/PlayingMedia.cpp
+
+CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/model/PlayingMedia.cpp > CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.i
+
+CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/model/PlayingMedia.cpp -o CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.s
+
+CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.o: ../source/model/PlaylistLibrary.cpp
+CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.o -MF CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.o.d -o CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/model/PlaylistLibrary.cpp
+
+CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/model/PlaylistLibrary.cpp > CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.i
+
+CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/model/PlaylistLibrary.cpp -o CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.s
+
+CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.o: ../source/view/ViewBase.cpp
+CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.o -MF CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.o.d -o CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/view/ViewBase.cpp
+
+CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/view/ViewBase.cpp > CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.i
+
+CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/view/ViewBase.cpp -o CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.s
+
+CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.o: ../source/view/ViewDetailedPlaylist.cpp
+CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.o -MF CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.o.d -o CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/view/ViewDetailedPlaylist.cpp
+
+CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/view/ViewDetailedPlaylist.cpp > CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.i
+
+CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/view/ViewDetailedPlaylist.cpp -o CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.s
+
+CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.o: ../source/view/ViewMainMenu.cpp
+CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.o -MF CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.o.d -o CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/view/ViewMainMenu.cpp
+
+CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/view/ViewMainMenu.cpp > CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.i
+
+CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/view/ViewMainMenu.cpp -o CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.s
+
+CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.o: ../source/view/ViewManager.cpp
+CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.o -MF CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.o.d -o CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/view/ViewManager.cpp
+
+CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/view/ViewManager.cpp > CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.i
+
+CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/view/ViewManager.cpp -o CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.s
+
+CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.o: ../source/view/ViewMediaFile.cpp
+CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.o -MF CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.o.d -o CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/view/ViewMediaFile.cpp
+
+CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/view/ViewMediaFile.cpp > CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.i
+
+CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/view/ViewMediaFile.cpp -o CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.s
+
+CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.o: ../source/view/ViewMetadata.cpp
+CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.o -MF CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.o.d -o CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/view/ViewMetadata.cpp
+
+CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/view/ViewMetadata.cpp > CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.i
+
+CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/view/ViewMetadata.cpp -o CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.s
+
+CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.o: ../source/view/ViewPlay.cpp
+CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.o -MF CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.o.d -o CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/view/ViewPlay.cpp
+
+CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/view/ViewPlay.cpp > CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.i
+
+CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/view/ViewPlay.cpp -o CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.s
+
+CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.o: ../source/view/ViewPlaylist.cpp
+CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.o -MF CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.o.d -o CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/view/ViewPlaylist.cpp
+
+CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/view/ViewPlaylist.cpp > CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.i
+
+CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/view/ViewPlaylist.cpp -o CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.s
+
+CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.o: ../source/view/ViewScanOption.cpp
+CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.o -MF CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.o.d -o CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/view/ViewScanOption.cpp
+
+CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/view/ViewScanOption.cpp > CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.i
+
+CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/view/ViewScanOption.cpp -o CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.s
+
+CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.o: CMakeFiles/controller_lib.dir/flags.make
+CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.o: ../source/include/S32K144Interface.cpp
+CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.o: CMakeFiles/controller_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.o -MF CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.o.d -o CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.o -c /media/sf_Shared_folder/Mock_Project/source/include/S32K144Interface.cpp
+
+CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_Shared_folder/Mock_Project/source/include/S32K144Interface.cpp > CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.i
+
+CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_Shared_folder/Mock_Project/source/include/S32K144Interface.cpp -o CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.s
+
 # Object files for target controller_lib
 controller_lib_OBJECTS = \
 "CMakeFiles/controller_lib.dir/source/controller/ControllerManager.cpp.o" \
@@ -190,7 +428,24 @@ controller_lib_OBJECTS = \
 "CMakeFiles/controller_lib.dir/source/controller/MetadataController.cpp.o" \
 "CMakeFiles/controller_lib.dir/source/controller/PlayingMediaController.cpp.o" \
 "CMakeFiles/controller_lib.dir/source/controller/PlaylistController.cpp.o" \
-"CMakeFiles/controller_lib.dir/source/controller/ScanfOptionController.cpp.o"
+"CMakeFiles/controller_lib.dir/source/controller/ScanfOptionController.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.o" \
+"CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.o"
 
 # External object files for target controller_lib
 controller_lib_EXTERNAL_OBJECTS =
@@ -203,9 +458,26 @@ libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/controller/MetadataCon
 libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/controller/PlayingMediaController.cpp.o
 libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/controller/PlaylistController.cpp.o
 libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/controller/ScanfOptionController.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/model/MediaFile.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/model/MediaLibrary.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/model/Metadata.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/model/ModelManager.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/model/PlayList.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/model/PlayingMedia.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/model/PlaylistLibrary.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/view/ViewBase.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/view/ViewDetailedPlaylist.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/view/ViewMainMenu.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/view/ViewManager.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/view/ViewMediaFile.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/view/ViewMetadata.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/view/ViewPlay.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/view/ViewPlaylist.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/view/ViewScanOption.cpp.o
+libcontroller_lib.a: CMakeFiles/controller_lib.dir/source/include/S32K144Interface.cpp.o
 libcontroller_lib.a: CMakeFiles/controller_lib.dir/build.make
 libcontroller_lib.a: CMakeFiles/controller_lib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX static library libcontroller_lib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/sf_Shared_folder/Mock_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Linking CXX static library libcontroller_lib.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/controller_lib.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/controller_lib.dir/link.txt --verbose=$(VERBOSE)
 

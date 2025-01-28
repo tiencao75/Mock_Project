@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/local/include/taglib -I/media/sf_Shared_folder/Mock_Project/header -I/media/sf_Shared_folder/Mock_Project/header/include -I/media/sf_Shared_folder/Mock_Project/header/model -I/media/sf_Shared_folder/Mock_Project/header/controller -I/media/sf_Shared_folder/Mock_Project/header/view
+CXX_INCLUDES = -I/usr/local/include/taglib -I/media/sf_Shared_folder/Mock_Project/header -I/media/sf_Shared_folder/Mock_Project/header/include -I/media/sf_Shared_folder/Mock_Project/header/model -I/media/sf_Shared_folder/Mock_Project/header/controller -I/media/sf_Shared_folder/Mock_Project/header/view -I/usr/local/include/gmock
 
 CXX_FLAGS =  -Wall -g -fprofile-arcs -ftest-coverage -std=gnu++17
 
