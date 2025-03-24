@@ -64,16 +64,5 @@ This project is a Linux-based command-line application designed for managing and
 
 ---
 
-## Libraries Installation
 
-### **FTXUI Installation**
-
-FTXUI is a C++ library that enables the creation of text-based user interfaces for CLI applications. Follow these steps to set up FTXUI for your project.
-
-#### 1. Clone the FTXUI Repository
-
-Use Git to clone the repository from GitHub:
-
-```bash
-git clone https://github.com/ArthurSonzogni/FTXUI.git
 
